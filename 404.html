@@ -1,0 +1,230 @@
+<!--
+  EARN — 404 Page
+  Design system inherited from main site.
+  Voice 1 (institutional): quiet, clinical.
+-->
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>EARN | Page Not Found</title>
+<link rel="icon" type="image/png" href="/images/favicon.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<meta name="description" content="The page you’re looking for can’t be found. Return to EARN — the Elite Agent Referral Network.">
+<!-- Open Graph / Social -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="EARN | Page Not Found">
+<meta property="og:description" content="The page you’re looking for can’t be found. Return to EARN — the Elite Agent Referral Network.">
+<meta property="og:image" content="/images/og-image.png">
+<meta property="og:url" content="https://eliteagentreferralnetwork.com">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --background: #050505;
+  --foreground: #fafafa;
+  --gold: #918268;
+  --gold-light: #a89478;
+  --text-primary: #ffffff;
+  --text-secondary: #d4d4d8;
+  --text-body: #71717a;
+  --text-muted: #52525b;
+  --text-warm: #787060;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ═══ NAVBAR ═══ */
+.nav-outer {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 55;
+  display: flex; justify-content: center; padding: 16px 16px 0;
+}
+.nav-pill {
+  display: flex; width: 100%; max-width: 1200px;
+  align-items: center; justify-content: space-between;
+  border-radius: 9999px; padding: 12px 28px;
+  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(12,12,12,0.5);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+.nav-left { display: flex; align-items: center; }
+.nav-center {
+  display: flex; align-items: center; gap: 36px;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.nav-link { font-size: 13px; font-weight: 500; color: #a1a1aa; letter-spacing: 0.02em; transition: color 0.2s; }
+.nav-link:hover { color: white; }
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.nav-signin { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; color: #a1a1aa; transition: color 0.2s; }
+.nav-signin:hover { color: white; }
+
+/* Shader button */
+.shader-btn-wrap { position: relative; display: inline-flex; border-radius: 9999px; cursor: pointer; }
+.shader-btn-wrap canvas {
+  position: absolute; top: -4px; left: -4px;
+  width: calc(100% + 8px); height: calc(100% + 8px);
+  border-radius: 9999px; pointer-events: none; z-index: 0;
+}
+.shader-btn {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 9999px; border: none;
+  background: rgba(8,8,8,0.92); color: white;
+  font-family: var(--font-sans); font-weight: 500; letter-spacing: 0.04em;
+  cursor: pointer; transition: background 0.3s;
+}
+.shader-btn:hover { background: rgba(18,18,18,0.95); }
+.shader-btn.sm { padding: 10px 24px; font-size: 13px; }
+
+/* Hamburger */
+.nav-hamburger {
+  display: none; flex-direction: column; justify-content: center; align-items: center;
+  width: 40px; height: 40px; cursor: pointer; background: none; border: none; padding: 0;
+}
+.nav-hamburger span {
+  display: block; width: 20px; height: 1.5px; background: #d4d4d8;
+  transition: all 0.35s cubic-bezier(0.4,0,0.2,1); border-radius: 1px;
+}
+.nav-hamburger span:nth-child(1) { transform: translateY(-4px); }
+.nav-hamburger span:nth-child(3) { transform: translateY(4px); }
+
+@media (max-width: 960px) {
+  .nav-center { display: none; }
+  .nav-hamburger { display: flex; }
+}
+@media (max-width: 768px) {
+  .nav-pill { padding: 10px 16px; }
+}
+@media (max-width: 480px) {
+  .nav-signin span { display: inline; }
+}
+
+/* ═══ 404 CONTENT ═══ */
+.error-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 160px 24px 120px;
+  min-height: 100vh;
+}
+.error-code {
+  font-family: var(--font-serif);
+  font-size: clamp(4rem, 12vw, 8rem);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  color: rgba(145,130,104,0.15);
+  line-height: 1;
+  margin-bottom: 24px;
+  user-select: none;
+}
+.error-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+.error-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-body);
+  max-width: 360px;
+  margin-bottom: 48px;
+}
+.error-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.error-link:hover { color: var(--gold-light); }
+.error-link svg {
+  width: 14px; height: 14px;
+  stroke: currentColor;
+  transition: transform 0.3s;
+}
+.error-link:hover svg { transform: translateX(3px); }
+
+/* ═══ FOOTER ═══ */
+.footer-minimal {
+  max-width: 680px; margin: 0 auto; width: 100%;
+  padding: 0 24px 64px;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid rgba(255,255,255,0.06); padding-top: 32px;
+}
+.footer-minimal p,
+.footer-minimal a { font-size: 12px; color: var(--text-muted); transition: color 0.2s; }
+.footer-minimal a:hover { color: var(--text-body); }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="nav-outer">
+  <div class="nav-pill" id="navPill">
+    <div class="nav-left">
+      <a href="/" style="flex-shrink:0;"><img src="/images/earn-logo.png" alt="EARN" style="height:28px;width:auto;"></a>
+    </div>
+    <div class="nav-center"></div>
+    <div class="nav-right">
+      <a href="https://app.eliteagentreferralnetwork.com/signin" class="nav-signin"><span>Sign in</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- 404 CONTENT -->
+<main class="error-container">
+  <div class="error-code">404</div>
+  <h1 class="error-title">Page Not Found.</h1>
+  <p class="error-body">The page requested does not exist or has been moved.</p>
+  <a href="/" class="error-link">
+    Return to Home
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" y1="12" x2="19" y2="12"/>
+      <polyline points="12 5 19 12 12 19"/>
+    </svg>
+  </a>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer-minimal">
+  <p>&copy;2026 Elite Agent Referral Network Inc.</p>
+  <div style="display:flex;gap:20px;">
+    <a href="/disclaimers">Disclaimers</a>
+    <a href="/privacy-policy">Privacy</a>
+    <a href="/terms-and-conditions">Terms</a>
+  </div>
+</footer>
+
+<script>
+// Shader Button
+(function(){const e=`attribute vec2 a_position;void main(){gl_Position=vec4(a_position,0.0,1.0);}`,t=`precision highp float;uniform vec2 u_resolution;uniform float u_time;uniform float u_hover;vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}vec2 mod289(vec2 x){return x-floor(x*(1.0/289.0))*289.0;}vec3 permute(vec3 x){return mod289(((x*34.0)+1.0)*x);}float snoise(vec2 v){const vec4 C=vec4(0.211324865405187,0.366025403784439,-0.577350269189626,0.024390243902439);vec2 i=floor(v+dot(v,C.yy));vec2 x0=v-i+dot(i,C.xx);vec2 i1=(x0.x>x0.y)?vec2(1.0,0.0):vec2(0.0,1.0);vec4 x12=x0.xyxy+C.xxzz;x12.xy-=i1;i=mod289(i);vec3 p=permute(permute(i.y+vec3(0.0,i1.y,1.0))+i.x+vec3(0.0,i1.x,1.0));vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.0);m=m*m*m*m;vec3 x=2.0*fract(p*C.www)-1.0;vec3 h=abs(x)-0.5;vec3 ox=floor(x+0.5);vec3 a0=x-ox;m*=1.79284291400159-0.85373472095314*(a0*a0+h*h);vec3 g;g.x=a0.x*x0.x+h.x*x0.y;g.yz=a0.yz*x12.xz+h.yz*x12.yw;return 130.0*dot(m,g);}void main(){vec2 uv=gl_FragCoord.xy/u_resolution;float aspect=u_resolution.x/u_resolution.y;vec2 p=(uv-0.5)*vec2(aspect,1.0);float r=0.44;float hw=max(0.5*aspect-r,0.0);vec2 q=vec2(max(abs(p.x)-hw,0.0),p.y);float d=length(q)-r;float angle=atan(p.y,p.x);float dist=length(p);float live_t=u_time*0.35;float ti=mix(u_time*0.04,live_t,u_hover);float n1=snoise(vec2(uv.x*4.0+ti,uv.y*5.0-ti*0.6))*0.45;float n2=snoise(vec2(uv.x*8.0-ti*0.7,uv.y*8.0+ti*0.4))*0.3;float n3=snoise(vec2(angle*1.2+ti*0.6,dist*5.0-ti*0.4))*0.2;float noise=n1+n2+n3;float verticalBias=abs(p.y)/(r*0.9);verticalBias=smoothstep(0.3,1.0,verticalBias);float blend=noise*0.5+0.5;blend=blend-verticalBias*0.3;vec3 d_dark=vec3(0.30,0.29,0.27);vec3 d_mid=vec3(0.52,0.50,0.47);vec3 d_bright=vec3(0.68,0.65,0.60);vec3 dormant_col=mix(d_dark,d_mid,smoothstep(0.15,0.5,blend));dormant_col=mix(dormant_col,d_bright,smoothstep(0.6,0.85,blend));float d_spec=pow(max(snoise(vec2(uv.x*10.0+3.7*2.0,uv.y*10.0-3.7)),0.0),4.0);dormant_col+=d_spec*0.10;vec3 active_col=mix(d_dark,d_mid,smoothstep(0.15,0.5,blend));active_col=mix(active_col,d_bright,smoothstep(0.6,0.85,blend));float a_spec=pow(max(snoise(vec2(uv.x*10.0+ti*2.0,uv.y*10.0-ti)),0.0),4.0);active_col+=a_spec*0.10;vec3 col=mix(dormant_col,active_col,u_hover);float bw=0.020;float aa=0.003;float inner=smoothstep(aa,-aa,d);float outer=smoothstep(-bw+aa,-bw-aa,d);float ring=inner-outer;float glow=smoothstep(0.05,0.0,d)*0.06;float alpha=ring*0.85+glow;vec3 glow_col=vec3(0.55,0.53,0.50);vec3 final_col=col*ring+glow_col*glow*0.4;gl_FragColor=vec4(final_col,alpha);}`;function n(o){var c=o.querySelector("canvas");if(!c)return;var a=c.getContext("webgl",{premultipliedAlpha:!1,alpha:!0});if(!a)return;function s(y,S){var r=a.createShader(y);a.shaderSource(r,S);a.compileShader(r);return r}var u=s(a.VERTEX_SHADER,e),f=s(a.FRAGMENT_SHADER,t),g=a.createProgram();a.attachShader(g,u);a.attachShader(g,f);a.linkProgram(g);a.useProgram(g);var b=a.createBuffer();a.bindBuffer(a.ARRAY_BUFFER,b);a.bufferData(a.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),a.STATIC_DRAW);var l=a.getAttribLocation(g,"a_position");a.enableVertexAttribArray(l);a.vertexAttribPointer(l,2,a.FLOAT,!1,0,0);var R=a.getUniformLocation(g,"u_resolution"),T=a.getUniformLocation(g,"u_time"),H=a.getUniformLocation(g,"u_hover"),h=0,d=0;o.addEventListener("mouseenter",function(){d=1});o.addEventListener("mouseleave",function(){d=0});function w(){var r=o.getBoundingClientRect(),p=Math.min(devicePixelRatio||1,2);c.width=(r.width+8)*p;c.height=(r.height+8)*p;a.viewport(0,0,c.width,c.height)}w();window.addEventListener("resize",w);a.enable(a.BLEND);a.blendFunc(a.SRC_ALPHA,a.ONE_MINUS_SRC_ALPHA);var t0=performance.now();function m(){h+=(d-h)*0.045;a.clearColor(0,0,0,0);a.clear(a.COLOR_BUFFER_BIT);a.uniform2f(R,c.width,c.height);a.uniform1f(T,(performance.now()-t0)/1e3);a.uniform1f(H,h);a.drawArrays(a.TRIANGLE_STRIP,0,4);requestAnimationFrame(m)}m()}document.querySelectorAll("[data-shader-btn]").forEach(n)})();
+</script>
+</body>
+</html>

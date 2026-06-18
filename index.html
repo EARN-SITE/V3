@@ -142,14 +142,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   -webkit-backdrop-filter: blur(32px) saturate(180%);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.04);
 }
-.nav-left { display: flex; align-items: center; flex-shrink: 0; }
+.nav-left { display: flex; align-items: center; flex: 1 1 0; }
 .nav-center {
   display: flex;
   align-items: center;
   gap: 36px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: static;
+  left: auto;
+  transform: none;
+  flex: 0 1 auto;
+  justify-content: center;
 }
 .nav-link {
   font-size: 13px;
@@ -160,7 +162,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .nav-link:hover { color: white; }
 .nav-link.active { color: white; }
-.nav-right { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.nav-right { display: flex; align-items: center; gap: 16px; flex: 1 1 0; justify-content: flex-end; }
 .nav-signin {
   display: flex;
   align-items: center;
@@ -172,6 +174,26 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .nav-signin:hover { color: white; }
 .nav-signin svg { transition: all 0.3s; }
+
+/* §4 MARKED DOOR — dimmed cross-zone persona link (hero/footer) */
+.marked-door {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.02em; color: var(--text-muted);
+  transition: color 0.25s;
+}
+.marked-door:hover { color: var(--text-tertiary); }
+
+/* §4 MARKED DOOR — at the foot of the mobile overlay */
+.mobile-menu-door {
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.02em; color: var(--text-muted);
+  margin-top: 4px; padding: 4px 0;
+  opacity: 0; transform: translateY(20px);
+  transition: color .25s, opacity .6s cubic-bezier(0.16,1,0.3,1), transform .6s cubic-bezier(0.16,1,0.3,1);
+}
+.mobile-menu.open .mobile-menu-door { opacity: 1; transform: translateY(0); transition-delay: 0.46s; }
+.mobile-menu-door:hover { color: var(--text-tertiary); }
 .nav-signin:hover svg { filter: drop-shadow(0 0 6px rgba(255,255,255,0.4)); }
 .fingerprint-icon .fp-stroke { transition: opacity 0.5s ease; }
 .fingerprint-icon .fp-fill {
@@ -258,7 +280,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .mobile-menu.open .mobile-menu-link:nth-child(3) { transition-delay: 0.2s; }
 .mobile-menu-link:hover { color: white; }
 
-/* Member Portal link in mobile menu */
+/* Sign in link in mobile menu */
 .mobile-menu-portal {
   display: flex;
   align-items: center;
@@ -305,7 +327,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding-top: 4px;
 }
 
-/* Request Access CTA in mobile menu */
+/* Submit Referral CTA in mobile menu */
 .mobile-menu-cta {
   opacity: 0;
   transform: translateY(20px);
@@ -1857,8 +1879,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 
 .footer-cta-row { display:flex; gap:20px; justify-content:center; align-items:center; flex-wrap:wrap; }
-.apply-quiet { display:inline-block; margin-top: 38px; font-size: 13px; font-weight:500; letter-spacing:0.05em; color: rgba(145,130,104,0.55); transition: color 0.25s; }
-.apply-quiet:hover { color: var(--gold); }
 
 
 .footer-duo { display: grid; grid-template-columns: 1fr 1px 1fr; max-width: 880px; margin: 0 auto; align-items: stretch; }
@@ -2113,9 +2133,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
       </a>
     </div>
     <div class="nav-center">
-      <a href="/membership" class="nav-link">Membership</a>
-      <a href="/refer" class="nav-link">Refer a Client</a>
-      <a href="/team" class="nav-link">Leadership</a>
+      <a href="/#how-it-works" class="nav-link active">How It Works</a>
       <a href="/faqs" class="nav-link">FAQ</a>
     </div>
     <div class="nav-right">
@@ -2152,9 +2170,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
             <path fill-rule="evenodd" clip-rule="evenodd" d="M0.75 12C0.75 11.5858 1.08579 11.25 1.5 11.25H1.5075C1.92171 11.25 2.2575 11.5858 2.2575 12C2.2575 12.4142 1.92171 12.75 1.5075 12.75H1.5C1.08579 12.75 0.75 12.4142 0.75 12Z"/>
           </g>
         </svg>
-        <span>Member Portal</span>
+        <span>Sign in</span>
       </a>
-      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn sm" onclick="window.location.href='/application'">Apply</button></div>
+      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn sm" onclick="window.location.href='/refer'">Submit Referral</button></div>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
         <span></span>
         <span></span>
@@ -2165,9 +2183,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <div class="mobile-menu-inner">
-    <a href="/membership" class="mobile-menu-link">Membership</a>
-    <a href="/refer" class="mobile-menu-link">Refer a Client</a>
-    <a href="/team" class="mobile-menu-link">Leadership</a>
+    <a href="/#how-it-works" class="mobile-menu-link">How It Works</a>
     <a href="/faqs" class="mobile-menu-link">FAQ</a>
         <div class="mobile-menu-rule"></div>
     <div class="mobile-menu-actions">
@@ -2185,11 +2201,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
             <path fill-rule="evenodd" clip-rule="evenodd" d="M0.75 12C0.75 11.5858 1.08579 11.25 1.5 11.25H1.5075C1.92171 11.25 2.2575 11.5858 2.2575 12C2.2575 12.4142 1.92171 12.75 1.5075 12.75H1.5C1.08579 12.75 0.75 12.4142 0.75 12Z"/>
           </g>
         </svg>
-        <span>Member Portal</span>
+        <span>Sign in</span>
       </a>
       <div class="mobile-menu-cta">
-        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/application'">Apply</button></div>
+        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/refer'">Submit Referral</button></div>
       </div>
+      <a href="/membership" class="mobile-menu-door">For Elite Agents →</a>
     </div>
   </div>
 </div>
@@ -2214,8 +2231,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     </h1>
     <p style="color:#a1a1aa;margin-top:22px;font-size:clamp(15px,2vw,18px);letter-spacing:0.01em;">Your fee in writing before the first introduction.</p>
     <div style="margin-top:38px;display:flex;flex-direction:column;gap:20px;align-items:center;">
-      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/refer'">Refer a Client</button></div>
-      <a href="/application" class="apply-quiet" style="margin-top:0;">Apply to be an Elite Agent →</a>
+      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/refer'">Submit Referral</button></div>
+      <a href="/membership" class="marked-door">For Elite Agents →</a>
     </div>
   </div>
 </section>
@@ -2311,7 +2328,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 <!-- ═══════════════════════════════════════
      HOW IT WORKS (Combined Unit: Asymmetry + Statement + Economics)
      ═══════════════════════════════════════ -->
-<section class="asym">
+<section class="asym" id="how-it-works">
   <div class="asym-inner">
     <span class="asym-label fade-in">How It Works</span>
     <h2 class="fade-in" style="text-wrap:balance;">Your part is small. Ours isn’t.</h2>
@@ -2480,7 +2497,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     <div class="footer-duo">
       <div class="footer-duo-cell">
         <p class="duo-line">Have a client right now?</p>
-        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/refer'">Refer a Client</button></div>
+        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/refer'">Submit Referral</button></div>
       </div>
       <div class="footer-duo-line" aria-hidden="true"></div>
       <div class="footer-duo-cell">
@@ -2488,7 +2505,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <a href="/refer" class="footer-refer-link">Get Verified</a>
       </div>
     </div>
-    <a href="/application" class="apply-quiet">Apply to be an Elite Agent →</a>
+    <a href="/membership" class="marked-door">For Elite Agents →</a>
   </div>
   <div class="footer-bottom-outer">
     <div class="footer-bottom">
