@@ -9,11 +9,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050505">
 <title>EARN | Apply to be an Elite Agent</title>
-<meta name="description" content="Request exclusive territory access in the Elite Agent Referral Network.">
+<meta name="description" content="Apply to the Elite Agent Referral Network — one vetted agent per market, evaluated against a published standard.">
 <!-- Open Graph / Social -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="EARN | Apply to be an Elite Agent">
-<meta property="og:description" content="Request exclusive territory access in the Elite Agent Referral Network.">
+<meta property="og:description" content="Apply to the Elite Agent Referral Network — one vetted agent per market, evaluated against a published standard.">
 <meta property="og:image" content="/images/og-image.png">
 <meta property="og:url" content="https://eliteagentreferralnetwork.com/application">
 <meta name="twitter:card" content="summary_large_image">
@@ -564,6 +564,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border-radius: 9999px; pointer-events: none; z-index: 0;
 }
 .shader-btn {
+  line-height: normal;
   position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center;
   border-radius: 9999px; border: none; background: rgba(8,8,8,0.92); color: white;
   font-family: var(--font-sans); font-weight: 500; letter-spacing: 0.04em; cursor: pointer; transition: background 0.3s;
@@ -664,7 +665,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         </svg>
         <span>Sign in</span>
       </a>
-      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn sm" onclick="window.location.href='/application'">Apply</button></div>
+      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/application" class="shader-btn sm">Apply</a></div>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
         <span></span>
         <span></span>
@@ -697,9 +698,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <span>Sign in</span>
       </a>
       <div class="mobile-menu-cta">
-        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/application'">Apply</button></div>
+        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/application" class="shader-btn lg">Apply</a></div>
       </div>
-      <a href="/refer" class="mobile-menu-door">For Referring Agents →</a>
+      <a href="/" class="mobile-menu-door">For Referring Agents →</a>
     </div>
   </div>
 </div>
@@ -709,8 +710,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 <section class="app-header">
   <div class="app-header-label fade-in">Membership Application</div>
   <h1 class="fade-in" style="transition-delay:0.1s;">Apply to be an Elite Agent.</h1>
-  <p class="fade-in" style="transition-delay:0.2s;">Territories are secured on a first-approved basis.</p>
-  <div class="fade-in" style="transition-delay:0.3s;margin-top:28px;"><a href="/refer" class="marked-door">For Referring Agents →</a></div>
+  <p class="fade-in" style="transition-delay:0.2s;">One agent per market. Every application is individually reviewed.</p>
+  <div class="fade-in" style="transition-delay:0.3s;margin-top:28px;"><a href="/" class="marked-door">For Referring Agents →</a></div>
 </section>
 
 
@@ -744,7 +745,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
   <!-- ── Territory Selection ── -->
   <div class="form-section fade-in">
-    <div class="form-section-label">Choose a Territory</div>
+    <div class="form-section-label">Your Market</div>
     <div class="form-row triple">
       <div class="form-group">
         <label class="form-label">Country <span class="required">*</span></label>

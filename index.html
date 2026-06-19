@@ -761,6 +761,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-family: var(--font-sans);
   font-weight: 500;
   letter-spacing: 0.04em;
+  line-height: normal;
   cursor: pointer;
   transition: background 0.3s;
 }
@@ -953,7 +954,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         </svg>
         <span>Sign in</span>
       </a>
-      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn sm" onclick="window.location.href='/refer'">Submit Referral</button></div>
+      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/refer" class="shader-btn sm">Submit Referral</a></div>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
         <span></span>
         <span></span>
