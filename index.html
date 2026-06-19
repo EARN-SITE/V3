@@ -96,9 +96,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   100% { transform: translate3d(-50%, 0, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee,
-  .territory-carousel-track,
-  .members-track {
+  .animate-marquee {
     animation-play-state: paused;
   }
 }
@@ -183,6 +181,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transition: color 0.25s;
 }
 .marked-door:hover { color: var(--text-tertiary); }
+.md-arrow { display: inline-block; transition: transform 0.25s ease; }
+.marked-door:hover .md-arrow, .founder-team-link:hover .md-arrow { transform: translateX(3px); }
 
 /* §4 MARKED DOOR — at the foot of the mobile overlay */
 .mobile-menu-door {
@@ -428,604 +428,25 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .hero-content h1 {
   font-family: 'Cormorant Garamond', 'Georgia', serif;
-  font-size: clamp(3.2rem, 6.5vw, 96px);
+  font-size: clamp(2.7rem, 5.6vw, 82px);
   line-height: 1.08;
   font-weight: 400;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.05em;
   color: white;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: 'lnum' 1;
+  text-wrap: balance;
+}
+.hero-content h1 span { display: block; }
+@media (max-width: 768px) {
+  .hero-content h1 span { display: inline; }
 }
 .hero-content p {
   max-width: 560px;
   font-size: clamp(1rem, 1.25vw, 1.25rem);
   line-height: 1.7;
-  color: #a1a1aa;
+  color: #d4d4d8;
 }
-/* ═══════════════════════════════════════
-   PROOF BAR
-   ═══════════════════════════════════════ */
-.proof-bar { padding: 80px 24px; }
-.proof-bar-inner {
-  max-width: 960px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  gap: 48px;
-  flex-wrap: wrap;
-  text-align: center;
-}
-.proof-stat {
-  flex-shrink: 0;
-  min-width: 140px;
-  text-align: center;
-}
-.proof-number {
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  color: white;
-  font-variant-numeric: tabular-nums;
-}
-.proof-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #71717a;
-  margin-top: 4px;
-}
-.proof-divider {
-  width: 1px;
-  background: rgba(255,255,255,0.08);
-  align-self: stretch;
-}
-@media (max-width: 600px) {
-  .proof-bar-inner { gap: 32px 0; flex-direction: column; align-items: center; }
-  .proof-divider { width: 40px; height: 1px; align-self: center; }
-}
-
-/* ═══════════════════════════════════════
-   ANTI-PLATFORM (No Noise Section)
-   ═══════════════════════════════════════ */
-.anti-platform {
-  position: relative;
-  padding: 240px 24px;
-}
-@media (max-width: 768px) {
-  .anti-platform { padding: 140px 24px; }
-}
-.anti-platform-inner {
-  max-width: 1152px;
-  margin: 0 auto;
-}
-.anti-header {
-  margin-bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  text-align: center;
-}
-@media (max-width: 768px) { .anti-header { margin-bottom: 0; } }
-.anti-header h2 {
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  color: white;
-  text-wrap: balance;
-}
-.anti-header p {
-  max-width: 672px;
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: #a1a1aa;
-}
-
-/* ═══════════════════════════════════════
-   UNFAIR ADVANTAGE (Phone + Notifications)
-   Photorealistic iPhone 15 Pro + iOS notifications
-   ═══════════════════════════════════════ */
-.unfair {
-  position: relative;
-  overflow: hidden;
-  padding: 128px 24px 160px;
-}
-.unfair::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -40%);
-  width: 800px;
-  height: 800px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at center, rgba(145,130,104,0.04) 0%, rgba(145,130,104,0.02) 35%, transparent 70%);
-  pointer-events: none;
-}
-@media (max-width: 768px) { .unfair { padding: 80px 24px 96px; } }
-.unfair-inner {
-  max-width: 1152px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-/* iPhone 15 Pro frame */
-.phone-wrap { display: flex; justify-content: center; }
-.phone-body {
-  position: relative;
-  width: 285px;
-  height: 582px;
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4))
-          drop-shadow(0 24px 60px rgba(0,0,0,0.5));
-}
-.phone-frame {
-  position: absolute;
-  inset: 0;
-  border-radius: 50px;
-  background:
-    linear-gradient(165deg,
-      rgba(58,58,60,1) 0%,
-      rgba(44,44,46,1) 15%,
-      rgba(38,38,40,1) 40%,
-      rgba(28,28,30,1) 70%,
-      rgba(22,22,24,1) 100%
-    );
-  box-shadow:
-    inset 0 1px 0 0 rgba(255,255,255,0.13),
-    inset 0 2px 0 0 rgba(255,255,255,0.05),
-    inset 0 -1px 0 0 rgba(255,255,255,0.04),
-    inset 1px 0 0 0 rgba(255,255,255,0.07),
-    inset -1px 0 0 0 rgba(255,255,255,0.07),
-    0 0 0 0.5px rgba(255,255,255,0.1),
-    0 1px 3px rgba(0,0,0,0.3),
-    0 8px 24px rgba(0,0,0,0.35),
-    0 24px 60px rgba(0,0,0,0.4);
-}
-.phone-frame::before {
-  content: '';
-  position: absolute;
-  right: -1.5px;
-  top: 148px;
-  width: 3px;
-  height: 44px;
-  border-radius: 0 2px 2px 0;
-  background: linear-gradient(180deg, rgba(60,60,62,1) 0%, rgba(48,48,50,1) 50%, rgba(38,38,40,1) 100%);
-  box-shadow: 1px 0 0 0 rgba(255,255,255,0.06);
-}
-.phone-frame::after {
-  content: '';
-  position: absolute;
-  left: -1.5px;
-  top: 120px;
-  width: 3px;
-  height: 32px;
-  border-radius: 2px 0 0 2px;
-  background: linear-gradient(180deg, rgba(60,60,62,1) 0%, rgba(48,48,50,1) 50%, rgba(38,38,40,1) 100%);
-  box-shadow: -1px 0 0 0 rgba(255,255,255,0.06);
-}
-.phone-action-btn {
-  position: absolute;
-  left: -1.5px;
-  top: 87px;
-  width: 3px;
-  height: 22px;
-  border-radius: 2px 0 0 2px;
-  background: linear-gradient(180deg, rgba(60,60,62,1) 0%, rgba(48,48,50,1) 100%);
-  box-shadow: -1px 0 0 0 rgba(255,255,255,0.06);
-}
-.phone-vol2 {
-  position: absolute;
-  left: -1.5px;
-  top: 162px;
-  width: 3px;
-  height: 32px;
-  border-radius: 2px 0 0 2px;
-  background: linear-gradient(180deg, rgba(60,60,62,1) 0%, rgba(48,48,50,1) 50%, rgba(38,38,40,1) 100%);
-  box-shadow: -1px 0 0 0 rgba(255,255,255,0.06);
-}
-
-/* Screen */
-.phone-screen {
-  position: absolute;
-  top: 4px; left: 4px; right: 4px; bottom: 4px;
-  border-radius: 46px;
-  background: #000000;
-  overflow: hidden;
-  box-shadow: inset 0 0 0 0.5px rgba(0,0,0,0.8);
-}
-.phone-wallpaper {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-image: url('/images/silk-black-wallpaper.webp');
-  background-size: cover;
-  background-position: center 20%;
-  filter: brightness(0.5);
-}
-/* Gentle vignette: barely-there darkening at bottom */
-.phone-wallpaper::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.2) 90%, rgba(0,0,0,0.3) 100%);
-}
-.phone-screen::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 40%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.012) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 100;
-}
-
-/* Dynamic Island */
-.phone-island {
-  position: absolute;
-  top: 11px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 50;
-  width: 120px;
-  height: 36px;
-  border-radius: 20px;
-  background: #000000;
-  box-shadow: 0 0 0 0.5px rgba(0,0,0,1), inset 0 0 2px rgba(0,0,0,1);
-}
-.phone-island::after {
-  content: '';
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, rgba(30,30,40,1) 0%, rgba(15,15,20,1) 50%, rgba(8,8,12,1) 100%);
-  box-shadow: 0 0 0 1px rgba(40,40,50,0.6), inset 0 0 2px rgba(0,0,0,0.8);
-}
-
-.phone-screen-glow {
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 50% 35%, rgba(255,255,255,0.02) 0%, transparent 65%);
-  opacity: 0;
-  transition: opacity 2s ease;
-  z-index: 1;
-}
-.phone-screen-glow.visible { opacity: 1; }
-
-/* iOS Status Bar */
-.ios-status-bar {
-  position: absolute;
-  top: 14px;
-  left: 36px;
-  right: 36px;
-  z-index: 40;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', var(--font-sans), system-ui, sans-serif;
-}
-.ios-status-time {
-  font-size: 10px;
-  font-weight: 600;
-  color: rgba(255,255,255,0.8);
-  letter-spacing: 0.02em;
-}
-.ios-status-icons {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-}
-.ios-cellular {
-  display: flex;
-  align-items: flex-end;
-  gap: 1px;
-  height: 8px;
-}
-.ios-cellular-bar {
-  width: 2px;
-  border-radius: 0.5px;
-  background: rgba(255,255,255,0.8);
-}
-.ios-cellular-bar:nth-child(1) { height: 2.5px; }
-.ios-cellular-bar:nth-child(2) { height: 4px; }
-.ios-cellular-bar:nth-child(3) { height: 5.5px; }
-.ios-cellular-bar:nth-child(4) { height: 7px; opacity: 0.3; }
-.ios-battery {
-  display: flex;
-  align-items: center;
-  gap: 1px;
-}
-.ios-battery-body {
-  width: 18px;
-  height: 8.5px;
-  border-radius: 2px;
-  border: 0.8px solid rgba(255,255,255,0.3);
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ios-battery-fill {
-  position: absolute;
-  top: 1.5px; left: 1.5px; bottom: 1.5px;
-  width: 60%;
-  border-radius: 0.8px;
-  background: rgba(255,255,255,0.8);
-}
-.ios-battery-pct {
-  position: relative;
-  z-index: 2;
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', var(--font-sans), system-ui, sans-serif;
-  font-size: 6px;
-  font-weight: 700;
-  color: rgba(255,255,255,0.85);
-  line-height: 1;
-}
-.ios-battery-cap {
-  width: 1px;
-  height: 3px;
-  border-radius: 0 0.8px 0.8px 0;
-  background: rgba(255,255,255,0.3);
-}
-
-/* Lock Screen Clock */
-.phone-time {
-  position: absolute;
-  top: 55px;
-  left: 0; right: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 5;
-  opacity: 0;
-  transform: translateY(4px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.phone-time.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.phone-time .date {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', var(--font-sans), system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 2px;
-}
-.phone-time .time {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', var(--font-sans), system-ui, sans-serif;
-  font-size: 56px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  color: rgba(255,255,255,0.95);
-  font-feature-settings: "tnum";
-}
-
-/* iOS Notifications */
-.phone-notifications {
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  top: 180px;
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  z-index: 20;
-  text-align: left;
-}
-.phone-notif {
-  border-radius: 14px;
-  padding: 10px 11px;
-  background:
-    linear-gradient(180deg,
-      rgba(58, 58, 60, 0.62) 0%,
-      rgba(42, 42, 44, 0.58) 100%
-    );
-  -webkit-backdrop-filter: blur(30px) saturate(160%) brightness(1.05);
-  backdrop-filter: blur(30px) saturate(160%) brightness(1.05);
-  box-shadow:
-    inset 0 0.5px 0 0 rgba(255,255,255,0.1),
-    0 0 0 0.5px rgba(255,255,255,0.04),
-    0 2px 6px rgba(0,0,0,0.3),
-    0 6px 16px rgba(0,0,0,0.15);
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  text-align: left;
-  opacity: 0;
-  transform: translateY(-12px) scale(0.97);
-}
-@keyframes notifSlideIn {
-  0% { opacity: 0; transform: translateY(-16px) scale(0.96); }
-  40% { opacity: 1; transform: translateY(2px) scale(1.005); }
-  65% { transform: translateY(-1px) scale(0.999); }
-  80% { transform: translateY(0.5px) scale(1.001); }
-  100% { opacity: 1; transform: translateY(0) scale(1); }
-}
-.phone-notif.visible {
-  animation: notifSlideIn 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* App Icon */
-.notif-icon {
-  width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow:
-    0 0 0 0.5px rgba(255,255,255,0.08),
-    0 1px 2px rgba(0,0,0,0.3);
-}
-.notif-icon svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* Notification Content */
-.notif-content {
-  flex: 1;
-  min-width: 0;
-  text-align: left;
-}
-.notif-meta {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 1px;
-}
-.notif-app {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', var(--font-sans), system-ui, sans-serif;
-  font-size: 10.5px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.01em;
-  line-height: 1.3;
-}
-.notif-time {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', var(--font-sans), system-ui, sans-serif;
-  font-size: 10.5px;
-  font-weight: 400;
-  color: rgba(255,255,255,0.28);
-  flex-shrink: 0;
-  margin-left: 4px;
-}
-.notif-title {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', var(--font-sans), system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.35;
-  color: rgba(255,255,255,0.92);
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.notif-detail {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', var(--font-sans), system-ui, sans-serif;
-  font-size: 10.5px;
-  font-weight: 400;
-  line-height: 1.35;
-  color: rgba(255,255,255,0.42);
-  text-align: left;
-  margin-top: 1px;
-}
-
-/* Home Indicator */
-.phone-bar {
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
-  height: 4px;
-  border-radius: 9999px;
-  background: rgba(255,255,255,0.2);
-  z-index: 30;
-  opacity: 0;
-  transition: opacity 1.2s 0.6s ease;
-}
-.phone-bar.visible { opacity: 1; }
-
-/* Lock Screen Shortcuts */
-.ios-lock-shortcuts {
-  position: absolute;
-  bottom: 20px;
-  left: 14px;
-  right: 14px;
-  display: flex;
-  justify-content: space-between;
-  z-index: 25;
-  opacity: 0;
-  transition: opacity 1.5s 1s ease;
-}
-.ios-lock-shortcuts.visible { opacity: 1; }
-.ios-lock-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: rgba(50,50,52,0.5);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.ios-flashlight::after {
-  content: '';
-  width: 6px;
-  height: 10px;
-  border: 1.2px solid rgba(255,255,255,0.7);
-  border-radius: 1px 1px 2px 2px;
-  display: block;
-}
-.ios-camera::after {
-  content: '';
-  width: 11px;
-  height: 8px;
-  border: 1.2px solid rgba(255,255,255,0.7);
-  border-radius: 1.5px;
-  display: block;
-}
-
-/* Ambient Glow */
-.phone-glow {
-  position: absolute;
-  inset: -160px;
-  z-index: -1;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse at 50% 45%,
-    rgba(145,130,104,0.08) 0%,
-    rgba(145,130,104,0.04) 30%,
-    rgba(145,130,104,0.01) 55%,
-    transparent 80%
-  );
-  opacity: 0;
-  transition: opacity 3s ease;
-}
-.phone-glow.visible { opacity: 1; }
-
-/* Phone responsive */
-@media (max-width: 480px) {
-  .phone-body { width: 250px; height: 510px; }
-  .phone-frame { border-radius: 44px; }
-  .phone-screen { border-radius: 41px; }
-  .phone-island { width: 100px; height: 30px; top: 10px; }
-  .phone-time .time { font-size: 48px; }
-  .phone-time { top: 50px; }
-  .phone-notifications { top: 158px; gap: 6px; left: 8px; right: 8px; }
-  .notif-icon { width: 30px; height: 30px; border-radius: 7px; }
-  .phone-notif { padding: 9px; gap: 7px; border-radius: 12px; }
-  .notif-title { font-size: 10px; }
-  .notif-detail { font-size: 9.5px; }
-  .notif-app { font-size: 9.5px; }
-  .notif-time { font-size: 9.5px; }
-  .ios-lock-btn { width: 28px; height: 28px; }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .phone-notif.visible {
-    animation: none;
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    transition: opacity 0.3s ease;
-  }
-  .phone-time {
-    transition: opacity 0.3s ease;
-    transform: none;
-  }
-}
-
-
 /* ═══════════════════════════════════════
    VETTING TICKER (Brokerage Marquee)
    ═══════════════════════════════════════ */
@@ -1117,453 +538,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 
 /* ═══════════════════════════════════════
-   TERRITORY MAP
-   ═══════════════════════════════════════ */
-.territory {
-  padding: 128px 24px;
-}
-@media (max-width: 768px) { .territory { padding: 80px 24px; } }
-.territory-inner {
-  max-width: 1152px;
-  margin: 0 auto;
-}
-.territory-header {
-  margin-bottom: 64px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  text-align: center;
-}
-@media (max-width: 768px) { .territory-header { margin-bottom: 40px; } }
-.territory-header h2 {
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  color: white;
-}
-.territory-header p {
-  max-width: 672px;
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: #a1a1aa;
-}
-
-/* Simple territory grid instead of react-simple-maps (which needs React) */
-/* Pulsing dot for available */
-.pulse-dot {
-  position: relative;
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-.pulse-dot.gold { background: var(--gold); }
-.pulse-dot.white { background: white; }
-.pulse-dot.white::before {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.3);
-  opacity: 0;
-}
-.pulse-dot.white.pulse-once::before {
-  animation: pulse-ring 2.5s ease-out 1 forwards;
-}
-@keyframes pulse-ring {
-  0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(2.5); opacity: 0; }
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.legend-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.legend-dot.gold { background: var(--gold); }
-.legend-dot.white { background: white; }
-.legend-text {
-  font-size: 12px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #71717a;
-}
-
-@media (max-width: 768px) {
-}
-/* ═══════════════════════════════════════
-   HOW IT WORKS
-   ═══════════════════════════════════════ */
-.how-it-works {
-  padding: 160px 24px 128px;
-}
-@media (max-width: 768px) { .how-it-works { padding: 80px 24px 80px; } }
-.how-inner {
-  max-width: 1060px;
-  margin: 0 auto;
-}
-.how-header {
-  text-align: center;
-  margin-bottom: 80px;
-}
-@media (max-width: 768px) { .how-header { margin-bottom: 48px; } }
-.how-header h2 {
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  color: white;
-}
-.how-steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  border-top: 1px solid rgba(145,130,104,0.2);
-}
-@media (max-width: 768px) { .how-steps { grid-template-columns: 1fr; } }
-.how-step {
-  padding: 40px 32px;
-  border-right: 1px solid rgba(255,255,255,0.04);
-}
-.how-step:last-child { border-right: none; }
-@media (max-width: 768px) {
-  .how-step {
-    border-right: none;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    padding: 32px 0;
-  }
-  .how-step:last-child { border-bottom: none; }
-  .how-step h3 { min-height: auto; }
-}
-.how-number {
-  display: block;
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
-  font-size: 2.5rem;
-  font-weight: 300;
-  color: rgba(145,130,104,0.35);
-  line-height: 1;
-  margin-bottom: 20px;
-}
-.how-step h3 {
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 500;
-  color: white;
-  margin-bottom: 12px;
-  line-height: 1.45;
-  min-height: 2.9em;
-}
-.how-step p {
-  font-size: 14px;
-  line-height: 1.7;
-  color: #71717a;
-}
-
-/* ═══════════════════════════════════════
-   TERRITORY CAROUSEL
-   ═══════════════════════════════════════ */
-.territory-carousel-wrap {
-  position: relative;
-  overflow: hidden;
-  margin: 0 -24px;
-}
-.territory-carousel-fade-l,
-.territory-carousel-fade-r {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 120px;
-  z-index: 2;
-  pointer-events: none;
-}
-.territory-carousel-fade-l { left: 0; background: linear-gradient(to right, #050505, transparent); }
-.territory-carousel-fade-r { right: 0; background: linear-gradient(to left, #050505, transparent); }
-@media (max-width: 768px) {
-  .territory-carousel-fade-l, .territory-carousel-fade-r { width: 48px; }
-}
-.territory-carousel-scroll {
-  overflow: hidden;
-}
-.territory-carousel-scroll:hover .territory-carousel-track {
-  animation-play-state: paused;
-}
-.territory-carousel-track {
-  display: flex;
-  gap: 20px;
-  animation: marquee 80s linear infinite;
-  will-change: transform;
-  width: max-content;
-}
-.territory-card {
-  position: relative;
-  flex-shrink: 0;
-  width: 280px;
-  height: 220px;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: border-color 0.3s;
-}
-.territory-card:hover {
-  border-color: rgba(255,255,255,0.18);
-}
-.territory-card.claimed {
-  border-color: rgba(145,130,104,0.25);
-}
-.territory-card.available:hover {
-  border-color: rgba(255,255,255,0.2);
-}
-.territory-card-img {
-  position: absolute;
-  inset: 0;
-  background: #151515;
-  background-size: cover;
-  background-position: center;
-}
-.territory-card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.85) 100%);
-}
-.territory-card.claimed .territory-card-overlay {
-  background: linear-gradient(180deg, rgba(5,5,5,0.5) 0%, rgba(5,5,5,0.9) 100%);
-}
-.territory-card-content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  padding: 20px;
-}
-.territory-card-city {
-  font-family: var(--font-serif);
-  font-size: 22px;
-  font-weight: 400;
-  color: white;
-  line-height: 1.2;
-}
-.territory-card.claimed .territory-card-city {
-  color: rgba(255,255,255,0.5);
-}
-.territory-card-area {
-  font-size: 12px;
-  color: #a1a1aa;
-  margin-top: 2px;
-  letter-spacing: 0.01em;
-}
-.territory-card.claimed .territory-card-area {
-  color: #71717a;
-}
-.territory-card-status {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-.territory-card-status.claimed { color: var(--gold); }
-.territory-card-status.available { color: rgba(255,255,255,0.6); }
-
-/* ═══════════════════════════════════════
-   MEMBERSHIP (Agent Carousel)
-   ═══════════════════════════════════════ */
-@media (max-width: 768px) { .membership { padding: 80px 0; } }
-.membership-header {
-  max-width: 1152px;
-  margin: 0 auto 64px;
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  text-align: center;
-}
-@media (max-width: 768px) { .membership-header { margin-bottom: 40px; } }
-.membership-header h2 {
-  font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  color: white;
-}
-.membership-header p {
-  max-width: 672px;
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: #a1a1aa;
-}
-
-.members-carousel-wrap {
-  position: relative;
-  overflow: hidden;
-}
-.members-fade-l, .members-fade-r {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 10;
-  width: 128px;
-  pointer-events: none;
-}
-.members-fade-l { left: 0; background: linear-gradient(to right, #050505, transparent); }
-.members-fade-r { right: 0; background: linear-gradient(to left, #050505, transparent); }
-@media (max-width: 768px) {
-  .members-fade-l, .members-fade-r { width: 48px; }
-}
-
-.members-scroll {
-  display: flex;
-  overflow: hidden;
-}
-.members-scroll:hover .members-track { animation-play-state: paused; }
-.members-track {
-  display: flex;
-  flex-shrink: 0;
-  gap: 24px;
-  padding-right: 24px;
-  animation: marquee 70s linear infinite reverse;
-}
-
-.member-card {
-  display: flex;
-  width: 300px;
-  flex-shrink: 0;
-  flex-direction: column;
-  border-radius: 16px;
-  overflow: hidden;
-}
-.member-photo {
-  position: relative;
-  width: 100%;
-  height: 340px;
-  overflow: hidden;
-}
-@media (max-width: 768px) { .member-photo { height: 280px; } }
-.member-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  filter: grayscale(100%);
-  transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.member-card:hover .member-photo img {
-  filter: grayscale(0%);
-}
-.member-info-wrap {
-  padding: 20px 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.member-name {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: white;
-}
-.member-territory {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #71717a;
-}
-.member-volume {
-  display: inline-block;
-  margin-top: 12px;
-  border-radius: 9999px;
-  padding: 6px 16px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--gold);
-  width: fit-content;
-}
-
-/* ═══════════════════════════════════════
-   ATMOSPHERIC DIVIDER — now integrated
-   into member credential section
-   ═══════════════════════════════════════ */
-
-/* ═══════════════════════════════════════
-   MEMBER CREDENTIAL
-   ═══════════════════════════════════════ */
-.member-credential {
-  position: relative;
-  padding: 180px 24px 160px;
-  overflow: hidden;
-}
-@media (max-width: 768px) { .member-credential { padding: 100px 24px 80px; } }
-.member-credential-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url(/images/atmo-obsidian.webp);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.35;
-}
-.member-credential-fade-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 65%;
-  background: linear-gradient(to bottom, #050505 15%, rgba(5,5,5,0.6) 45%, transparent);
-  z-index: 1;
-}
-.member-credential-fade-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 65%;
-  background: linear-gradient(to top, #050505 15%, rgba(5,5,5,0.6) 45%, transparent);
-  z-index: 1;
-}
-.mc-inner {
-  max-width: 560px;
-  margin: 0 auto;
-  text-align: center;
-}
-.mc-headline {
-  font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  color: var(--text-primary);
-  margin-bottom: 0;
-}
-.mc-seal {
-  margin-top: -20px;
-  margin-bottom: 40px;
-}
-.mc-seal svg {
-  display: block;
-  margin: 0 auto;
-}
-.mc-statement {
-  font-size: 14px;
-  line-height: 1.8;
-  color: var(--text-tertiary);
-  letter-spacing: 0.01em;
-}
-
-/* ═══════════════════════════════════════
    FOUNDER NOTE
    ═══════════════════════════════════════ */
 .founder {
@@ -1579,7 +553,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .founder blockquote p {
   font-family: 'Cormorant Garamond', 'Georgia', serif;
-  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
   line-height: 1.55;
   font-weight: 300;
   font-style: italic;
@@ -1661,15 +635,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   align-items: center;
   text-align: center;
 }
-.footer-cta h2 {
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  color: white;
-  margin-bottom: 32px;
-}
 .footer-cta .shader-btn-wrap { margin-bottom: 0; }
+.footer-cta .marked-door { margin-top: 52px; }
 
 .footer-bottom-outer {
   margin-top: 160px;
@@ -1825,8 +792,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .standard-row { border-top: 1px solid rgba(255,255,255,0.08); padding: 17px 0; }
 .standard-row h3 { font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color: var(--gold); font-weight:600; margin-bottom: 5px; }
 .standard-row p { font-size:15px; line-height:1.7; color: var(--text-secondary); }
-.standard-close { margin-top: 24px; font-size: 16.5px; line-height: 1.7; color: var(--text-primary); max-width: 460px; }
-.standard-close strong { font-weight: 500; }
+.standard-close { margin-top: 36px; font-size: 17px; line-height: 1.65; color: var(--text-primary); max-width: 460px; }
 /* ── Field of One Hundred ── */
 .standard-field-wrap { position: sticky; top: 50vh; transform: translateY(-50%); }
 @media (max-width: 920px){ .standard-field-wrap { position: static; transform: none; } }
@@ -1836,22 +802,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .field-agent.culled { color: #1b1b1b; }
 .field-agent.survivor-lit { color: #C9B891; transform: scale(1.7); }
 @media (prefers-reduced-motion: reduce) { .field-agent { transition: none; } }
-/* ── Membership router ── */
-.member-router { padding: 110px 24px 130px; text-align:center; }
-.member-router p { font-family: var(--font-serif); font-size:26px; color: var(--text-secondary); margin-bottom:22px; }
-.member-router a { font-size:14px; font-weight:500; letter-spacing:0.08em; color: var(--gold); transition: color 0.25s; }
-.member-router a:hover { color: var(--gold-light); }
-
-
-/* ── The Economics ── */
-.economics { padding: 150px 24px; }
-.economics-inner { max-width: 880px; margin: 0 auto; }
-.economics-label { display:block; font-size:12px; font-weight:500; letter-spacing:0.25em; text-transform:uppercase; color:#787060; margin-bottom:20px; }
-.economics h2 { font-family: var(--font-serif); font-weight:500; letter-spacing:-0.02em; font-size: clamp(2rem, 4vw, 3.2rem); line-height:1.15; color: var(--text-primary); margin-bottom: 40px; }
-.economics p { font-size: 17px; line-height: 1.85; color: var(--text-secondary); margin-bottom: 24px; }
-.economics .economics-close { font-family: var(--font-serif); font-style: italic; font-size: 21px; line-height: 1.6; color: var(--text-tertiary); margin-bottom: 0; }
-
-
 /* ── The Asymmetry (How It Works) ── */
 .asym { padding: 150px 24px; }
 .asym-inner { max-width: 1080px; margin: 0 auto; }
@@ -1878,10 +828,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .unit-econ p { font-size: 17px; line-height: 1.85; color: var(--text-secondary); margin-bottom: 22px; }
 
 
-.footer-cta-row { display:flex; gap:20px; justify-content:center; align-items:center; flex-wrap:wrap; }
 
 
-.footer-duo { display: grid; grid-template-columns: 1fr 1px 1fr; max-width: 880px; margin: 0 auto; align-items: stretch; }
+.footer-duo { display: grid; grid-template-columns: 1fr 1px 1fr; width: 100%; margin: 0 auto; align-items: stretch; }
 .footer-duo-cell { display: flex; flex-direction: column; align-items: center; gap: 26px; padding: 8px 32px; }
 .duo-line { font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.35rem, 2.2vw, 1.7rem); color: var(--text-primary); }
 .footer-duo-line { width: 1px; background: linear-gradient(180deg, rgba(145,130,104,0), rgba(145,130,104,0.5), rgba(145,130,104,0)); }
@@ -1889,174 +838,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .footer-duo { grid-template-columns: 1fr; }
   .footer-duo-line { width: 60%; height: 1px; margin: 30px auto; background: linear-gradient(90deg, rgba(145,130,104,0), rgba(145,130,104,0.5), rgba(145,130,104,0)); }
 }
-
-
-/* ═══════════════════════════════════════
-   MEMBERS (Carousel — ⚠️ PLACEHOLDER DATA, see section markup)
-   ═══════════════════════════════════════ */
-/* ═══════════════════════════════════════
-   MEMBERSHIP (Agent Carousel)
-   ═══════════════════════════════════════ */
-.membership {
-  padding: 128px 0;
-}
-@media (max-width: 768px) { .membership { padding: 80px 0; } }
-.membership-header {
-  max-width: 1152px;
-  margin: 0 auto 64px;
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  text-align: center;
-}
-@media (max-width: 768px) { .membership-header { margin-bottom: 40px; } }
-.membership-header h2 {
-  font-family: var(--font-serif);
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  color: white;
-}
-.membership-header p {
-  max-width: 672px;
-  font-size: 1.125rem;
-  line-height: 1.7;
-  color: #a1a1aa;
-}
-.members-carousel-wrap {
-  position: relative;
-  overflow: hidden;
-}
-.members-fade-l, .members-fade-r {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 10;
-  width: 128px;
-  pointer-events: none;
-}
-.members-fade-l { left: 0; background: linear-gradient(to right, #050505, transparent); }
-.members-fade-r { right: 0; background: linear-gradient(to left, #050505, transparent); }
-@media (max-width: 768px) {
-  .members-fade-l, .members-fade-r { width: 48px; }
-}
-.members-scroll {
-  display: flex;
-  overflow: hidden;
-}
-.members-scroll:hover .members-track { animation-play-state: paused; }
-.members-track {
-  display: flex;
-  flex-shrink: 0;
-  gap: 24px;
-  padding-right: 24px;
-  animation: marquee 70s linear infinite reverse;
-}
-.member-card {
-  display: flex;
-  width: 300px;
-  flex-shrink: 0;
-  flex-direction: column;
-  border-radius: 16px;
-  overflow: hidden;
-}
-.member-photo {
-  position: relative;
-  width: 100%;
-  height: 340px;
-  overflow: hidden;
-}
-@media (max-width: 768px) { .member-photo { height: 280px; } }
-.member-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  filter: grayscale(100%);
-  transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.member-card:hover .member-photo img {
-  filter: grayscale(0%);
-}
-.member-info-wrap {
-  padding: 20px 20px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.member-name {
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: white;
-}
-.member-territory {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #71717a;
-}
-.member-volume {
-  display: inline-block;
-  margin-top: 12px;
-  border-radius: 9999px;
-  padding: 6px 16px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--gold);
-  width: fit-content;
-}
-/* ═══════════════════════════════════════
-   ATMOSPHERIC DIVIDER — now integrated
-   into member credential section
-   ═══════════════════════════════════════ */
-
-/* ═══════════════════════════════════════
-   MEMBER CREDENTIAL
-   ═══════════════════════════════════════ */
-.member-credential {
-  position: relative;
-  padding: 180px 24px 160px;
-  overflow: hidden;
-}
-@media (max-width: 768px) { .member-credential { padding: 100px 24px 80px; } }
-.member-credential-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url(/images/atmo-obsidian.webp);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.35;
-}
-.member-credential-fade-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 65%;
-  background: linear-gradient(to bottom, #050505 15%, rgba(5,5,5,0.6) 45%, transparent);
-  z-index: 1;
-}
-.member-credential-fade-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 65%;
-  background: linear-gradient(to top, #050505 15%, rgba(5,5,5,0.6) 45%, transparent);
-  z-index: 1;
-}
-.members-track { animation-duration: 60s; }
-@media (prefers-reduced-motion: reduce) { .members-track { animation-play-state: paused; } }
-
-
-
-
 
 
 .footer-identity { font-size: 15px; line-height: 1.8; color: var(--text-tertiary); max-width: 620px; margin: 0 auto 64px; text-align: center; letter-spacing: 0.01em; }
@@ -2090,7 +871,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .agdoc-sig svg { width: 100%; max-width: 110px; height: 24px; display: block; margin-bottom: 3px; }
 .agdoc-sig span { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
 .agdoc-stamp { margin-top: 14px; text-align: center; font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); padding: 8px 0; border: 1px solid rgba(145,130,104,0.28); border-radius: 9999px; }
-.track-steps { display: flex; flex-direction: column; }
+.track-steps { display: flex; flex-direction: column; text-align: left; }
 .track-step { display: flex; gap: 13px; padding: 12.5px 0; border-top: 1px solid rgba(255,255,255,0.06); opacity: 0.32; transition: opacity 0.65s ease; }
 .track-step:first-child { border-top: none; }
 .track-step.lit { opacity: 1; }
@@ -2204,7 +985,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <span>Sign in</span>
       </a>
       <div class="mobile-menu-cta">
-        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/refer'">Submit Referral</button></div>
+        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/refer" class="shader-btn lg">Submit Referral</a></div>
       </div>
       <a href="/membership" class="mobile-menu-door">For Elite Agents →</a>
     </div>
@@ -2225,14 +1006,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
   <div class="hero-content">
     <span style="display:block;font-family:'Inter',sans-serif;font-size:clamp(12px, 2.5vw, 18px);font-weight:400;letter-spacing:clamp(0.12em, 1.5vw, 0.25em);text-transform:uppercase;color:#787060;margin-bottom:20px;">Elite Agent Referral Network</span>
-    <h1 style="font-family:'Cormorant Garamond','Georgia',serif;font-weight:400;font-style:normal;letter-spacing:-0.05em;font-size:clamp(2.7rem,5.6vw,82px);font-variant-numeric:lining-nums;font-feature-settings:'lnum' 1;">
-      <span style="display:block;">Instant access to a vetted</span>
-      <span style="display:block;">top 1% agent in every market.</span>
+    <h1>
+      <span>Instant access to a vetted</span>
+      <span>top&nbsp;1% agent in every market.</span>
     </h1>
-    <p style="color:#a1a1aa;margin-top:22px;font-size:clamp(15px,2vw,18px);letter-spacing:0.01em;">Your fee in writing before the first introduction.</p>
+    <p style="color:#d4d4d8;margin-top:22px;font-size:clamp(15px,2vw,18px);letter-spacing:0.01em;">Your fee in writing before the first introduction.</p>
     <div style="margin-top:38px;display:flex;flex-direction:column;gap:20px;align-items:center;">
-      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/refer'">Submit Referral</button></div>
-      <a href="/membership" class="marked-door">For Elite Agents →</a>
+      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/refer" class="shader-btn lg">Submit Referral</a></div>
+      <a href="/membership" class="marked-door">For Elite Agents<span class="md-arrow" aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
@@ -2315,7 +1096,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
           <p>The service standard the entire network relies on when a client arrives in their market.</p>
         </div>
       </div>
-      <p class="standard-close fade-in" style="transition-delay:0.25s;">Each market in the network is represented by one elite agent. Every referral for that market goes to them.</p>
+      <p class="standard-close fade-in" style="transition-delay:0.25s;">Each market in the network is represented by one elite agent — one known destination for every client referred there.</p>
     </div>
     <div class="standard-field-wrap fade-in" style="transition-delay:0.25s;">
       <div class="standard-field" id="standardField" aria-hidden="true">
@@ -2366,7 +1147,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   <div class="otr-inner">
     <span class="otr-label fade-in">On the Record</span>
     <h2 class="fade-in" style="transition-delay:0.08s;text-wrap:balance;">A handshake is not an agreement.</h2>
-    <p class="otr-sub fade-in" style="transition-delay:0.15s;">Most referrals travel on goodwill — a name passed along, a promise remembered differently at closing, and silence in between. Every EARN referral is documented before the introduction and tracked to the close. Your fee never depends on anyone’s memory.</p>
+    <p class="otr-sub fade-in" style="transition-delay:0.15s;">Most referrals travel on goodwill — a name passed along, a promise remembered differently at closing. Every EARN referral is on the record, so your fee never depends on anyone’s memory.</p>
 
   <!-- Proof band — the receipts for the two EARN-column claims.
        Both cards are ILLUSTRATIVE system objects: redacted parties, no dates,
@@ -2420,7 +1201,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   </div>
 
   </div>
-  </div>
 </section>
 
 <!-- ═══════════════════════════════════════
@@ -2430,7 +1210,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   <div class="founder-inner">
     <div>
       <blockquote>
-        <p>"I built EARN because I was tired of referral roulette. I wanted a black book of the best agents in North America. This is that black book."</p>
+        <p>I built EARN because I was tired of referral roulette. I wanted a black book of the best agents in North America. This is that black book.</p>
         <footer class="founder-footer">
           <div class="founder-divider"></div>
           <div class="founder-avatar">
@@ -2440,52 +1220,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
             <span class="founder-name">Liam McKinney</span>
             <span class="founder-title" style="display:block;">Founder</span>
           </cite>
-          <a href="/team" class="founder-team-link">Leadership →</a>
+          <a href="/team" class="founder-team-link">Leadership <span class="md-arrow" aria-hidden="true">→</span></a>
         </footer>
       </blockquote>
     </div>
   </div>
 </section>
-
-<!-- ═══════════════════════════════════════════════════════════════════
-     MEMBERS (Carousel)
-     ⚠️⚠️⚠️  PLACEHOLDER MEMBER DATA — INTERNAL DESIGN EVALUATION ONLY  ⚠️⚠️⚠️
-     These are NOT real members. Honesty class (KB-18 §1): real, consented
-     members only in public materials. DO NOT COMMIT TO MAIN with this
-     section active. Go-live condition: replace every card with a real,
-     consented member (Roadmap: "Recruit featured agents — P1").
-     ═══════════════════════════════════════════════════════════════════ -->
-<section class="membership" data-placeholder="true">
-  <div class="membership-header fade-in-rise">
-    <span style="font-size:12px;font-weight:500;letter-spacing:0.25em;text-transform:uppercase;color:#787060;">The Network</span>
-    <h2>Elite Members.</h2>
-  </div>
-
-  <div class="members-carousel-wrap fade-in" style="transition-delay:0.2s;">
-    <div class="members-fade-l"></div>
-    <div class="members-fade-r"></div>
-    <div class="members-scroll">
-      <div class="members-track">
-        <!-- Set 1 (placeholder) -->
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-knoxville.webp" alt="EARN member — Toronto (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Thomas Reeves</div><div class="member-territory">Toronto</div><div class="glass-badge member-volume" style="border-radius:9999px;">$68M ANNUAL VOLUME</div></div></div>
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-aspen.webp" alt="EARN member — Calgary (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Marcus Hale</div><div class="member-territory">Calgary</div><div class="glass-badge member-volume" style="border-radius:9999px;">$82M ANNUAL VOLUME</div></div></div>
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-vancouver.webp" alt="EARN member — Vancouver (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Dominic Voss</div><div class="member-territory">Vancouver</div><div class="glass-badge member-volume" style="border-radius:9999px;">$57M ANNUAL VOLUME</div></div></div>
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-charleston.webp" alt="EARN member — Halifax (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Caroline Monroe</div><div class="member-territory">Halifax</div><div class="glass-badge member-volume" style="border-radius:9999px;">$61M ANNUAL VOLUME</div></div></div>
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-las-vegas.webp" alt="EARN member — Kelowna (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Natasha Kaine</div><div class="member-territory">Kelowna</div><div class="glass-badge member-volume" style="border-radius:9999px;">$75M ANNUAL VOLUME</div></div></div>
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-arlington.webp" alt="EARN member — Ottawa (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Jonathan Pierce</div><div class="member-territory">Ottawa</div><div class="glass-badge member-volume" style="border-radius:9999px;">$78M ANNUAL VOLUME</div></div></div>
-        <!-- Set 2 (duplicate for seamless loop) -->
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-knoxville.webp" alt="EARN member — Toronto (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Thomas Reeves</div><div class="member-territory">Toronto</div><div class="glass-badge member-volume" style="border-radius:9999px;">$68M ANNUAL VOLUME</div></div></div>
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-aspen.webp" alt="EARN member — Calgary (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Marcus Hale</div><div class="member-territory">Calgary</div><div class="glass-badge member-volume" style="border-radius:9999px;">$82M ANNUAL VOLUME</div></div></div>
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-vancouver.webp" alt="EARN member — Vancouver (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Dominic Voss</div><div class="member-territory">Vancouver</div><div class="glass-badge member-volume" style="border-radius:9999px;">$57M ANNUAL VOLUME</div></div></div>
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-charleston.webp" alt="EARN member — Halifax (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Caroline Monroe</div><div class="member-territory">Halifax</div><div class="glass-badge member-volume" style="border-radius:9999px;">$61M ANNUAL VOLUME</div></div></div>
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-las-vegas.webp" alt="EARN member — Kelowna (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Natasha Kaine</div><div class="member-territory">Kelowna</div><div class="glass-badge member-volume" style="border-radius:9999px;">$75M ANNUAL VOLUME</div></div></div>
-        <div class="glass member-card" style="border-radius:16px;"><div class="member-photo"><img src="/images/agents/agent-arlington.webp" alt="EARN member — Ottawa (placeholder)"></div><div class="member-info-wrap"><div class="member-name">Jonathan Pierce</div><div class="member-territory">Ottawa</div><div class="glass-badge member-volume" style="border-radius:9999px;">$78M ANNUAL VOLUME</div></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
 
 <!-- ═══════════════════════════════════════
      FOOTER SECTION
@@ -2493,11 +1233,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 <footer class="footer-section">
   <div class="footer-border-top"></div>
   <div class="footer-cta fade-in-subtle">
-    <p class="footer-identity">EARN is referral infrastructure — when a client leaves an agent’s market, the network places them with a vetted elite agent, the fee in writing, the referral tracked to close.</p>
+    <p class="footer-identity">EARN is referral infrastructure — when a client leaves an agent’s market, they’re placed with a vetted elite agent, the fee in writing, the referral tracked to close.</p>
     <div class="footer-duo">
       <div class="footer-duo-cell">
         <p class="duo-line">Have a client right now?</p>
-        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/refer'">Submit Referral</button></div>
+        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/refer" class="shader-btn lg">Submit Referral</a></div>
       </div>
       <div class="footer-duo-line" aria-hidden="true"></div>
       <div class="footer-duo-cell">
@@ -2505,7 +1245,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <a href="/refer" class="footer-refer-link">Get Verified</a>
       </div>
     </div>
-    <a href="/membership" class="marked-door">For Elite Agents →</a>
+    <a href="/membership" class="marked-door">For Elite Agents<span class="md-arrow" aria-hidden="true">→</span></a>
   </div>
   <div class="footer-bottom-outer">
     <div class="footer-bottom">
