@@ -1,139 +1,64 @@
+<!--
+  EARN — Referral FAQ Page
+  Design system inherited from main site.
+-->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050505">
-<title>EARN — Submit a Referral</title>
-<meta name="description" content="Submit a referral to EARN — your client is placed with the one elite agent for that market, your fee in writing before the first introduction.">
+<title>Referral FAQ — Elite Agent Referral Network</title>
+<meta name="description" content="How sending a client referral through EARN works — eligibility, fees, and what happens to the client you refer.">
 <!-- Open Graph / Social -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="EARN — Submit a Referral">
-<meta property="og:description" content="Submit a referral to EARN — your client is placed with the one elite agent for that market, your fee in writing before the first introduction.">
+<meta property="og:title" content="EARN | Referral FAQ">
+<meta property="og:description" content="Common questions about the Elite Agent Referral Network — territory exclusivity, membership, referral mechanics, and vetting.">
 <meta property="og:image" content="/images/og-image.png">
-<meta property="og:url" content="https://eliteagentreferralnetwork.com/refer">
+<meta property="og:url" content="https://eliteagentreferralnetwork.com/referral-faqs">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-<!-- ════════════════════════════════════════════════════════════════
-     MOCKUP 2 / REFERRAL SUBMISSION — 3-SCREEN CONTINUOUS FLOW
-     Design target for Ian (June 12, 2026 — rev B, founder corrections)
-     Spec: User Flow Map — App Delta Spec, §3 (Flow A), §5 (Flow C),
-     §8 (Flow G guard), §13 (route: app.…/refer recommended).
 
-     SCREENS: 1 form → 2 account creation → 3 held confirmation.
-
-     BUILD NOTES:
-     • NO AUTH WALL on screen 1 — completable before any account exists.
-     • ONE CONTINUOUS TRANSACTION: submit flows DIRECTLY into the
-       account-creation screen. No standalone confirmation between, no
-       "finish later" option, no limbo state. The referral is CAPTURED
-       + HELD atomically WHEN THE ACCOUNT IS CREATED — it does not
-       exist as an orphan before that. Abandonment at screen 2 =
-       incomplete submission (brief server-side session recovery is
-       fine; no chaser-email machinery, no orphaned referrals).
-     • EMAIL VERIFICATION IS ASYNC + NON-BLOCKING — never a wall
-       mid-flow. Admin approval remains the routing gate.
-     • FEE INPUT: auto-filled 25, HARD MAX 25, sender may adjust down
-       (clamp client- AND server-side). Framing: this is what the
-       sender RECEIVES — never "acknowledge"/payer language. The
-       chosen % feeds referral-agreement generation (Essential item 6).
-     • DESTINATION is a dropdown. Option-list source is session wiring
-       (market list); an unclaimed destination market triggers the
-       Golden Ticket pipeline — do not reject it.
-     • CLIENT CONTACT shared with the receiving agent only AFTER the
-       referral agreement is signed.
-     • AUTHENTICATED SENDERS (Flow C): Section 1 pre-filled from the
-       account and collapsed; screen 2 is skipped entirely.
-     • SAME-EMAIL GUARD (item 5): email matches an existing account →
-       prompt sign-in, attach the referral. NEVER create a duplicate.
-     • LICENSE FIELDS feed manual admin verification; the license-auth
-       feature flag (spec §10) hooks here later — build it, ship it OFF.
-     • BUTTON LABEL: "Submit Referral" (founder, June 12). Marketing
-       CTAs currently read "Submit a Referral" — uniformity sweep
-       pending founder decision; this file follows the founder.
-     • View switching below is DEMO JS only — production navigates.
-     ════════════════════════════════════════════════════════════════ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet">
+
 <style>
-  :root{--font-sans:'Inter',system-ui,sans-serif;--font-serif:'Cormorant Garamond',Georgia,serif;--gold:#918268;--gold-light:#a89a7e;--text-muted:#52525b;--text-tertiary:#a1a1aa;}
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:var(--font-sans);min-height:100vh;
-    background:radial-gradient(1000px 540px at 50% -5%,rgba(145,130,104,0.12),transparent 60%),#0a0a0a;
-    color:#e4e4e7;padding:120px 16px 80px;display:flex;flex-direction:column;align-items:center;}
-  a{text-decoration:none;color:inherit;}
-  .brand{font-weight:800;letter-spacing:0.08em;font-size:18px;color:#fff;margin-bottom:34px;}
+:root {
+  --background: #050505;
+  --foreground: #fafafa;
+  --muted-foreground: #a1a1aa;
+  --border: rgba(255, 255, 255, 0.1);
+  --gold: #918268;
+  --gold-light: #a89478;
+  --dark-gold: #87734e;
+  --bg-surface: #151515;
+  --text-primary: #ffffff;
+  --text-secondary: #d4d4d8;
+  --text-tertiary: #a1a1aa;
+  --text-body: #71717a;
+  --text-muted: #52525b;
+  --text-warm: #787060;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+}
 
-  .wrap{width:100%;max-width:640px;}
-
-  .head h1{font-family:var(--font-serif);font-weight:300;font-size:38px;color:#fff;letter-spacing:0.005em;margin-bottom:10px;}
-  .head .sub{font-size:14px;color:#8f8f96;line-height:1.7;max-width:520px;margin-bottom:38px;}
-
-  .section{background:rgba(16,16,16,0.72);border:1px solid rgba(255,255,255,0.07);border-radius:18px;
-    padding:30px 30px 26px;margin-bottom:18px;backdrop-filter:blur(18px);}
-  .sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:22px;}
-  .sec-num{font-family:var(--font-serif);font-weight:300;font-size:22px;color:var(--gold);}
-  .sec-title{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#a1a1aa;font-weight:600;}
-  .sec-note{font-size:12px;color:#6f6f76;margin:-14px 0 20px;line-height:1.6;}
-
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .grid .full{grid-column:1 / -1;}
-  @media (max-width:560px){.grid{grid-template-columns:1fr;}}
-
-  .field label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#71717a;margin-bottom:6px;}
-  .field label .opt{color:#52525b;text-transform:none;letter-spacing:0;font-size:11px;}
-  .field input,.field select,.field textarea{width:100%;padding:12px 14px;font-size:14px;color:#e4e4e7;
-    background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:10px;outline:none;
-    transition:border-color .25s,box-shadow .25s;font-family:var(--font-sans);}
-  .field input::placeholder,.field textarea::placeholder{color:#52525b;}
-  .field select{color:#a1a1aa;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2371717a' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
-  .field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(145,130,104,0.55);box-shadow:0 0 0 3px rgba(145,130,104,0.12);}
-  .field textarea{min-height:88px;resize:vertical;}
-
-  .agree{display:flex;gap:13px;align-items:flex-start;padding:18px 18px;border:1px solid rgba(145,130,104,0.25);
-    border-radius:12px;background:rgba(145,130,104,0.05);}
-  .agree input{margin-top:3px;accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;}
-  .agree p{font-size:13px;color:#a1a1aa;line-height:1.65;}
-  .agree a{color:var(--gold-light);border-bottom:1px solid rgba(168,154,126,0.35);}
-
-  .submit-row{margin-top:26px;display:flex;flex-direction:column;align-items:center;gap:14px;}
-  .submit-btn{padding:15px 44px;border:none;border-radius:9999px;cursor:pointer;font-family:var(--font-sans);
-    font-size:14px;font-weight:500;letter-spacing:0.04em;color:#fff;background:rgba(8,8,8,0.95);
-    box-shadow:0 0 0 1px rgba(145,130,104,0.5),0 4px 24px rgba(145,130,104,0.22);transition:box-shadow .3s,background .3s;}
-  .submit-btn:hover{background:rgba(20,20,20,0.95);box-shadow:0 0 0 1px rgba(145,130,104,0.8),0 6px 30px rgba(145,130,104,0.35);}
-  .privacy{font-size:12px;color:#5d5d63;text-align:center;line-height:1.7;max-width:420px;}
-
-  /* ── account + confirmation ── */
-  .strip{display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold-light);}
-  .strip .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(145,130,104,0.7);}
-  input[type=number]{appearance:textfield;-moz-appearance:textfield;}
-  input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
-  .c-card{background:rgba(16,16,16,0.72);border:1px solid rgba(255,255,255,0.07);border-radius:20px;
-    padding:46px 40px 40px;text-align:center;backdrop-filter:blur(18px);}
-  .c-ring{width:58px;height:58px;border-radius:50%;border:1px solid rgba(145,130,104,0.55);display:flex;
-    align-items:center;justify-content:center;margin:0 auto 22px;box-shadow:0 0 30px rgba(145,130,104,0.18);}
-  .c-ring svg{width:24px;height:24px;stroke:var(--gold-light);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
-  .c-card h2{font-family:var(--font-serif);font-weight:300;font-size:32px;color:#fff;margin-bottom:10px;}
-  .chip{display:inline-block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold-light);
-    border:1px solid rgba(145,130,104,0.4);border-radius:9999px;padding:5px 14px;margin-bottom:8px;}
-  .c-ref{font-size:12px;color:#5d5d63;margin-bottom:26px;letter-spacing:0.06em;}
-  .c-steps{text-align:left;max-width:400px;margin:0 auto 30px;display:flex;flex-direction:column;gap:14px;}
-  .c-step{display:flex;gap:14px;align-items:flex-start;}
-  .c-step .n{font-family:var(--font-serif);font-weight:300;font-size:19px;color:var(--gold);min-width:16px;line-height:1.3;}
-  .c-step p{font-size:13.5px;color:#a1a1aa;line-height:1.6;}
-  .c-step p b{color:#e4e4e7;font-weight:600;}
-  .c-cta{padding:15px 40px;border:none;border-radius:9999px;cursor:pointer;font-family:var(--font-sans);font-size:14px;
-    font-weight:500;letter-spacing:0.04em;color:#fff;background:rgba(8,8,8,0.95);
-    box-shadow:0 0 0 1px rgba(145,130,104,0.5),0 4px 24px rgba(145,130,104,0.22);transition:box-shadow .3s;}
-  .c-cta:hover{box-shadow:0 0 0 1px rgba(145,130,104,0.8),0 6px 30px rgba(145,130,104,0.35);}
-  .c-min{margin-top:13px;font-size:12px;color:#5d5d63;}
-
-  .demo{position:fixed;bottom:14px;right:16px;font-size:11px;color:#3f3f46;cursor:pointer;border:1px dashed rgba(255,255,255,0.12);border-radius:8px;padding:6px 10px;}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
 
 /* ═══════════════════════════════════════
-   NAVBAR (ported from index.html — sender zone)
+   NAVBAR
    ═══════════════════════════════════════ */
 .nav-outer {
   position: fixed;
@@ -203,10 +128,11 @@
 .marked-door {
   display: inline-flex; align-items: center; gap: 6px;
   font-family: var(--font-sans); font-size: 13px; font-weight: 500;
-  letter-spacing: 0.02em; color: var(--text-muted);
-  transition: color 0.25s;
+  letter-spacing: 0.02em; color: var(--text-muted); transition: color 0.25s;
 }
 .marked-door:hover { color: var(--text-tertiary); }
+.md-arrow { display: inline-block; transition: transform 0.25s ease; }
+.marked-door:hover .md-arrow { transform: translateX(3px); }
 
 /* §4 MARKED DOOR — at the foot of the mobile overlay */
 .mobile-menu-door {
@@ -351,7 +277,7 @@
   padding-top: 4px;
 }
 
-/* Submit Referral CTA in mobile menu */
+/* Apply CTA in mobile menu */
 .mobile-menu-cta {
   opacity: 0;
   transform: translateY(20px);
@@ -384,50 +310,264 @@
   .nav-signin { display: none; }
 }
 
-/* ── Shader Buttons (ported from index.html) ── */
-.shader-btn-wrap {
-  position: relative;
-  display: inline-flex;
-  border-radius: 9999px;
-  cursor: pointer;
-}
+/* ═══ SHADER BUTTON ═══ */
+.shader-btn-wrap { position: relative; display: inline-flex; border-radius: 9999px; cursor: pointer; }
 .shader-btn-wrap canvas {
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  width: calc(100% + 8px);
-  height: calc(100% + 8px);
-  border-radius: 9999px;
-  pointer-events: none;
-  z-index: 0;
+  position: absolute; top: -4px; left: -4px; width: calc(100% + 8px); height: calc(100% + 8px);
+  border-radius: 9999px; pointer-events: none; z-index: 0;
 }
 .shader-btn {
   line-height: normal;
-  position: relative;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  border: none;
-  background: rgba(8, 8, 8, 0.92);
-  color: white;
-  font-family: var(--font-sans);
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: background 0.3s;
+  position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 9999px; border: none; background: rgba(8,8,8,0.92); color: white;
+  font-family: var(--font-sans); font-weight: 500; letter-spacing: 0.04em; cursor: pointer; transition: background 0.3s;
 }
-.shader-btn:hover { background: rgba(18, 18, 18, 0.95); }
-.shader-btn.lg { padding: 16px 40px; font-size: 14px; }
+.shader-btn:hover { background: rgba(18,18,18,0.95); }
 .shader-btn.sm { padding: 10px 24px; font-size: 13px; }
+.shader-btn.lg { padding: 16px 40px; font-size: 14px; }
+
+/* ═══ PAGE HERO ═══ */
+.page-hero {
+  position: relative; padding: 200px 24px 100px;
+  display: flex; flex-direction: column; align-items: center; text-align: center; overflow: hidden;
+}
+@media (max-width: 768px) { .page-hero { padding: 140px 24px 60px; } }
+.page-hero::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 600px;
+  background: radial-gradient(ellipse at center, rgba(145,130,104,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.page-hero-label {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--text-warm); margin-bottom: 24px;
+}
+.page-hero h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 400; letter-spacing: -0.03em;
+  color: white; line-height: 1.1; margin-bottom: 24px;
+}
+.page-hero p {
+  max-width: 580px; font-size: 1.05rem; line-height: 1.7; color: var(--text-tertiary);
+}
+
+/* ═══ FAQ SECTION ═══ */
+.faq-section {
+  padding: 0 24px 160px;
+}
+@media (max-width: 768px) { .faq-section { padding-bottom: 80px; } }
+.faq-list {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+/* Accordion item */
+.faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 100%;
+  padding: 28px 0;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.faq-question:hover { color: white; }
+.faq-question span {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: color 0.2s;
+  line-height: 1.5;
+}
+.faq-question:hover span { color: white; }
+.faq-question .faq-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.faq-item.open .faq-question .faq-icon {
+  transform: rotate(45deg);
+}
+.faq-icon::before,
+.faq-icon::after {
+  content: '';
+  position: absolute;
+  background: var(--text-muted);
+  transition: background 0.2s;
+}
+.faq-question:hover .faq-icon::before,
+.faq-question:hover .faq-icon::after { background: var(--gold); }
+.faq-icon::before {
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 14px; height: 1px;
+}
+.faq-icon::after {
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1px; height: 14px;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 0 0;
+}
+.faq-item.open .faq-answer {
+  max-height: 400px;
+  padding: 0 0 28px;
+}
+.faq-answer p {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-body);
+  max-width: 640px;
+}
+.faq-answer p + p {
+  margin-top: 12px;
+}
+
+/* ═══ CONTACT STRIP ═══ */
+.contact-strip {
+  padding: 80px 24px;
+  position: relative;
+}
+.contact-strip::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent);
+}
+.contact-inner {
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.contact-inner p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+.contact-inner a {
+  font-size: 1rem;
+  color: var(--gold);
+  transition: color 0.2s;
+}
+.contact-inner a:hover { color: var(--gold-light); }
+
+/* ═══ FOOTER ═══ */
+.footer-section {
+  position: relative;
+  padding: 160px 0 0;
+}
+@media (max-width: 767px) { .footer-section { padding-top: 120px; } }
+.footer-border-top {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+}
+.footer-cta {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.footer-cta h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  color: white;
+  margin-bottom: 32px;
+}
+.footer-cta .shader-btn-wrap { margin-bottom: 0; }
+.footer-cta .marked-door { margin-top: 52px; }
+
+.footer-bottom-outer {
+  margin-top: 160px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+@media (max-width: 767px) { .footer-bottom-outer { margin-top: 100px; } }
+.footer-bottom {
+  margin: 0 auto;
+  padding: 64px 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: 40px;
+}
+@media (min-width: 768px) {
+  .footer-bottom {
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    padding: 64px 10vw;
+  }
+}
+@media (min-width: 1400px) { .footer-bottom { padding: 64px 14vw; } }
+@media (min-width: 1800px) { .footer-bottom { padding: 64px 18vw; } }
+.footer-left {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+}
+@media (min-width: 768px) { .footer-left { text-align: left; } }
+.footer-left p { font-size: 13px; line-height: 1.7; color: #52525b; }
+.footer-left a { font-size: 13px; color: var(--gold); transition: color 0.2s; }
+.footer-left a:hover { color: var(--gold-light); }
+.footer-center { display: flex; justify-content: center; }
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+@media (min-width: 768px) { .footer-right { align-items: flex-end; } }
+.footer-right a { font-size: 13px; color: #52525b; transition: color 0.2s; }
+.footer-right a:hover { color: #d4d4d8; }
+
+.footer-duo { display: grid; grid-template-columns: 1fr 1px 1fr; width: 100%; margin: 0 auto; align-items: stretch; }
+.footer-duo-cell { display: flex; flex-direction: column; align-items: center; gap: 26px; padding: 8px 32px; }
+.duo-line { font-family: var(--font-serif); font-weight: 500; font-size: clamp(1.35rem, 2.2vw, 1.7rem); color: var(--text-primary); }
+.footer-duo-line { width: 1px; background: linear-gradient(180deg, rgba(145,130,104,0), rgba(145,130,104,0.5), rgba(145,130,104,0)); }
+@media (max-width: 720px) {
+  .footer-duo { grid-template-columns: 1fr; }
+  .footer-duo-line { width: 60%; height: 1px; margin: 30px auto; background: linear-gradient(90deg, rgba(145,130,104,0), rgba(145,130,104,0.5), rgba(145,130,104,0)); }
+}
+.footer-identity { font-size: 15px; line-height: 1.8; color: var(--text-tertiary); max-width: 620px; margin: 0 auto 64px; text-align: center; letter-spacing: 0.01em; }
+.footer-refer-link { display: inline-block; padding: 12px 30px; border: 1px solid rgba(145,130,104,0.45); border-radius: 9999px; color: var(--gold); font-size: 14px; font-weight: 500; letter-spacing: 0.02em; text-decoration: none; transition: all 0.3s ease; }
+.footer-refer-link:hover { border-color: var(--gold); background: rgba(145,130,104,0.08); color: var(--gold-light); }
+
+/* ═══ ANIMATIONS ═══ */
+.fade-in {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+#scrollProgress {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0;
+  background: linear-gradient(to right, rgba(145,130,104,0.6), rgba(145,130,104,0.9));
+  z-index: 100; pointer-events: none; transition: width 0.05s linear;
+}
 </style>
 </head>
+
 <body>
 
-<!-- ═══════════════════════════════════════
-     NAVBAR (ported from index.html — sender zone)
-     ═══════════════════════════════════════ -->
+<!-- NAVBAR -->
 <nav class="nav-outer" id="navOuter">
   <div class="nav-pill" id="navPill">
     <div class="nav-left">
@@ -436,8 +576,8 @@
       </a>
     </div>
     <div class="nav-center">
-      <a href="/#how-it-works" class="nav-link active">How It Works</a>
-      <a href="/referral-faqs" class="nav-link">FAQ</a>
+      <a href="/#how-it-works" class="nav-link">How It Works</a>
+      <a href="/referral-faqs" class="nav-link active">FAQ</a>
     </div>
     <div class="nav-right">
       <a href="https://app.eliteagentreferralnetwork.com/signin" class="nav-signin">
@@ -488,7 +628,7 @@
   <div class="mobile-menu-inner">
     <a href="/#how-it-works" class="mobile-menu-link">How It Works</a>
     <a href="/referral-faqs" class="mobile-menu-link">FAQ</a>
-        <div class="mobile-menu-rule"></div>
+    <div class="mobile-menu-rule"></div>
     <div class="mobile-menu-actions">
       <a href="https://app.eliteagentreferralnetwork.com/signin" class="mobile-menu-portal">
         <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -514,285 +654,253 @@
   </div>
 </div>
 
-<!-- ─────────── VIEW 1 · THE FORM ─────────── -->
-<div class="wrap" id="form">
-  <div class="head">
-    <h1>Submit a Referral</h1>
-    <p class="sub">Route your client to the right agent in any market. Your referral fee is documented in writing before the first introduction.</p>
-  </div>
 
-  <div class="section">
-    <div class="sec-head"><span class="sec-num">1</span><span class="sec-title">About you</span></div>
-    <p class="sec-note">Already verified? <a href="#" style="color:var(--gold-light);">Sign in</a> and this section fills itself.</p>
-    <div class="grid">
-      <div class="field"><label for="s-name">Full name</label><input id="s-name" type="text" placeholder="Jordan Avery"></div>
-      <div class="field"><label for="s-email">Email</label><input id="s-email" type="email" placeholder="you@brokerage.com"></div>
-      <div class="field"><label for="s-phone">Phone</label><input id="s-phone" type="tel" placeholder="(416) 555-0184"></div>
-      <div class="field"><label for="s-brokerage">Brokerage</label><input id="s-brokerage" type="text" placeholder="Brokerage name"></div>
-      <div class="field"><label for="s-license">License #</label><input id="s-license" type="text" placeholder="e.g. 4756xxxx"></div>
-      <div class="field"><label for="s-prov">License jurisdiction</label>
-        <select id="s-prov"><option>Select province / state</option><option>Ontario</option><option>British Columbia</option><option>Alberta</option><option>Nova Scotia</option><option>Other</option></select></div>
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <span class="page-hero-label fade-in">FAQ</span>
+  <h1 class="fade-in" style="transition-delay:0.1s;">Common Questions.</h1>
+</section>
+
+
+<!-- FAQ CONTENT -->
+<section class="faq-section">
+  <div class="faq-list">
+
+    <div class="faq-item fade-in">
+      <button class="faq-question" onclick="toggleFaq(this)"><span>Do I have to be a member to send a referral?</span><div class="faq-icon"></div></button>
+      <div class="faq-answer"><p>No. Any licensed agent in good standing can send a client referral into the network — sending is open to everyone and costs nothing. Membership is a separate, receiving-side privilege; you don't need it to refer a client and collect your fee.</p></div>
+    </div>
+
+    <div class="faq-item fade-in">
+      <button class="faq-question" onclick="toggleFaq(this)"><span>What does it cost to send a referral?</span><div class="faq-icon"></div></button>
+      <div class="faq-answer"><p>Nothing. There's no fee to send a referral and no catch — you collect the standard agent-to-agent referral fee at close, exactly as you would on any brokerage-to-brokerage referral. EARN takes nothing from it.</p></div>
+    </div>
+
+    <div class="faq-item fade-in">
+      <button class="faq-question" onclick="toggleFaq(this)"><span>How do I know my client will be in good hands?</span><div class="faq-icon"></div></button>
+      <div class="faq-answer"><p>Every market is held by one vetted agent — a top producer admitted through EARN's vetting. When you refer a client into that market, they're introduced to that one agent, personally. It's a warm hand-off to a known professional, not a lead dropped into a pool.</p></div>
+    </div>
+
+    <div class="faq-item fade-in">
+      <button class="faq-question" onclick="toggleFaq(this)"><span>How do I get paid?</span><div class="faq-icon"></div></button>
+      <div class="faq-answer"><p>You and the receiving agent agree to a referral fee — typically 25% of the cooperating commission — and it's put in writing before the introduction is ever made. At close, the fee moves between brokerages on the standard rails, exactly as referral fees always do. EARN provides the agreement both sides work from and takes nothing from it.</p></div>
+    </div>
+
+    <div class="faq-item fade-in">
+      <button class="faq-question" onclick="toggleFaq(this)"><span>Can I set up a sending account before I have a client to refer?</span><div class="faq-icon"></div></button>
+      <div class="faq-answer"><p>Yes — and it's worth doing early. Verifying ahead of time means that the moment a client tells you they're moving, you're ready to send the referral without missing a beat. There's no cost and no obligation to send.</p></div>
+    </div>
+
+    <div class="faq-item fade-in">
+      <button class="faq-question" onclick="toggleFaq(this)"><span>What if there's no EARN agent in my client's market yet?</span><div class="faq-icon"></div></button>
+      <div class="faq-answer"><p>Your client is placed with a vetted agent — that's the commitment. If a market doesn't yet have its one agent, EARN handles the placement directly, and your referral agreement is honored exactly the same way.</p></div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- CONTACT STRIP -->
+<section class="contact-strip fade-in">
+  <div class="contact-inner">
+    <p>Question not listed here?</p>
+    <div style="height:20px;"></div>
+    <a href="mailto:support@eliteagentreferralnetwork.com">support@eliteagentreferralnetwork.com</a>
+    <p style="margin-top:4px;margin-bottom:0;font-size:14px;color:var(--text-muted);">or</p>
+    <a href="tel:18884225881">1 (888) 422-5881</a>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer-section">
+  <div class="footer-border-top"></div>
+  <div class="footer-cta fade-in-subtle">
+    <p class="footer-identity">EARN is referral infrastructure — when a client leaves an agent’s market, they’re placed with a vetted elite agent, the fee in writing, the referral tracked to close.</p>
+    <div class="footer-duo">
+      <div class="footer-duo-cell">
+        <p class="duo-line">Have a client right now?</p>
+        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/refer" class="shader-btn lg">Submit Referral</a></div>
+      </div>
+      <div class="footer-duo-line" aria-hidden="true"></div>
+      <div class="footer-duo-cell">
+        <p class="duo-line">Be ready for the next one.</p>
+        <a href="/refer" class="footer-refer-link">Get Verified</a>
+      </div>
+    </div>
+    <a href="/membership" class="marked-door">For Elite Agents<span class="md-arrow" aria-hidden="true">→</span></a>
+  </div>
+  <div class="footer-bottom-outer">
+    <div class="footer-bottom">
+      <div class="footer-left">
+        <div>
+          <p>&copy;2026 Elite Agent Referral Network Inc.</p>
+          <p>All rights reserved.</p>
+        </div>
+        <a href="tel:18884225881">1 (888) 422-5881</a>
+      </div>
+      <div class="footer-center">
+        <a href="/"><img src="/images/earn-logo.png" alt="EARN" style="height:32px;width:auto;"></a>
+      </div>
+      <div class="footer-right">
+        <a href="/disclaimers">Disclaimers</a>
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms-and-conditions">Terms and Conditions</a>
+      </div>
     </div>
   </div>
+</footer>
 
-  <div class="section">
-    <div class="sec-head"><span class="sec-num">2</span><span class="sec-title">Your client</span></div>
-    <div class="grid">
-      <div class="field"><label for="c-name">Client name</label><input id="c-name" type="text" placeholder="First + last"></div>
-      <div class="field"><label for="c-contact">Best contact <span class="opt">(email or phone)</span></label><input id="c-contact" type="text" placeholder="Shared only after routing"></div>
-      <div class="field"><label for="c-need">Client is</label>
-        <select id="c-need"><option>Select</option><option>Buying</option><option>Selling</option><option>Buying + selling</option></select></div>
-      <div class="field"><label for="c-time">Timeline <span class="opt">(optional)</span></label>
-        <select id="c-time"><option>Select</option><option>Immediately</option><option>1–3 months</option><option>3–6 months</option><option>6+ months</option></select></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="sec-head"><span class="sec-num">3</span><span class="sec-title">Destination</span></div>
-    <div class="grid">
-      <div class="field full"><label for="d-market">Destination market</label>
-        <select id="d-market"><option>Select destination market</option><option>Calgary, AB</option><option>Edmonton, AB</option><option>Vancouver, BC</option><option>Kelowna / Okanagan, BC</option><option>Toronto / GTA, ON</option><option>Ottawa, ON</option><option>Halifax, NS</option><option>Moncton, NB</option><option>Montréal, QC</option><option>Other market…</option></select></div>
-      <div class="field full"><label for="d-notes">Anything the receiving agent should know <span class="opt">(optional)</span></label>
-        <textarea id="d-notes" placeholder="Price range, neighbourhoods, language needs, context…"></textarea></div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="sec-head"><span class="sec-num">4</span><span class="sec-title">Your referral fee</span></div>
-    <div class="grid">
-      <div class="field"><label for="fee">Referral fee (% of gross commission)</label><input id="fee" type="number" value="25" min="1" max="25" step="0.5" oninput="clampFee(this)"></div>
-      <div class="field" style="display:flex;align-items:flex-end;"><p style="font-size:12.5px;color:#8f8f96;line-height:1.6;padding-bottom:4px;">This is what <b style="color:#e4e4e7;">you receive</b>, paid broker-to-broker at closing. 25% is the network standard and the maximum — adjust down only if you choose to.</p></div>
-    </div>
-    <label class="agree" style="margin-top:16px;">
-      <input type="checkbox">
-      <p>I agree to the <a href="#">Referral Agreement terms</a> governing this referral. EARN documents your fee in writing and tracks it to close; payment settles between brokerages.</p>
-    </label>
-  </div>
-
-  <div class="submit-row">
-    <button class="submit-btn" onclick="showAccount()">Submit Referral</button>
-    <p class="privacy">Your client's contact details are shared only with the receiving agent, and only after the referral agreement is signed.</p>
-  </div>
-</div>
-
-<!-- ─────────── VIEW 2 · ACCOUNT CREATION (continuous — no limbo) ─────────── -->
-<div class="wrap" id="account" style="display:none;max-width:480px;">
-  <div class="c-card" style="text-align:left;padding:42px 38px 38px;">
-    <div class="strip"><span class="dot"></span>Referral received — one step to secure it</div>
-    <h2 style="font-family:var(--font-serif);font-weight:300;font-size:30px;color:#fff;margin:16px 0 8px;">Secure your referral</h2>
-    <p style="font-size:13.5px;color:#8f8f96;line-height:1.7;margin-bottom:26px;">Everything you entered is saved. Set a password and your referral is locked in — your account is where it's tracked, signed, and paid.</p>
-    <div class="field" style="margin-bottom:16px;"><label for="a-email">Email</label><input id="a-email" type="email" value="jordan@brokerage.com"></div>
-    <div class="field" style="margin-bottom:8px;"><label for="a-pass">Create password</label><input id="a-pass" type="password" placeholder="••••••••••"></div>
-    <button class="submit-btn" style="width:100%;margin-top:18px;" onclick="showConfirm()">Create account</button>
-    <p style="font-size:12px;color:#5d5d63;text-align:center;margin-top:14px;line-height:1.7;">No email confirmation needed to continue — we verify your license next.</p>
-  </div>
-</div>
-
-<!-- ─────────── VIEW 3 · HELD CONFIRMATION ─────────── -->
-<div class="wrap" id="confirm" style="display:none;">
-  <div class="c-card">
-    <div class="c-ring"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></div>
-    <h2>Referral secured</h2>
-    <div><span class="chip">Held — pending verification</span></div>
-    <p class="c-ref">Reference REF-2026-0612-041</p>
-    <div class="c-steps">
-      <div class="c-step"><span class="n">1</span><p><b>We verify your license and standing</b> — a quick, one-time check. You'll be notified the moment it clears.</p></div>
-      <div class="c-step"><span class="n">2</span><p><b>Your referral routes</b> to the destination market's Elite Agent, and the referral agreement is generated for signatures.</p></div>
-      <div class="c-step"><span class="n">3</span><p><b>Once the agreement is signed,</b> your client's contact is shared and the introduction is made. Track every step from your dashboard.</p></div>
-    </div>
-    <button class="c-cta">Go to your dashboard</button>
-    <p class="c-min">Account created · jordan@brokerage.com</p>
-  </div>
-</div>
-
-<span class="demo" onclick="toggleDemo()">demo: cycle screens</span>
+<div id="scrollProgress" style="position:fixed;top:0;left:0;height:2px;width:0;background:linear-gradient(to right,rgba(145,130,104,0.6),rgba(145,130,104,0.9));z-index:100;transition:width 0.05s linear;pointer-events:none;"></div>
 
 <script>
-  /* DEMO ONLY — production navigates between routes */
-  function sw(a,b){document.getElementById(a).style.display='none';document.getElementById(b).style.display='block';window.scrollTo(0,0);}
-  function showAccount(){sw('form','account');}
-  function showConfirm(){sw('account','confirm');}
-  function toggleDemo(){
-    const o=['form','account','confirm'];
-    const cur=o.findIndex(id=>document.getElementById(id).style.display!=='none');
-    o.forEach((id,i)=>{document.getElementById(id).style.display=(i===(cur+1)%3)?'block':'none';});
-    window.scrollTo(0,0);
-  }
-  function clampFee(el){const v=parseFloat(el.value);if(v>25)el.value=25;if(v<0)el.value=0;}
-
-// ── Navbar scroll effect ──
+// Navbar scroll
 const navPill = document.getElementById('navPill');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 20) {
-    navPill.classList.add('scrolled');
-  } else {
-    navPill.classList.remove('scrolled');
-  }
+  navPill.classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
 
-// ── Shader Buttons (WebGL liquid metal — dormant until hover) ──
-(function() {
-  const vertSrc = `
-    attribute vec2 a_position;
-    void main() { gl_Position = vec4(a_position, 0.0, 1.0); }
-  `;
+// Fade-in
+const fadeEls = document.querySelectorAll('.fade-in');
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      fadeObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+fadeEls.forEach(el => fadeObserver.observe(el));
+// ── Mobile menu toggle ──
+const hamburger = document.getElementById('navHamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+if (hamburger && mobileMenu) {
+  hamburger.addEventListener('click', () => {
+    const isOpen = hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open', isOpen);
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  });
+  mobileMenu.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+}
 
+// FAQ accordion
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const wasOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+  // Open clicked (if it wasn't already open)
+  if (!wasOpen) item.classList.add('open');
+}
+
+// Scroll progress
+const scrollBar = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const progress = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  scrollBar.style.width = progress + '%';
+}, { passive: true });
+
+// Shader Buttons
+(function() {
+  const vertSrc = `attribute vec2 a_position; void main() { gl_Position = vec4(a_position, 0.0, 1.0); }`;
   const fragSrc = `
     precision highp float;
-    uniform vec2 u_resolution;
-    uniform float u_time;
-    uniform float u_hover;
-
+    uniform vec2 u_resolution; uniform float u_time; uniform float u_hover;
     vec3 mod289(vec3 x){return x-floor(x*(1.0/289.0))*289.0;}
     vec2 mod289(vec2 x){return x-floor(x*(1.0/289.0))*289.0;}
     vec3 permute(vec3 x){return mod289(((x*34.0)+1.0)*x);}
-
     float snoise(vec2 v){
       const vec4 C=vec4(0.211324865405187,0.366025403784439,-0.577350269189626,0.024390243902439);
-      vec2 i=floor(v+dot(v,C.yy));
-      vec2 x0=v-i+dot(i,C.xx);
+      vec2 i=floor(v+dot(v,C.yy));vec2 x0=v-i+dot(i,C.xx);
       vec2 i1=(x0.x>x0.y)?vec2(1.0,0.0):vec2(0.0,1.0);
-      vec4 x12=x0.xyxy+C.xxzz;
-      x12.xy-=i1;
-      i=mod289(i);
+      vec4 x12=x0.xyxy+C.xxzz;x12.xy-=i1;i=mod289(i);
       vec3 p=permute(permute(i.y+vec3(0.0,i1.y,1.0))+i.x+vec3(0.0,i1.x,1.0));
       vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.0);
       m=m*m*m*m;
-      vec3 x=2.0*fract(p*C.www)-1.0;
-      vec3 h=abs(x)-0.5;
-      vec3 ox=floor(x+0.5);
-      vec3 a0=x-ox;
+      vec3 x=2.0*fract(p*C.www)-1.0;vec3 h=abs(x)-0.5;
+      vec3 ox=floor(x+0.5);vec3 a0=x-ox;
       m*=1.79284291400159-0.85373472095314*(a0*a0+h*h);
-      vec3 g;
-      g.x=a0.x*x0.x+h.x*x0.y;
-      g.yz=a0.yz*x12.xz+h.yz*x12.yw;
+      vec3 g;g.x=a0.x*x0.x+h.x*x0.y;g.yz=a0.yz*x12.xz+h.yz*x12.yw;
       return 130.0*dot(m,g);
     }
-
     void main(){
-      vec2 uv=gl_FragCoord.xy/u_resolution;
-      float aspect=u_resolution.x/u_resolution.y;
+      vec2 uv=gl_FragCoord.xy/u_resolution;float aspect=u_resolution.x/u_resolution.y;
       vec2 p=(uv-0.5)*vec2(aspect,1.0);
-
-      float r=0.44;
-      float hw=max(0.5*aspect-r,0.0);
-      vec2 q=vec2(max(abs(p.x)-hw,0.0),p.y);
-      float d=length(q)-r;
-
-      float angle=atan(p.y,p.x);
-      float dist=length(p);
-
-      // Time: crawling at rest, flowing on hover
+      float r=0.44;float hw=max(0.5*aspect-r,0.0);
+      vec2 q=vec2(max(abs(p.x)-hw,0.0),p.y);float d=length(q)-r;
+      float angle=atan(p.y,p.x);float dist=length(p);
       float live_t=u_time*0.35;
       float t=mix(u_time*0.04, live_t, u_hover);
-
       float n1=snoise(vec2(uv.x*4.0+t,uv.y*5.0-t*0.6))*0.45;
       float n2=snoise(vec2(uv.x*8.0-t*0.7,uv.y*8.0+t*0.4))*0.3;
       float n3=snoise(vec2(angle*1.2+t*0.6,dist*5.0-t*0.4))*0.2;
       float noise=n1+n2+n3;
-
-      float verticalBias=abs(p.y)/(r*0.9);
-      verticalBias=smoothstep(0.3,1.0,verticalBias);
-
-      float blend=noise*0.5+0.5;
-      blend=blend-verticalBias*0.3;
-
-      // Dormant: polished gunmetal with visible grain
-      vec3 d_dark=vec3(0.30,0.29,0.27);
-      vec3 d_mid=vec3(0.52,0.50,0.47);
-      vec3 d_bright=vec3(0.68,0.65,0.60);
-
+      float verticalBias=abs(p.y)/(r*0.9);verticalBias=smoothstep(0.3,1.0,verticalBias);
+      float blend=noise*0.5+0.5;blend=blend-verticalBias*0.3;
+      vec3 d_dark=vec3(0.30,0.29,0.27);vec3 d_mid=vec3(0.52,0.50,0.47);vec3 d_bright=vec3(0.68,0.65,0.60);
       vec3 dormant_col=mix(d_dark,d_mid,smoothstep(0.15,0.5,blend));
       dormant_col=mix(dormant_col,d_bright,smoothstep(0.6,0.85,blend));
-      // Dormant specular — frozen highlights
       float d_spec=pow(max(snoise(vec2(uv.x*10.0+3.7*2.0,uv.y*10.0-3.7)),0.0),4.0);
       dormant_col+=d_spec*0.10;
-
-      // Active: same palette as dormant — hover only unlocks motion
       vec3 active_col=mix(d_dark,d_mid,smoothstep(0.15,0.5,blend));
       active_col=mix(active_col,d_bright,smoothstep(0.6,0.85,blend));
       float a_spec=pow(max(snoise(vec2(uv.x*10.0+t*2.0,uv.y*10.0-t)),0.0),4.0);
       active_col+=a_spec*0.10;
-
       vec3 col=mix(dormant_col, active_col, u_hover);
-
-      // Ring
-      float bw=0.020;
-      float aa=0.003;
-      float inner=smoothstep(aa,-aa,d);
-      float outer=smoothstep(-bw+aa,-bw-aa,d);
+      float bw=0.020;float aa=0.003;
+      float inner=smoothstep(aa,-aa,d);float outer=smoothstep(-bw+aa,-bw-aa,d);
       float ring=inner-outer;
-
-      // Glow: constant faint warmth
       float glow=smoothstep(0.05,0.0,d)*0.06;
-
       float alpha=ring*0.85+glow;
       vec3 glow_col=vec3(0.55,0.53,0.50);
       vec3 final_col=col*ring+glow_col*glow*0.4;
-
       gl_FragColor=vec4(final_col,alpha);
     }
   `;
-
   function initShaderButton(wrap) {
-    var canvas = wrap.querySelector('canvas');
-    if (!canvas) return;
-    var gl = canvas.getContext('webgl', {premultipliedAlpha:false, alpha:true});
-    if (!gl) return;
-
+    var canvas = wrap.querySelector('canvas'); if (!canvas) return;
+    var gl = canvas.getContext('webgl', {premultipliedAlpha:false, alpha:true}); if (!gl) return;
     function makeShader(type, src) {
-      var s = gl.createShader(type);
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
+      var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
       if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error(gl.getShaderInfoLog(s)); return null; }
       return s;
     }
-
-    var vs = makeShader(gl.VERTEX_SHADER, vertSrc);
-    var fs = makeShader(gl.FRAGMENT_SHADER, fragSrc);
+    var vs = makeShader(gl.VERTEX_SHADER, vertSrc), fs = makeShader(gl.FRAGMENT_SHADER, fragSrc);
     var prog = gl.createProgram();
-    gl.attachShader(prog, vs);
-    gl.attachShader(prog, fs);
-    gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) { console.error(gl.getProgramInfoLog(prog)); return; }
+    gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
     gl.useProgram(prog);
-
-    var buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
     var loc = gl.getAttribLocation(prog, 'a_position');
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-
+    gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     var uRes = gl.getUniformLocation(prog, 'u_resolution');
     var uTime = gl.getUniformLocation(prog, 'u_time');
     var uHover = gl.getUniformLocation(prog, 'u_hover');
-
     var hover = 0, targetHover = 0;
     var isVisible = false;
     var rafId = null;
     wrap.addEventListener('mouseenter', function(){ targetHover = 1; });
     wrap.addEventListener('mouseleave', function(){ targetHover = 0; });
-
     function resize() {
       var rect = wrap.getBoundingClientRect();
       var dpr = Math.min(devicePixelRatio || 1, 2);
-      canvas.width = (rect.width + 8) * dpr;
-      canvas.height = (rect.height + 8) * dpr;
+      canvas.width = (rect.width + 8) * dpr; canvas.height = (rect.height + 8) * dpr;
       gl.viewport(0, 0, canvas.width, canvas.height);
     }
-    resize();
-    window.addEventListener('resize', resize);
-
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-
+    resize(); window.addEventListener('resize', resize);
+    gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     var t0 = performance.now();
     function render() {
       if (!isVisible) { rafId = null; return; }
       hover += (targetHover - hover) * 0.045;
-      gl.clearColor(0,0,0,0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.clearColor(0,0,0,0); gl.clear(gl.COLOR_BUFFER_BIT);
       gl.uniform2f(uRes, canvas.width, canvas.height);
       gl.uniform1f(uTime, (performance.now() - t0) / 1000);
       gl.uniform1f(uHover, hover);
@@ -811,27 +919,9 @@ window.addEventListener('scroll', () => {
     }, { threshold: 0 });
     shaderObserver.observe(wrap);
   }
-
   document.querySelectorAll('[data-shader-btn]').forEach(initShaderButton);
 })();
-
-// ── Mobile menu toggle ──
-const hamburger = document.getElementById('navHamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-if (hamburger && mobileMenu) {
-  hamburger.addEventListener('click', () => {
-    const isOpen = hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  });
-  mobileMenu.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-      document.body.style.overflow = '';
-    });
-  });
-}
 </script>
+
 </body>
 </html>
