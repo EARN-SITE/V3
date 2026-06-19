@@ -315,6 +315,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border-radius: 9999px; pointer-events: none; z-index: 0;
 }
 .shader-btn {
+  line-height: normal;
   position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center;
   border-radius: 9999px; border: none; background: rgba(8,8,8,0.92); color: white;
   font-family: var(--font-sans); font-weight: 500; letter-spacing: 0.04em; cursor: pointer; transition: background 0.3s;
@@ -612,7 +613,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         </svg>
         <span>Sign in</span>
       </a>
-      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn sm" onclick="window.location.href='/application'">Apply</button></div>
+      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/application" class="shader-btn sm">Apply</a></div>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
         <span></span>
         <span></span>
@@ -645,9 +646,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <span>Sign in</span>
       </a>
       <div class="mobile-menu-cta">
-        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/application'">Apply</button></div>
+        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/application" class="shader-btn lg">Apply</a></div>
       </div>
-      <a href="/refer" class="mobile-menu-door">For Referring Agents →</a>
+      <a href="/" class="mobile-menu-door">For Referring Agents →</a>
     </div>
   </div>
 </div>
@@ -931,8 +932,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   <div class="footer-border-top"></div>
   <div class="footer-cta fade-in">
     <h2 style="text-wrap:balance;">Applications are open. Acceptance is not.</h2>
-    <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/application'">Apply to be an Elite Agent</button></div>
-    <a href="/refer" class="marked-door" style="margin-top:20px;">For Referring Agents →</a>
+    <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/application" class="shader-btn lg">Apply to be an Elite Agent</a></div>
+    <a href="/" class="marked-door" style="margin-top:20px;">For Referring Agents →</a>
   </div>
   <div class="footer-bottom-outer">
     <div class="footer-bottom">

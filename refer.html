@@ -402,6 +402,7 @@
   z-index: 0;
 }
 .shader-btn {
+  line-height: normal;
   position: relative;
   z-index: 1;
   display: inline-flex;
@@ -474,7 +475,7 @@
         </svg>
         <span>Sign in</span>
       </a>
-      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn sm" onclick="window.location.href='/refer'">Submit Referral</button></div>
+      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/refer" class="shader-btn sm">Submit Referral</a></div>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
         <span></span>
         <span></span>
@@ -506,7 +507,7 @@
         <span>Sign in</span>
       </a>
       <div class="mobile-menu-cta">
-        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/refer'">Submit Referral</button></div>
+        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/refer" class="shader-btn lg">Submit Referral</a></div>
       </div>
       <a href="/membership" class="mobile-menu-door">For Elite Agents →</a>
     </div>

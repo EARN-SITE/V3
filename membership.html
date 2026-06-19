@@ -1,5 +1,5 @@
 <!--
-  EARN — FAQ Page
+  EARN — The Membership Page
   Design system inherited from main site.
 -->
 <!DOCTYPE html>
@@ -12,10 +12,10 @@
 <meta name="description" content="Membership is conferred, not purchased. One elite agent per market — the credential, the territory, and every client referral the network carries for that market.">
 <!-- Open Graph / Social -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="EARN | FAQ">
-<meta property="og:description" content="Common questions about the Elite Agent Referral Network — territory exclusivity, membership, referral mechanics, and vetting.">
+<meta property="og:title" content="The Membership — Elite Agent Referral Network">
+<meta property="og:description" content="Membership is conferred, not purchased. One elite agent per market — the credential, the territory, and every client referral the network carries for that market.">
 <meta property="og:image" content="/images/og-image.png">
-<meta property="og:url" content="https://eliteagentreferralnetwork.com/faqs">
+<meta property="og:url" content="https://eliteagentreferralnetwork.com/membership">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
@@ -305,6 +305,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border-radius: 9999px; pointer-events: none; z-index: 0;
 }
 .shader-btn {
+  line-height: normal;
   position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center;
   border-radius: 9999px; border: none; background: rgba(8,8,8,0.92); color: white;
   font-family: var(--font-sans); font-weight: 500; letter-spacing: 0.04em; cursor: pointer; transition: background 0.3s;
@@ -339,128 +340,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .page-hero p {
   max-width: 580px; font-size: 1.05rem; line-height: 1.7; color: var(--text-tertiary);
 }
-/* ═══ FAQ SECTION ═══ */
-.faq-section {
-  padding: 0 24px 160px;
-}
-@media (max-width: 768px) {
-.faq-section { padding-bottom: 80px; }
-}
-.faq-inner {
-  max-width: 780px;
-  margin: 0 auto;
-}
-/* Category label */
-.faq-category {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 24px;
-  padding-top: 64px;
-}
-.faq-category:first-child { padding-top: 0; }
-/* Accordion item */
-.faq-item {
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.faq-question {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  width: 100%;
-  padding: 28px 0;
-  text-align: left;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.faq-question:hover { color: white; }
-.faq-question span {
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  transition: color 0.2s;
-  line-height: 1.5;
-}
-.faq-question:hover span { color: white; }
-.faq-question .faq-icon {
-  flex-shrink: 0;
-  width: 24px;
-  height: 24px;
-  position: relative;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.faq-item.open .faq-question .faq-icon {
-  transform: rotate(45deg);
-}
-.faq-icon::before,
-.faq-icon::after {
-  content: '';
-  position: absolute;
-  background: var(--text-muted);
-  transition: background 0.2s;
-}
-.faq-question:hover .faq-icon::before,
-.faq-question:hover .faq-icon::after { background: var(--gold); }
-.faq-icon::before {
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 14px; height: 1px;
-}
-.faq-icon::after {
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1px; height: 14px;
-}
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1), padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  padding: 0 0;
-}
-.faq-item.open .faq-answer {
-  max-height: 400px;
-  padding: 0 0 28px;
-}
-.faq-answer p {
-  font-size: 15px;
-  line-height: 1.75;
-  color: var(--text-body);
-  max-width: 640px;
-}
-.faq-answer p + p {
-  margin-top: 12px;
-}
-/* ═══ CONTACT STRIP ═══ */
-.contact-strip {
-  padding: 80px 24px;
-  position: relative;
-}
-.contact-strip::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent);
-}
-.contact-inner {
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
-}
-.contact-inner p {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--text-tertiary);
-  margin-bottom: 8px;
-}
-.contact-inner a {
-  font-size: 1rem;
-  color: var(--gold);
-  transition: color 0.2s;
-}
-.contact-inner a:hover { color: var(--gold-light); }
 /* ═══ FOOTER ═══ */
 .footer-section {
   position: relative;
@@ -470,7 +349,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .footer-section { padding-top: 64px; }
 }
 .footer-bottom-outer {
-  margin-top: 160px;
+  margin-top: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 @media (max-width: 767px) {
@@ -531,8 +410,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ── Open/Gated additions — June 2026 ───────────────────── */
 .mobile-menu.open .mobile-menu-link:nth-child(4) { transition-delay: 0.25s; }
 .mobile-menu.open .mobile-menu-link:nth-child(5) { transition-delay: 0.3s; }
-.footer-refer { margin-top: 44px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.footer-refer p { font-size: 14px; color: var(--text-tertiary); }
 /* ── depth-page layout ── */
 .depth-section { padding: 110px 24px; }
 .depth-inner { max-width: 1080px; margin: 0 auto; }
@@ -542,12 +419,19 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .depth-body p { font-size: 17px; line-height: 1.85; color: var(--text-secondary); margin-bottom: 24px; }
 .depth-body p:last-child { margin-bottom: 0; }
 .hero-cta-row { margin-top: 40px; display:flex; justify-content:center; }
-.depth-closer { padding: 170px 24px 130px; text-align:center; }
-.depth-closer h2 { font-family: var(--font-serif); font-weight:500; font-size: clamp(2rem,4vw,3.2rem); color: var(--text-primary); line-height:1.2; margin-bottom: 24px; }
-.gate-line { margin-top: 40px; font-size: 13px; color: var(--text-muted); font-style: italic; }
-.guarantee-card { border:1px solid rgba(145,130,104,0.35); border-radius:12px; padding:56px 48px; background: rgba(145,130,104,0.04); }
+.depth-closer { padding: 180px 24px 140px; text-align:center; }
+@media (max-width: 767px) { .depth-closer { padding: 40px 24px 86px; } }
+.depth-closer h2 { font-family: var(--font-serif); font-weight:500; font-size: clamp(2rem,4vw,3.2rem); color: var(--text-primary); line-height:1.2; margin-bottom: 0; }
+.guarantee-card { position:relative; border:1px solid rgba(145,130,104,0.42); border-radius:12px; padding:60px 52px; background:linear-gradient(180deg,rgba(145,130,104,0.06),rgba(145,130,104,0.015)); box-shadow:inset 0 1px 0 rgba(255,255,255,0.05); text-align:center; }
+.guarantee-card::before { content:""; position:absolute; inset:13px; border:1px solid rgba(145,130,104,0.16); border-radius:6px; pointer-events:none; }
+.guarantee-card .depth-body p { font-family:var(--font-serif); font-weight:400; font-size:26px; line-height:1.5; letter-spacing:0.01em; color:#f4f0ea; margin-bottom:0; }
+.g-ornament { display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:28px; }
+.g-ornament span { height:1px; width:54px; background:linear-gradient(90deg,transparent,rgba(145,130,104,0.55)); }
+.g-ornament span:last-child { background:linear-gradient(90deg,rgba(145,130,104,0.55),transparent); }
+.g-ornament i { width:7px; height:7px; background:var(--gold); transform:rotate(45deg); }
 @media (max-width:600px) {
-.guarantee-card{ padding:40px 28px; }
+.guarantee-card{ padding:44px 28px; }
+.guarantee-card .depth-body p{ font-size:22px; }
 }
 .dues-line { margin-top: 32px; font-size: 14px; color: var(--text-muted); }
 .unfair {
@@ -905,14 +789,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   letter-spacing: 0.01em;
   line-height: 1.3;
 }
-.notif-time {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', var(--font-sans), system-ui, sans-serif;
-  font-size: 10.5px;
-  font-weight: 400;
-  color: rgba(255,255,255,0.28);
-  flex-shrink: 0;
-  margin-left: 4px;
-}
 .notif-title {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', var(--font-sans), system-ui, sans-serif;
   font-size: 11px;
@@ -1020,7 +896,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .notif-title { font-size: 10px; }
   .notif-detail { font-size: 9.5px; }
   .notif-app { font-size: 9.5px; }
-  .notif-time { font-size: 9.5px; }
   .ios-lock-btn { width: 28px; height: 28px; }
 }
 /* Reduced motion */
@@ -1036,7 +911,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     transform: none;
   }
 }
-.eval-dim { color: var(--gold); font-weight:600; }
 .unfair-inner .depth-label { display:block; }
 .territory {
   padding: 128px 24px;
@@ -1203,9 +1077,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 /* ── Ported sections: ticker, members, how-it-works, anti-platform ── */
 @media (prefers-reduced-motion: reduce) {
-.animate-marquee,
-  .territory-carousel-track,
-  .members-track {
+.animate-marquee {
     animation-play-state: paused;
   }
 }
@@ -1327,13 +1199,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @media (max-width: 768px) {
 .how-header { margin-bottom: 48px; }
 }
-.how-header h2 {
-  font-family: 'Cormorant Garamond', 'Georgia', serif;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  color: white;
-}
+
 .how-steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1452,8 +1318,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .standard-row { border-top: 1px solid rgba(255,255,255,0.08); padding: 17px 0; }
 .standard-row h3 { font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color: var(--gold); font-weight:600; margin-bottom: 5px; }
 .standard-row p { font-size:15px; line-height:1.7; color: var(--text-secondary); }
-.standard-close { margin-top: 24px; font-size: 16.5px; line-height: 1.7; color: var(--text-primary); max-width: 460px; }
-.standard-close strong { font-weight: 500; }
 /* ── Field of One Hundred ── */
 .standard-field-wrap { position: sticky; top: 50vh; transform: translateY(-50%); }
 @media (max-width: 920px) {
@@ -1560,7 +1424,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         </svg>
         <span>Sign in</span>
       </a>
-      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn sm" onclick="window.location.href='/application'">Apply</button></div>
+      <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/application" class="shader-btn sm">Apply</a></div>
       <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
         <span></span>
         <span></span>
@@ -1593,9 +1457,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <span>Sign in</span>
       </a>
       <div class="mobile-menu-cta">
-        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/application'">Apply</button></div>
+        <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/application" class="shader-btn lg">Apply</a></div>
       </div>
-      <a href="/refer" class="mobile-menu-door">For Referring Agents →</a>
+      <a href="/" class="mobile-menu-door">For Referring Agents →</a>
     </div>
   </div>
 </div>
@@ -1605,7 +1469,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   <span class="page-hero-label fade-in">ELITE AGENT REFERRAL NETWORK</span>
   <h1 class="fade-in" style="transition-delay:0.1s;">The Agent Other Agents Trust.</h1>
   <p class="fade-in" style="transition-delay:0.2s;">One agent per market — vetted, credentialed, and receiving every client referral the network carries for that market.</p>
-  <div class="fade-in" style="transition-delay:0.3s;margin-top:28px;"><a href="/refer" class="marked-door">For Referring Agents →</a></div>
+  <div class="fade-in" style="transition-delay:0.3s;margin-top:28px;"><a href="/" class="marked-door">For Referring Agents →</a></div>
 </section>
 
 <!-- VETTING TICKER (ported from homepage) -->
@@ -1846,7 +1710,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   <div class="territory-inner">
     <div class="territory-header fade-in-rise">
       <h2>Exclusivity.</h2>
-      <p>Each territory is held by one agent. All inbound referral volume for that market routes exclusively to the territory holder. No rotation. No competition.</p>
+      <p>Each territory is held by one agent. Every client referral for that market goes to them — no rotation, no competition.</p>
     </div>
     <div class="map-stage fade-in" style="transition-delay:0.15s;" id="networkMap">
       <svg class="map-svg" viewBox="0 0 1000 773" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="North America rendered in dots — referrals from licensed agents across Canada and the United States converging on one exclusive territory">
@@ -1998,6 +1862,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     <span class="depth-label fade-in">The Guarantee</span>
     <h2 class="fade-in">The Referral Guarantee.</h2>
     <div class="guarantee-card fade-in" style="transition-delay:0.15s;">
+      <div class="g-ornament" aria-hidden="true"><span></span><i></i><span></span></div>
       <div class="depth-body">
         <p>If your first six months pass without a single inbound client referral, your dues pause — and remain paused until one arrives.</p>
       </div>
@@ -2012,7 +1877,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 <section class="depth-closer">
   <h2 class="fade-in" style="text-wrap:balance;">Secure your place as the <em>elite agent</em> in your market.</h2>
   <div class="hero-cta-row fade-in" style="transition-delay:0.2s;">
-    <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><button class="shader-btn lg" onclick="window.location.href='/application'">Apply to be an Elite Agent</button></div>
+    <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/application" class="shader-btn lg">Apply to be an Elite Agent</a></div>
   </div>
 </section>
 
