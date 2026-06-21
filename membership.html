@@ -338,6 +338,11 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-size: 12px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
   color: var(--text-warm); margin-bottom: 24px;
 }
+.page-hero .page-hero-label--name {
+  font-size: clamp(12px, 2.5vw, 18px);
+  font-weight: 400;
+  letter-spacing: clamp(0.12em, 1.5vw, 0.25em);
+}
 .page-hero h1 {
   font-family: var(--font-serif);
   font-size: clamp(2.5rem, 5.5vw, 4.5rem); font-weight: 400; letter-spacing: -0.03em;
@@ -1472,7 +1477,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-  <span class="page-hero-label fade-in">ELITE AGENT REFERRAL NETWORK</span>
+  <span class="page-hero-label page-hero-label--name fade-in">ELITE AGENT REFERRAL NETWORK</span>
   <h1 class="fade-in" style="transition-delay:0.1s;">The Agent Other Agents Trust.</h1>
   <p class="fade-in" style="transition-delay:0.2s;">One agent per market — vetted, credentialed, and receiving every client referral the network carries for that market.</p>
   <div class="fade-in" style="transition-delay:0.3s;margin-top:28px;"><a href="/" class="marked-door">For Referring Agents →</a></div>
