@@ -10,16 +10,17 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="EARN | Elite Agent Referral Network">
 <meta property="og:description" content="When a client leaves your market, EARN places them with a vetted top-1% agent — your fee in writing before the first introduction.">
-<meta property="og:image" content="/images/og-image.png">
+<meta property="og:image" content="https://eliteagentreferralnetwork.com/images/og-image.png">
 <meta property="og:url" content="https://eliteagentreferralnetwork.com">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://eliteagentreferralnetwork.com">
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 
 <!-- Fonts: Inter + Cormorant Garamond -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet">
 
 <style>
 /* ═══════════════════════════════════════
@@ -48,7 +49,10 @@
    RESET & BASE
    ═══════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 body {
   font-family: var(--font-sans);
   background: var(--background);
@@ -60,33 +64,11 @@ a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
 
-/* ═══════════════════════════════════════
-   GLASS DESIGN SYSTEM (from globals.css)
-   ═══════════════════════════════════════ */
-.glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(24px) saturate(150%);
-  -webkit-backdrop-filter: blur(24px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 8px 32px rgba(0, 0, 0, 0.3);
-  position: relative;
-}
-.glass::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 40%);
-  pointer-events: none;
-}
+/* Keyboard focus ring (AT/keyboard users) */
+:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+:focus:not(:focus-visible) { outline: none; }
 
-.glass-badge {
-  background: rgba(145, 130, 104, 0.08);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(145, 130, 104, 0.2);
-  box-shadow: inset 0 1px 0 0 rgba(145, 130, 104, 0.1), 0 1px 4px rgba(0, 0, 0, 0.1);
-}
+
 
 /* ═══════════════════════════════════════
    MARQUEE ANIMATION
@@ -703,27 +685,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   opacity: 1;
 }
 
-/* Prestige emerge — slight scale with slow reveal */
-.fade-in-scale {
-  opacity: 0;
-  transform: scale(0.92);
-  transition: opacity 3.5s cubic-bezier(0.25, 0.1, 0.25, 1), transform 3.5s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-.fade-in-scale.visible {
-  opacity: 1;
-  transform: scale(1);
-}
 
-/* Heavy rise — deeper, slower, deliberate */
-.fade-in-rise {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 2.5s cubic-bezier(0.25, 0.1, 0.25, 1), transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-.fade-in-rise.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 /* ═══════════════════════════════════════
    SVG ICONS INLINE
@@ -900,6 +862,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 @media (max-width: 768px) { .ontherecord { padding: 110px 24px; } .otr-inner .unit-proof { margin-top: 56px; } }
 
 </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "EARN",
+  "legalName": "Elite Agent Referral Network Inc.",
+  "url": "https://eliteagentreferralnetwork.com",
+  "logo": "https://eliteagentreferralnetwork.com/images/earn-logo.png"
+}
+</script>
 </head>
 
 <body>
@@ -955,7 +927,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <span>Sign in</span>
       </a>
       <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/refer" class="shader-btn sm">Submit Referral</a></div>
-      <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
         <span></span>
         <span></span>
@@ -963,7 +935,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     </div>
   </div>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu" tabindex="-1" inert>
   <div class="mobile-menu-inner">
     <a href="/#how-it-works" class="mobile-menu-link">How It Works</a>
     <a href="/referral-faqs" class="mobile-menu-link">FAQ</a>
@@ -1036,31 +1008,31 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     <div class="ticker-fade-r"></div>
     <div class="ticker-scroll">
       <div class="ticker-track animate-marquee">
-        <img src="/images/brokerages/sothebys.svg" alt="Sotheby's International Realty">
-        <img src="/images/brokerages/christies.svg" alt="Christie's International Real Estate">
-        <img src="/images/brokerages/douglas-elliman.svg" alt="Douglas Elliman">
-        <img src="/images/brokerages/compass.svg" alt="Compass">
-        <img src="/images/brokerages/coldwell-banker.svg" alt="Coldwell Banker">
-        <img src="/images/brokerages/berkshire-hathaway.svg" alt="Berkshire Hathaway HomeServices">
-        <img src="/images/brokerages/engels-and-volkers.svg" alt="Engel &amp; Völkers">
-        <img src="/images/brokerages/remax.svg" alt="RE/MAX">
-        <img src="/images/brokerages/keller-williams.svg" alt="Keller Williams">
-        <img src="/images/brokerages/royal-lepage.svg" alt="Royal LePage">
-        <img src="/images/brokerages/nest-seekers.svg" alt="Nest Seekers International">
-        <img src="/images/brokerages/the-agency.svg" alt="The Agency">
+        <img loading="lazy" decoding="async" src="/images/brokerages/sothebys.svg" alt="Sotheby's International Realty">
+        <img loading="lazy" decoding="async" src="/images/brokerages/christies.svg" alt="Christie's International Real Estate">
+        <img loading="lazy" decoding="async" src="/images/brokerages/douglas-elliman.svg" alt="Douglas Elliman">
+        <img loading="lazy" decoding="async" src="/images/brokerages/compass.svg" alt="Compass">
+        <img loading="lazy" decoding="async" src="/images/brokerages/coldwell-banker.svg" alt="Coldwell Banker">
+        <img loading="lazy" decoding="async" src="/images/brokerages/berkshire-hathaway.svg" alt="Berkshire Hathaway HomeServices">
+        <img loading="lazy" decoding="async" src="/images/brokerages/engels-and-volkers.svg" alt="Engel &amp; Völkers">
+        <img loading="lazy" decoding="async" src="/images/brokerages/remax.svg" alt="RE/MAX">
+        <img loading="lazy" decoding="async" src="/images/brokerages/keller-williams.svg" alt="Keller Williams">
+        <img loading="lazy" decoding="async" src="/images/brokerages/royal-lepage.svg" alt="Royal LePage">
+        <img loading="lazy" decoding="async" src="/images/brokerages/nest-seekers.svg" alt="Nest Seekers International">
+        <img loading="lazy" decoding="async" src="/images/brokerages/the-agency.svg" alt="The Agency">
         <!-- Set 2 (duplicate for seamless loop) -->
-        <img src="/images/brokerages/sothebys.svg" alt="Sotheby's International Realty">
-        <img src="/images/brokerages/christies.svg" alt="Christie's International Real Estate">
-        <img src="/images/brokerages/douglas-elliman.svg" alt="Douglas Elliman">
-        <img src="/images/brokerages/compass.svg" alt="Compass">
-        <img src="/images/brokerages/coldwell-banker.svg" alt="Coldwell Banker">
-        <img src="/images/brokerages/berkshire-hathaway.svg" alt="Berkshire Hathaway HomeServices">
-        <img src="/images/brokerages/engels-and-volkers.svg" alt="Engel &amp; Völkers">
-        <img src="/images/brokerages/remax.svg" alt="RE/MAX">
-        <img src="/images/brokerages/keller-williams.svg" alt="Keller Williams">
-        <img src="/images/brokerages/royal-lepage.svg" alt="Royal LePage">
-        <img src="/images/brokerages/nest-seekers.svg" alt="Nest Seekers International">
-        <img src="/images/brokerages/the-agency.svg" alt="The Agency">
+        <img loading="lazy" decoding="async" src="/images/brokerages/sothebys.svg" alt="Sotheby's International Realty">
+        <img loading="lazy" decoding="async" src="/images/brokerages/christies.svg" alt="Christie's International Real Estate">
+        <img loading="lazy" decoding="async" src="/images/brokerages/douglas-elliman.svg" alt="Douglas Elliman">
+        <img loading="lazy" decoding="async" src="/images/brokerages/compass.svg" alt="Compass">
+        <img loading="lazy" decoding="async" src="/images/brokerages/coldwell-banker.svg" alt="Coldwell Banker">
+        <img loading="lazy" decoding="async" src="/images/brokerages/berkshire-hathaway.svg" alt="Berkshire Hathaway HomeServices">
+        <img loading="lazy" decoding="async" src="/images/brokerages/engels-and-volkers.svg" alt="Engel &amp; Völkers">
+        <img loading="lazy" decoding="async" src="/images/brokerages/remax.svg" alt="RE/MAX">
+        <img loading="lazy" decoding="async" src="/images/brokerages/keller-williams.svg" alt="Keller Williams">
+        <img loading="lazy" decoding="async" src="/images/brokerages/royal-lepage.svg" alt="Royal LePage">
+        <img loading="lazy" decoding="async" src="/images/brokerages/nest-seekers.svg" alt="Nest Seekers International">
+        <img loading="lazy" decoding="async" src="/images/brokerages/the-agency.svg" alt="The Agency">
       </div>
     </div>
   </div>
@@ -1134,7 +1106,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     <div class="unit-econ fade-in">
       <h3>The Catch</h3>
       <p class="unit-econ-lead">There isn’t one.</p>
-      <p>EARN never takes a cut of the commission — 0%, on every deal. Sending costs nothing. You won’t hear from us unless it’s about your referral. Membership dues from the receiving agents fund the network.</p>
+      <p>EARN never takes a cut of the commission — 0%, on every deal. Sending costs nothing. You won’t hear from us unless it’s about your referral. Membership dues from the receiving agents fund the network. A market is only ever represented by an agent who meets the Standard.</p>
     </div>
   </div>
 </section>
@@ -1215,7 +1187,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <footer class="founder-footer">
           <div class="founder-divider"></div>
           <div class="founder-avatar">
-            <img src="/images/founder-liam-mckinney.webp" alt="Liam McKinney, Founder of EARN">
+            <img loading="lazy" decoding="async" src="/images/founder-liam-mckinney.webp" alt="Liam McKinney, Founder of EARN">
           </div>
           <cite style="font-style:normal;">
             <span class="founder-name">Liam McKinney</span>
@@ -1291,7 +1263,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ── Fade-in on scroll (IntersectionObserver) ──
-const fadeEls = document.querySelectorAll('.fade-in, .fade-in-subtle, .fade-in-scale, .fade-in-rise');
+const fadeEls = document.querySelectorAll('.fade-in, .fade-in-subtle');
 const fadeObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -1489,54 +1461,64 @@ fadeEls.forEach(el => fadeObserver.observe(el));
 })();
 
 
-// ── Animated Counters ──
-const counters = document.querySelectorAll('.counter');
-const counterObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const el = entry.target;
-      const target = parseInt(el.dataset.target);
-      const start = parseInt(el.dataset.start || '0');
-      const suffix = el.dataset.suffix || '';
-      const duration = parseInt(el.dataset.duration || '2000');
-      const startTime = performance.now();
-      const countingDown = start > target;
 
-      function update(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        // Ease out cubic
-        const eased = 1 - Math.pow(1 - progress, 3);
-        let current;
-        if (countingDown) {
-          current = Math.round(start - (start - target) * eased);
-        } else {
-          current = Math.round(start + (target - start) * eased);
-        }
-        el.textContent = current.toLocaleString() + suffix;
-        if (progress < 1) requestAnimationFrame(update);
-      }
-      requestAnimationFrame(update);
-      counterObserver.unobserve(el);
-    }
-  });
-}, { threshold: 0.5 });
-counters.forEach(el => counterObserver.observe(el));
-// ── Mobile menu toggle ──
+// ── Mobile menu (a11y: focus trap, Escape, inert background) ──
 const hamburger = document.getElementById('navHamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 if (hamburger && mobileMenu) {
+  const navEl = document.getElementById('navOuter');
+  const bgEls = Array.from(document.body.children).filter(
+    el => el !== mobileMenu && el !== navEl
+  );
+  const getFocusable = el => Array.from(
+    el.querySelectorAll('a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])')
+  ).filter(n => n.offsetParent !== null || n.getClientRects().length);
+
+  let lastFocused = null;
+
+  function openMenu() {
+    lastFocused = document.activeElement;
+    hamburger.classList.add('open');
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    hamburger.setAttribute('aria-expanded', 'true');
+    hamburger.setAttribute('aria-label', 'Close menu');
+    mobileMenu.inert = false;
+    bgEls.forEach(el => { el.inert = true; });
+    const f = getFocusable(mobileMenu);
+    (f[0] || mobileMenu).focus();
+  }
+
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Open menu');
+    mobileMenu.inert = true;
+    bgEls.forEach(el => { el.inert = false; });
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
   hamburger.addEventListener('click', () => {
-    const isOpen = hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    if (hamburger.classList.contains('open')) closeMenu();
+    else openMenu();
   });
+
   mobileMenu.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-      document.body.style.overflow = '';
-    });
+    el.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!mobileMenu.classList.contains('open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeMenu(); return; }
+    if (e.key === 'Tab') {
+      const f = getFocusable(mobileMenu);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   });
 }
 
@@ -1549,17 +1531,7 @@ window.addEventListener('scroll', () => {
   scrollBar.style.width = progress + '%';
 }, { passive: true });
 
-// ── Single-pulse available dots on viewport enter ──
-const pulseDots = document.querySelectorAll('.pulse-dot.white');
-const pulseObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('pulse-once');
-      pulseObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.5 });
-pulseDots.forEach(dot => pulseObserver.observe(dot));
+
 
 </script>
 

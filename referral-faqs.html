@@ -615,7 +615,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <span>Sign in</span>
       </a>
       <div class="shader-btn-wrap" data-shader-btn><canvas></canvas><a href="/refer" class="shader-btn sm">Submit Referral</a></div>
-      <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
         <span></span>
         <span></span>
         <span></span>
@@ -623,7 +623,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     </div>
   </div>
 </nav>
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu" tabindex="-1" inert>
   <div class="mobile-menu-inner">
     <a href="/#how-it-works" class="mobile-menu-link">How It Works</a>
     <a href="/referral-faqs" class="mobile-menu-link">FAQ</a>
@@ -769,21 +769,63 @@ const fadeObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.15 });
 fadeEls.forEach(el => fadeObserver.observe(el));
-// ── Mobile menu toggle ──
+// ── Mobile menu (a11y: focus trap, Escape, inert background) ──
 const hamburger = document.getElementById('navHamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 if (hamburger && mobileMenu) {
+  const navEl = document.getElementById('navOuter');
+  const bgEls = Array.from(document.body.children).filter(
+    el => el !== mobileMenu && el !== navEl
+  );
+  const getFocusable = el => Array.from(
+    el.querySelectorAll('a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])')
+  ).filter(n => n.offsetParent !== null || n.getClientRects().length);
+
+  let lastFocused = null;
+
+  function openMenu() {
+    lastFocused = document.activeElement;
+    hamburger.classList.add('open');
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    hamburger.setAttribute('aria-expanded', 'true');
+    hamburger.setAttribute('aria-label', 'Close menu');
+    mobileMenu.inert = false;
+    bgEls.forEach(el => { el.inert = true; });
+    const f = getFocusable(mobileMenu);
+    (f[0] || mobileMenu).focus();
+  }
+
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-label', 'Open menu');
+    mobileMenu.inert = true;
+    bgEls.forEach(el => { el.inert = false; });
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
   hamburger.addEventListener('click', () => {
-    const isOpen = hamburger.classList.toggle('open');
-    mobileMenu.classList.toggle('open', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    if (hamburger.classList.contains('open')) closeMenu();
+    else openMenu();
   });
+
   mobileMenu.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('click', () => {
-      hamburger.classList.remove('open');
-      mobileMenu.classList.remove('open');
-      document.body.style.overflow = '';
-    });
+    el.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!mobileMenu.classList.contains('open')) return;
+    if (e.key === 'Escape') { e.preventDefault(); closeMenu(); return; }
+    if (e.key === 'Tab') {
+      const f = getFocusable(mobileMenu);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
   });
 }
 
