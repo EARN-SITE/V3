@@ -14,8 +14,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="EARN | Membership FAQ">
 <meta property="og:description" content="Common questions about the Elite Agent Referral Network — territory exclusivity, membership, referral mechanics, and vetting.">
-<meta property="og:image" content="/images/og-image.png">
+<meta property="og:image" content="https://eliteagentreferralnetwork.com/images/og-image.png">
 <meta property="og:url" content="https://eliteagentreferralnetwork.com/membership-faqs">
+<link rel="canonical" href="https://eliteagentreferralnetwork.com/membership-faqs">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
@@ -37,15 +38,18 @@
   --text-primary: #ffffff;
   --text-secondary: #d4d4d8;
   --text-tertiary: #a1a1aa;
-  --text-body: #71717a;
-  --text-muted: #52525b;
-  --text-warm: #787060;
+  --text-body: #82828a;
+  --text-muted: #78787f;
+  --text-warm: #847b66;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 body {
   font-family: var(--font-sans);
   background: var(--background);
@@ -56,6 +60,8 @@ body {
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+:focus:not(:focus-visible) { outline: none; }
 
 /* ═══════════════════════════════════════
    NAVBAR
@@ -535,7 +541,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   text-align: center;
 }
 @media (min-width: 768px) { .footer-left { text-align: left; } }
-.footer-left p { font-size: 13px; line-height: 1.7; color: #52525b; }
+.footer-left p { font-size: 13px; line-height: 1.7; color: #78787f; }
 .footer-left a { font-size: 13px; color: var(--gold); transition: color 0.2s; }
 .footer-left a:hover { color: var(--gold-light); }
 .footer-center { display: flex; justify-content: center; }
@@ -546,7 +552,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   gap: 10px;
 }
 @media (min-width: 768px) { .footer-right { align-items: flex-end; } }
-.footer-right a { font-size: 13px; color: #52525b; transition: color 0.2s; }
+.footer-right a { font-size: 13px; color: #78787f; transition: color 0.2s; }
 .footer-right a:hover { color: #d4d4d8; }
 
 /* ═══ ANIMATIONS ═══ */
@@ -946,7 +952,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <a href="tel:18884225881">1 (888) 422-5881</a>
       </div>
       <div class="footer-center">
-        <a href="/"><img src="/images/earn-logo.png" alt="EARN" style="height:32px;width:auto;"></a>
+        <a href="/"><img loading="lazy" decoding="async" src="/images/earn-logo.png" alt="EARN" style="height:32px;width:auto;"></a>
       </div>
       <div class="footer-right">
         <a href="/disclaimers">Disclaimers</a>

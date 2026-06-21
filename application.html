@@ -14,8 +14,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="EARN | Apply to be an Elite Agent">
 <meta property="og:description" content="Apply to the Elite Agent Referral Network — one vetted agent per market, evaluated against a published standard.">
-<meta property="og:image" content="/images/og-image.png">
+<meta property="og:image" content="https://eliteagentreferralnetwork.com/images/og-image.png">
 <meta property="og:url" content="https://eliteagentreferralnetwork.com/application">
+<link rel="canonical" href="https://eliteagentreferralnetwork.com/application">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
@@ -37,15 +38,18 @@
   --text-primary: #ffffff;
   --text-secondary: #d4d4d8;
   --text-tertiary: #a1a1aa;
-  --text-body: #71717a;
-  --text-muted: #52525b;
-  --text-warm: #787060;
+  --text-body: #82828a;
+  --text-muted: #78787f;
+  --text-warm: #847b66;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 body {
   font-family: var(--font-sans);
   background: var(--background);
@@ -56,6 +60,8 @@ body {
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+:focus:not(:focus-visible) { outline: none; }
 
 /* ═══════════════════════════════════════
    NAVBAR
@@ -945,7 +951,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
       <canvas></canvas>
       <button class="shader-btn lg" type="submit">Submit Application</button>
     </div>
-    <p style="font-size:12px;color:var(--text-muted);text-align:center;max-width:520px;">By submitting, you agree to the <a href="/terms-and-conditions" style="color:#71717a;transition:color 0.2s;" onmouseover="this.style.color='#a1a1aa'" onmouseout="this.style.color='#71717a'">Terms and Conditions</a> and <a href="/privacy-policy" style="color:#71717a;transition:color 0.2s;" onmouseover="this.style.color='#a1a1aa'" onmouseout="this.style.color='#71717a'">Privacy Policy</a>.</p>
+    <p style="font-size:12px;color:var(--text-muted);text-align:center;max-width:520px;">By submitting, you agree to the <a href="/terms-and-conditions" style="color:#82828a;transition:color 0.2s;" onmouseover="this.style.color='#a1a1aa'" onmouseout="this.style.color='#71717a'">Terms and Conditions</a> and <a href="/privacy-policy" style="color:#82828a;transition:color 0.2s;" onmouseover="this.style.color='#a1a1aa'" onmouseout="this.style.color='#71717a'">Privacy Policy</a>.</p>
   </div>
 
 </div>

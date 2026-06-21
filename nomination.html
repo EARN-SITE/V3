@@ -14,8 +14,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="EARN | Nominate an Agent">
 <meta property="og:description" content="Nominate a top-producing agent for EARN territory membership.">
-<meta property="og:image" content="/images/og-image.png">
+<meta property="og:image" content="https://eliteagentreferralnetwork.com/images/og-image.png">
 <meta property="og:url" content="https://eliteagentreferralnetwork.com/nomination">
+<link rel="canonical" href="https://eliteagentreferralnetwork.com/nomination">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
@@ -37,15 +38,18 @@
   --text-primary: #ffffff;
   --text-secondary: #d4d4d8;
   --text-tertiary: #a1a1aa;
-  --text-body: #71717a;
-  --text-muted: #52525b;
-  --text-warm: #787060;
+  --text-body: #82828a;
+  --text-muted: #78787f;
+  --text-warm: #847b66;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
 }
 
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 body {
   font-family: var(--font-sans);
   background: var(--background);
@@ -56,6 +60,8 @@ body {
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+:focus:not(:focus-visible) { outline: none; }
 
 /* ═══════════════════════════════════════
    NAVBAR (identical to application page)

@@ -13,8 +13,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="EARN | Disclaimers">
 <meta property="og:description" content="Disclaimers for the Elite Agent Referral Network.">
-<meta property="og:image" content="/images/og-image.png">
+<meta property="og:image" content="https://eliteagentreferralnetwork.com/images/og-image.png">
 <meta property="og:url" content="https://eliteagentreferralnetwork.com/disclaimers">
+<link rel="canonical" href="https://eliteagentreferralnetwork.com/disclaimers">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="/images/favicon.png">
 <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
@@ -40,9 +41,9 @@
   --text-primary: #ffffff;
   --text-secondary: #d4d4d8;
   --text-tertiary: #a1a1aa;
-  --text-body: #71717a;
-  --text-muted: #52525b;
-  --text-warm: #787060;
+  --text-body: #82828a;
+  --text-muted: #78787f;
+  --text-warm: #847b66;
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
 }
@@ -51,7 +52,10 @@
    RESET & BASE
    ═══════════════════════════════════════ */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 body {
   font-family: var(--font-sans);
   background: var(--background);
@@ -62,6 +66,8 @@ body {
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 3px; }
+:focus:not(:focus-visible) { outline: none; }
 
 /* ═══════════════════════════════════════
    GLASS DESIGN SYSTEM (from globals.css)
@@ -503,7 +509,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #71717a;
+  color: #82828a;
   margin-top: 4px;
 }
 .proof-divider {
@@ -575,7 +581,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #71717a;
+  color: #82828a;
 }
 .anti-badge-gold {
   display: inline-block;
@@ -618,9 +624,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   box-shadow: inset 0 1px 0 0 rgba(145,130,104,0.15);
   flex-shrink: 0;
 }
-.anti-row span.strike { color: #71717a; text-decoration: line-through; }
+.anti-row span.strike { color: #82828a; text-decoration: line-through; }
 .anti-row span.bright { color: white; }
-.anti-row .x-icon { margin-left: auto; color: #52525b; }
+.anti-row .x-icon { margin-left: auto; color: #78787f; }
 .anti-row .check-icon { margin-left: auto; color: var(--gold); }
 
 .anti-quote {
@@ -629,7 +635,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: 24px;
 }
 .anti-quote p { font-size: 14px; line-height: 1.7; color: #a1a1aa; }
-.anti-quote .attr { margin-top: 12px; font-size: 12px; letter-spacing: 0.05em; color: #52525b; }
+.anti-quote .attr { margin-top: 12px; font-size: 12px; letter-spacing: 0.05em; color: #78787f; }
 
 /* ═══════════════════════════════════════
    UNFAIR ADVANTAGE (Phone + Copy)
@@ -822,7 +828,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #71717a;
+  color: #82828a;
 }
 .protocol-card .title {
   font-family: var(--font-serif);
@@ -833,7 +839,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .protocol-card .sub {
   margin-top: 8px;
   font-size: 14px;
-  color: #71717a;
+  color: #82828a;
 }
 
 /* ═══════════════════════════════════════
@@ -872,7 +878,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #71717a;
+  color: #82828a;
 }
 @media (max-width: 480px) {
   .ticker-label svg { display: none; }
@@ -1068,7 +1074,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-size: 12px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #71717a;
+  color: #82828a;
 }
 
 .anti-columns {
@@ -1103,7 +1109,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .anti-col p {
   font-size: 15px;
   line-height: 1.65;
-  color: #71717a;
+  color: #82828a;
 }
 
 /* ═══════════════════════════════════════
@@ -1171,7 +1177,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .how-step p {
   font-size: 14px;
   line-height: 1.7;
-  color: #71717a;
+  color: #82828a;
 }
 
 /* ═══════════════════════════════════════
@@ -1269,7 +1275,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   letter-spacing: 0.01em;
 }
 .territory-card.claimed .territory-card-area {
-  color: #71717a;
+  color: #82828a;
 }
 .territory-card-status {
   display: flex;
@@ -1388,7 +1394,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-weight: 500;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: #71717a;
+  color: #82828a;
 }
 .member-volume {
   display: inline-block;
@@ -1496,7 +1502,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-size: 12px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #52525b;
+  color: #78787f;
 }
 .founder-team-link {
   margin-top: 24px;
@@ -1543,7 +1549,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   margin-bottom: 32px;
 }
 .footer-cta .shader-btn-wrap { margin-bottom: 16px; }
-.footer-cta p { max-width: 512px; color: #71717a; }
+.footer-cta p { max-width: 512px; color: #82828a; }
 
 .footer-bottom-outer {
   margin-top: 160px;
@@ -1574,7 +1580,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   text-align: center;
 }
 @media (min-width: 768px) { .footer-left { text-align: left; } }
-.footer-left p { font-size: 13px; line-height: 1.7; color: #52525b; }
+.footer-left p { font-size: 13px; line-height: 1.7; color: #78787f; }
 .footer-left a { font-size: 13px; color: var(--gold); transition: color 0.2s; }
 .footer-left a:hover { color: var(--gold-light); }
 .footer-center { display: flex; justify-content: center; }
@@ -1585,7 +1591,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   gap: 10px;
 }
 @media (min-width: 768px) { .footer-right { align-items: flex-end; } }
-.footer-right a { font-size: 13px; color: #52525b; transition: color 0.2s; }
+.footer-right a { font-size: 13px; color: #78787f; transition: color 0.2s; }
 .footer-right a:hover { color: #d4d4d8; }
 
 /* ═══════════════════════════════════════
@@ -1884,7 +1890,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   <p>For questions regarding these disclaimers, contact EARN at <a href="mailto:support@eliteagentreferralnetwork.com">support@eliteagentreferralnetwork.com</a> or <a href="tel:18884225881">1 (888) 422-5881</a>.</p>
 </div>
 
-<p style="margin-top:64px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.04);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#52525b;">Last Updated: March 3, 2026</p>
+<p style="margin-top:64px;padding-top:32px;border-top:1px solid rgba(255,255,255,0.04);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#78787f;">Last Updated: March 3, 2026</p>
 </div>
 
 <footer class="footer-section" style="padding-top:0;">
@@ -1898,7 +1904,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <a href="tel:18884225881">1 (888) 422-5881</a>
       </div>
       <div class="footer-center">
-        <a href="/"><img src="/images/earn-logo.png" alt="EARN" style="height:32px;width:auto;"></a>
+        <a href="/"><img loading="lazy" decoding="async" src="/images/earn-logo.png" alt="EARN" style="height:32px;width:auto;"></a>
       </div>
       <div class="footer-right">
         <a href="/disclaimers">Disclaimers</a>

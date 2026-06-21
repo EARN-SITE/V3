@@ -58,7 +58,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  :root{--font-sans:'Inter',system-ui,sans-serif;--font-serif:'Cormorant Garamond',Georgia,serif;--gold:#918268;--gold-light:#a89a7e;--text-muted:#52525b;--text-tertiary:#a1a1aa;}
+  :root{--font-sans:'Inter',system-ui,sans-serif;--font-serif:'Cormorant Garamond',Georgia,serif;--gold:#918268;--gold-light:#a89a7e;--text-muted:#78787f;--text-tertiary:#a1a1aa;}
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:var(--font-sans);min-height:100vh;
     background:radial-gradient(1000px 540px at 50% -5%,rgba(145,130,104,0.12),transparent 60%),#0a0a0a;
@@ -82,12 +82,12 @@
   .grid .full{grid-column:1 / -1;}
   @media (max-width:560px){.grid{grid-template-columns:1fr;}}
 
-  .field label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#71717a;margin-bottom:6px;}
-  .field label .opt{color:#52525b;text-transform:none;letter-spacing:0;font-size:11px;}
+  .field label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#82828a;margin-bottom:6px;}
+  .field label .opt{color:#78787f;text-transform:none;letter-spacing:0;font-size:11px;}
   .field input,.field select,.field textarea{width:100%;padding:12px 14px;font-size:14px;color:#e4e4e7;
     background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.10);border-radius:10px;outline:none;
     transition:border-color .25s,box-shadow .25s;font-family:var(--font-sans);}
-  .field input::placeholder,.field textarea::placeholder{color:#52525b;}
+  .field input::placeholder,.field textarea::placeholder{color:#78787f;}
   .field select{color:#a1a1aa;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2371717a' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
   .field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(145,130,104,0.55);box-shadow:0 0 0 3px rgba(145,130,104,0.12);}
   .field textarea{min-height:88px;resize:vertical;}
