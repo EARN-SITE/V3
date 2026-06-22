@@ -28,7 +28,8 @@
    ═══════════════════════════════════════ */
 :root {
   --reveal-dur: 0.8s;
-  --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --reveal-dur-feature: 1.5s;
+  --reveal-ease: cubic-bezier(0.33, 1, 0.68, 1);
   --background: #050505;
   --foreground: #fafafa;
   --muted-foreground: #a1a1aa;
@@ -666,17 +667,16 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transform: translateY(0);
 }
 @media (prefers-reduced-motion: reduce) {
-  .fade-in, .fade-in-subtle { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .fade-in, .fade-in-rise, .fade-in-scale { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* Pure materialization — no movement, just appears */
-.fade-in-subtle {
+.fade-in-rise {
   opacity: 0;
-  transition: opacity 4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transform: translateY(28px);
+  transition: opacity var(--reveal-dur-feature) var(--reveal-ease), transform var(--reveal-dur-feature) var(--reveal-ease);
 }
-.fade-in-subtle.visible {
-  opacity: 1;
-}
+.fade-in-rise.visible { opacity: 1; transform: translateY(0); }
 
 
 
@@ -1197,7 +1197,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
      ═══════════════════════════════════════ -->
 <footer class="footer-section">
   <div class="footer-border-top"></div>
-  <div class="footer-cta fade-in-subtle">
+  <div class="footer-cta fade-in-rise">
     <p class="footer-identity">EARN is referral infrastructure — when a client leaves an agent’s market, they’re placed with a vetted elite agent, the fee in writing, the referral tracked to close.</p>
     <div class="footer-duo">
       <div class="footer-duo-cell">
@@ -1255,7 +1255,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ── Fade-in on scroll (IntersectionObserver) ──
-const fadeEls = document.querySelectorAll('.fade-in, .fade-in-subtle');
+const fadeEls = document.querySelectorAll('.fade-in, .fade-in-rise');
 const fadeObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {

@@ -28,7 +28,8 @@
 <style>
 :root {
   --reveal-dur: 0.8s;
-  --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --reveal-dur-feature: 1.5s;
+  --reveal-ease: cubic-bezier(0.33, 1, 0.68, 1);
   --background: #050505;
   --foreground: #fafafa;
   --muted-foreground: #a1a1aa;
@@ -417,7 +418,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) {
-  .fade-in, .fade-in-subtle { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .fade-in, .fade-in-rise, .fade-in-scale { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 #scrollProgress {
   position: fixed; top: 0; left: 0; height: 2px; width: 0;
@@ -701,8 +702,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   flex-direction: column;
   align-items: center;
   z-index: 5;
-  opacity: 0;
-  transform: translateY(4px);
+  opacity: 1;
+  transform: none;
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
 .phone-time.visible {
@@ -1066,10 +1067,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   color: var(--text-tertiary);
   letter-spacing: 0.01em;
 }
-.fade-in-scale { opacity:0; transform:scale(0.92); transition: opacity 3.5s cubic-bezier(0.25,0.1,0.25,1), transform 3.5s cubic-bezier(0.25,0.1,0.25,1); }
-.fade-in-scale.visible { opacity:1; transform:scale(1); }
-.fade-in-subtle { opacity:0; transition: opacity 4s cubic-bezier(0.25,0.1,0.25,1); }
-.fade-in-subtle.visible { opacity:1; }
+.fade-in-scale {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity var(--reveal-dur-feature) var(--reveal-ease), transform var(--reveal-dur-feature) var(--reveal-ease);
+}
+.fade-in-scale.visible { opacity: 1; transform: scale(1); }
 /* ── Centered section headers (site-wide rhythm) ── */
 .depth-section .depth-label, .depth-section h2 { text-align: center; }
 /* ── Network map v2 ── */
@@ -1305,13 +1308,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* Heavy rise — deeper, slower, deliberate */
 .fade-in-rise {
   opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 2.5s cubic-bezier(0.25, 0.1, 0.25, 1), transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transform: translateY(28px);
+  transition: opacity var(--reveal-dur-feature) var(--reveal-ease), transform var(--reveal-dur-feature) var(--reveal-ease);
 }
-.fade-in-rise.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.fade-in-rise.visible { opacity: 1; transform: translateY(0); }
 @keyframes marquee {
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-50%, 0, 0); }
@@ -1716,7 +1716,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 <!-- ANTI-PLATFORM -->
 <section class="anti-platform">
   <div class="anti-platform-inner">
-    <div class="anti-header fade-in-subtle">
+    <div class="anti-header fade-in-rise">
       <h2>No Masterminds. No Group Chats.<br>No Forums. Just Revenue.</h2>
     </div>
   </div>
@@ -1869,7 +1869,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <text x="130" y="270" text-anchor="middle" fill="white" font-family="'Cormorant Garamond',Georgia,serif" font-size="22" font-weight="400" letter-spacing="0.02em">Verified Member</text>
       </svg>
     </div>
-    <p class="mc-statement fade-in-subtle" style="transition-delay:0.8s;">A credential mark issued to every accepted member. Displayed on member websites, signatures, and client-facing materials.</p>
+    <p class="mc-statement fade-in-rise" style="transition-delay:0.8s;">A credential mark issued to every accepted member. Displayed on member websites, signatures, and client-facing materials.</p>
   </div>
 </section>
 
@@ -1930,7 +1930,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // Fade-in
-const fadeEls = document.querySelectorAll('.fade-in, .fade-in-scale, .fade-in-subtle, .fade-in-rise');
+const fadeEls = document.querySelectorAll('.fade-in, .fade-in-scale, .fade-in-rise');
 const fadeObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -2143,7 +2143,6 @@ const phoneObserver = new IntersectionObserver(([entry]) => {
     // Screen wake
     setTimeout(() => {
       document.getElementById('phoneGlow').classList.add('visible');
-      document.getElementById('phoneTime').classList.add('visible');
       document.getElementById('phoneBar').classList.add('visible');
       document.getElementById('lockShortcuts').classList.add('visible');
       document.getElementById('phoneAmbient').classList.add('visible');
