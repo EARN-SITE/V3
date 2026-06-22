@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EARN — Activate Your Territory</title>
+<meta name="robots" content="noindex">
+<!-- ════════════════════════════════════════════════════════════════
+     MOCKUP 5 rev B / FAST-TRACK ACTIVATION — design target for Ian
+     (June 12, 2026)
+
+     STYLE: EARN Brand Reference Kit v1 (locked) — NOT the V2 portal
+     file styling. CONTENT: faithful to the V2 portal specs (02/03/04)
+     + App Delta Spec Flow E. Emails 01 + 05 remain canonical as-is.
+
+     SCREENS: 1 Stripe gate → 2 profile → 3 credentials → E expired.
+     Demo cycler bottom-right; row "go(n)" JS is demo-only.
+
+     BUILD NOTES:
+     • ENTRY: approval email CTA = signed {{activation_link}} token →
+       AUTO-AUTH session, SCOPED TO ONBOARDING ONLY. Token life 14
+       days. Stripe checkout generated at CLICK-TIME.
+     • STEP 1 (per 02): progress shows all 3 steps with 2–3 locked
+       (anticipation, payment reframed as unlocking); territory header;
+       dues {{dues_amount}}/month; Stripe Elements mount (appearance:
+       theme 'night', colorPrimary #918268, colorBackground #141414);
+       month-to-month + Terms footnote; Referral Guarantee note.
+       On payment success: webhook marks active → redirect Step 2 →
+       activation confirmation email (05) fires (receipt; may overlap
+       with the member still in-flow — fine).
+     • STEP 2 (per 03's AUDITED spec): collapsible "From your
+       application" review (personal + brokerage fields; production
+       data excluded). ACTIVE INPUT = 7 fields ONLY: headshot,
+       brokerage address, brokerage phone, admin email, brokerage fax,
+       license expiry date, commission invoicing instructions.
+       NO SKIP LINK. No bio, no contact-preference — this step is
+       commission-routing operability.
+     • STEP 3 (per 04): a reward, not a form. Territory Live badge;
+       Verified Member seal delivered HERE (6 PNG variants, CDN
+       links); Territory Confirmation PDF (dynamic); inline usage
+       guidance; CTA → member portal. Type flips Applicant → Member.
+     • SCREEN E: expired/invalid token soft landing. One-click fresh
+       link to masked email (rate-limit re-sends), sign-in fallback
+       (unpaid member signing in routes into Step 1 regardless).
+     • Vocabulary: membership never subscription. Sample data fictional.
+     ════════════════════════════════════════════════════════════════ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{--font-sans:'Inter',system-ui,sans-serif;--font-serif:'Cormorant Garamond',Georgia,serif;--gold:#918268;--gold-light:#a89a7e;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--font-sans);min-height:100vh;display:flex;flex-direction:column;align-items:center;
+    background:radial-gradient(1000px 540px at 50% -5%,rgba(145,130,104,0.12),transparent 60%),#0a0a0a;color:#e4e4e7;padding:40px 16px 90px;}
+  a{text-decoration:none;color:inherit;}
+:focus-visible{outline:2px solid rgba(145,130,104,0.75);outline-offset:2px;border-radius:6px;}
+  .brand{font-weight:800;letter-spacing:0.08em;font-size:18px;color:#fff;margin-bottom:16px;}
+  .auth-strip{display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+    color:#8f8f96;border:1px solid rgba(255,255,255,0.08);border-radius:9999px;padding:6px 14px;margin-bottom:24px;}
+  .auth-strip .d{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(145,130,104,0.7);}
+
+  .steps-bar{display:flex;align-items:center;margin-bottom:26px;}
+  .sd{width:28px;height:28px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:var(--font-serif);font-size:13px;color:#71717a;border:1px solid rgba(255,255,255,0.12);position:relative;}
+  .sd.on{color:#0a0a0a;background:var(--gold);border-color:var(--gold);}
+  .sd.done{color:var(--gold-light);border-color:rgba(145,130,104,0.5);}
+  .sd.lock{opacity:0.45;}
+  .sl{width:38px;height:1px;background:rgba(255,255,255,0.1);}
+  .slab{position:absolute;top:34px;font-family:var(--font-sans);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:#5d5d63;white-space:nowrap;}
+  .sd.on .slab{color:var(--gold-light);}
+
+  .panel{display:none;width:100%;max-width:560px;}
+  .panel.on{display:block;}
+  .card{background:rgba(16,16,16,0.72);border:1px solid rgba(255,255,255,0.07);border-radius:20px;
+    padding:36px 34px 32px;backdrop-filter:blur(18px);box-shadow:0 8px 40px rgba(0,0,0,0.45);}
+  .eyebrow{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#787060;text-align:center;margin-bottom:12px;}
+  h1{font-family:var(--font-serif);font-weight:300;font-size:36px;color:#fff;text-align:center;line-height:1.12;margin-bottom:8px;}
+  .terr-meta{display:flex;align-items:center;justify-content:center;gap:12px;font-size:12px;color:#71717a;letter-spacing:0.04em;margin-bottom:26px;}
+  .terr-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--gold);opacity:0.5;}
+
+  .dues-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:16px;margin-bottom:20px;}
+  .dues-head .t{font-size:13px;color:#a1a1aa;}
+  .dues-head .a{font-family:var(--font-serif);font-weight:300;font-size:26px;color:#fff;}
+  .dues-head .p{font-size:11.5px;color:#71717a;margin-left:4px;}
+
+  .stripe-mount{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:28px 20px;text-align:center;margin-bottom:20px;}
+  .stripe-mount .l{font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;color:#52525b;margin-bottom:7px;}
+  .stripe-mount .n{font-size:12px;color:#71717a;line-height:1.6;}
+
+  .cta{width:100%;padding:15px;border:none;border-radius:9999px;cursor:pointer;font-family:var(--font-sans);
+    font-size:14px;font-weight:500;letter-spacing:0.04em;color:#fff;background:rgba(8,8,8,0.95);
+    box-shadow:0 0 0 1px rgba(145,130,104,0.5),0 4px 24px rgba(145,130,104,0.22);transition:box-shadow .3s;}
+  .cta:hover{box-shadow:0 0 0 1px rgba(145,130,104,0.8),0 6px 30px rgba(145,130,104,0.35);}
+  .under{font-size:11.5px;color:#5d5d63;text-align:center;margin-top:13px;line-height:1.7;}
+  .under a{color:#71717a;border-bottom:1px solid rgba(255,255,255,0.15);}
+
+  .next-l{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:#52525b;text-align:center;margin:24px 0 12px;}
+  .locked{display:flex;align-items:center;gap:14px;padding:14px 18px;background:rgba(255,255,255,0.02);
+    border:1px solid rgba(255,255,255,0.05);border-radius:12px;opacity:0.65;margin-bottom:9px;}
+  .locked .n{font-family:var(--font-serif);font-size:19px;color:var(--gold);opacity:0.55;min-width:14px;text-align:center;}
+  .locked b{display:block;font-size:13px;color:#a1a1aa;font-weight:500;margin-bottom:2px;}
+  .locked span{display:block;font-size:11.5px;color:#5d5d63;line-height:1.5;}
+  .locked .lk{margin-left:auto;color:#52525b;opacity:0.5;font-size:12px;}
+
+  .guarantee{display:flex;align-items:flex-start;gap:12px;border:1px solid rgba(145,130,104,0.25);background:rgba(145,130,104,0.04);
+    border-radius:12px;padding:14px 18px;margin-top:18px;}
+  .guarantee .gi{color:var(--gold);opacity:0.7;font-size:13px;margin-top:1px;}
+  .guarantee p{font-size:12px;color:#8f8f96;line-height:1.65;}
+  .guarantee p b{color:#a1a1aa;font-weight:500;}
+
+  details.prefill{border:1px solid rgba(255,255,255,0.08);border-radius:12px;background:rgba(255,255,255,0.02);margin-bottom:22px;overflow:hidden;}
+  details.prefill summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px;font-size:12.5px;color:#a1a1aa;}
+  details.prefill summary::-webkit-details-marker{display:none;}
+  details.prefill summary .ch{transition:transform .25s;color:#5d5d63;}
+  details.prefill[open] summary .ch{transform:rotate(180deg);}
+  .pf-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid rgba(255,255,255,0.05);}
+  .pf{padding:11px 18px;border-bottom:1px solid rgba(255,255,255,0.04);}
+  .pf .k{font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:#52525b;margin-bottom:2px;}
+  .pf .v{font-size:12.5px;color:#8f8f96;}
+
+  .field{margin-bottom:14px;}
+  .field label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#71717a;margin-bottom:6px;}
+  .field label .opt{color:#52525b;text-transform:none;letter-spacing:0;}
+  .field input,.field textarea{width:100%;padding:12px 14px;font-size:14px;color:#e4e4e7;background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.10);border-radius:10px;outline:none;transition:border-color .25s,box-shadow .25s;font-family:var(--font-sans);}
+  .field input::placeholder,.field textarea::placeholder{color:#52525b;}
+  .field input:focus,.field textarea:focus{border-color:rgba(145,130,104,0.55);box-shadow:0 0 0 3px rgba(145,130,104,0.12);}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+  @media (max-width:520px){.row2,.pf-grid{grid-template-columns:1fr;}}
+
+  .upload{display:flex;align-items:center;gap:14px;border:1px dashed rgba(255,255,255,0.15);border-radius:12px;padding:14px 16px;margin-bottom:16px;}
+  .upload .ph{width:44px;height:44px;border-radius:50%;background:rgba(145,130,104,0.14);border:1px solid rgba(145,130,104,0.35);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:18px;color:var(--gold-light);}
+  .upload p{font-size:12.5px;color:#8f8f96;line-height:1.55;}
+  .upload a{color:var(--gold-light);}
+
+  .live{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-light);
+    border:1px solid rgba(145,130,104,0.4);background:rgba(145,130,104,0.07);border-radius:9999px;padding:6px 16px;}
+  .live .d{width:8px;height:8px;border-radius:50%;background:#5b8a5e;box-shadow:0 0 10px rgba(91,138,94,0.7);}
+  .ring{width:58px;height:58px;border-radius:50%;border:1px solid rgba(145,130,104,0.55);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 0 30px rgba(145,130,104,0.18);}
+  .ring svg{width:24px;height:24px;stroke:var(--gold-light);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+  .ring .pulse{width:11px;height:11px;border-radius:50%;background:#c9b98a;box-shadow:0 0 14px rgba(201,185,138,0.85);animation:pl 2s infinite;}
+  @keyframes pl{0%,100%{opacity:1}50%{opacity:.35}}
+
+  .seal{width:96px;height:96px;border-radius:50%;border:1px solid rgba(145,130,104,0.5);background:radial-gradient(circle at 50% 35%,rgba(145,130,104,0.22),rgba(145,130,104,0.05));
+    display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 8px;box-shadow:0 0 34px rgba(145,130,104,0.2);}
+  .seal b{font-family:var(--font-serif);font-weight:400;font-size:22px;color:var(--gold-light);letter-spacing:0.05em;}
+  .seal span{font-size:7px;letter-spacing:0.22em;text-transform:uppercase;color:#787060;margin-top:2px;}
+  .seal-cap{font-size:11px;color:#5d5d63;text-align:center;margin-bottom:22px;}
+
+  .docrow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;font-size:13px;margin-bottom:10px;text-align:left;}
+  .docrow span b{display:block;color:#e4e4e7;font-weight:500;font-size:13.5px;}
+  .docrow span i{display:block;font-style:normal;font-size:11.5px;color:#5d5d63;margin-top:2px;}
+  .docrow a{color:var(--gold-light);font-size:12.5px;white-space:nowrap;}
+  .usage{font-size:12px;color:#71717a;line-height:1.7;text-align:center;margin:16px 0 22px;}
+  .usage b{color:#a1a1aa;font-weight:500;}
+
+  .center{text-align:center;}
+  .demo{position:fixed;bottom:14px;right:16px;font-size:11px;color:#3f3f46;cursor:pointer;border:1px dashed rgba(255,255,255,0.12);border-radius:8px;padding:6px 10px;background:#0a0a0a;}
+</style>
+</head>
+<body>
+
+<a href="/" class="brand">EARN</a>
+<div class="auth-strip" id="authStrip"><span class="d"></span>Signed in via activation link · Alexandra Reid</div>
+
+<div class="steps-bar" id="stepsBar">
+  <span class="sd" id="s1">1<span class="slab">Secure Territory</span></span><span class="sl"></span>
+  <span class="sd" id="s2">2<span class="slab">Your Profile</span></span><span class="sl"></span>
+  <span class="sd" id="s3">3<span class="slab">Your Credentials</span></span>
+</div>
+
+<!-- ── STEP 1 · SECURE TERRITORY (per 02) ── -->
+<div class="panel on" id="p1">
+  <div class="card">
+    <div class="eyebrow">Territory Approved</div>
+    <h1>{{territory}}</h1>
+    <div class="terr-meta"><span>{{territory_tier}}</span><span class="dot"></span><span>{{member_id}}</span></div>
+    <div class="dues-head"><span class="t">Monthly territory dues</span><span><span class="a">{{dues_amount}}</span><span class="p">/ month</span></span></div>
+    <div class="stripe-mount" id="stripe-payment-element">
+      <div class="l">Payment · Stripe</div>
+      <div class="n">Stripe Elements mount point — theme 'night', colorPrimary #918268.<br>Replace this block in production.</div>
+    </div>
+    <button class="cta" onclick="go(2)">Secure {{territory}} Territory</button>
+    <p class="under">Month-to-month membership. Cancel before your next billing date at any time.<br>By activating, you agree to the <a href="/terms-and-conditions">Terms &amp; Conditions</a>.</p>
+
+    <div class="next-l">Unlocks immediately after payment</div>
+    <div class="locked"><span class="n">2</span><div><b>Complete your profile</b><span>Your headshot and the brokerage details that route your commissions.</span></div><span class="lk">🔒</span></div>
+    <div class="locked"><span class="n">3</span><div><b>Receive your credentials</b><span>Your Verified Member seal and Territory Confirmation — for your website, signature, and marketing.</span></div><span class="lk">🔒</span></div>
+
+    <div class="guarantee"><span class="gi">◆</span><p><b>Referral Guarantee.</b> If you receive zero inbound referrals in your first six months, your dues are paused automatically until your first referral arrives.</p></div>
+  </div>
+</div>
+
+<!-- ── STEP 2 · PROFILE (per 03's audited spec — 7 active fields, no skip) ── -->
+<div class="panel" id="p2">
+  <div class="card">
+    <h1 style="font-size:30px;text-align:left;">Complete your profile</h1>
+    <p style="font-size:13.5px;color:#8f8f96;line-height:1.7;margin:6px 0 22px;">Your application did most of the work — review it below, then add the details that put your face on the territory and route your commissions correctly.</p>
+
+    <details class="prefill">
+      <summary><span>From your application — review</span><span class="ch">▾</span></summary>
+      <div class="pf-grid">
+        <div class="pf"><div class="k">Name</div><div class="v">Alexandra Reid</div></div>
+        <div class="pf"><div class="k">Email</div><div class="v">a.reid@reidrealty.com</div></div>
+        <div class="pf"><div class="k">Contact number</div><div class="v">(403) 555-0148</div></div>
+        <div class="pf"><div class="k">Website</div><div class="v">reidrealty.com</div></div>
+        <div class="pf"><div class="k">Reviews URL</div><div class="v">g.page/reidrealty</div></div>
+        <div class="pf"><div class="k">Social</div><div class="v">LinkedIn · Instagram · Facebook</div></div>
+        <div class="pf"><div class="k">Brokerage</div><div class="v">Reid Realty Group</div></div>
+        <div class="pf"><div class="k">Brokerage contact</div><div class="v">(403) 555-0100</div></div>
+        <div class="pf"><div class="k">Broker of record</div><div class="v">M. Castellan</div></div>
+        <div class="pf"><div class="k">License #</div><div class="v">4756XXXX</div></div>
+        <div class="pf"><div class="k">Initial license date</div><div class="v">2014-03-18</div></div>
+        <div class="pf"><div class="k">Focus</div><div class="v">Residential</div></div>
+      </div>
+    </details>
+
+    <div class="upload"><div class="ph">A</div><p><a>Upload your headshot</a> — referring agents introduce clients to a face, not a name.</p></div>
+
+    <div class="row2">
+      <div class="field" style="grid-column:1 / -1;"><label>Brokerage address</label><input type="text" placeholder="123 Main St, City, Province, Postal Code"></div>
+      <div class="field"><label>Brokerage phone <span class="opt">(direct line)</span></label><input type="tel" placeholder="+1 (555) 000-0000"></div>
+      <div class="field"><label>Admin email</label><input type="email" placeholder="admin@brokerage.com"></div>
+      <div class="field"><label>Brokerage fax <span class="opt">(optional)</span></label><input type="tel" placeholder="+1 (555) 000-0000"></div>
+      <div class="field"><label>License expiry date</label><input type="text" placeholder="YYYY-MM-DD"></div>
+      <div class="field" style="grid-column:1 / -1;"><label>Commission invoicing instructions</label><textarea rows="3" placeholder="e.g. Please forward all invoices to admin@brokerage.com"></textarea></div>
+    </div>
+
+    <button class="cta" onclick="go(3)">Complete Profile</button>
+  </div>
+</div>
+
+<!-- ── STEP 3 · CREDENTIALS (per 04 — a reward, not a task) ── -->
+<div class="panel" id="p3">
+  <div class="card center">
+    <div style="margin-bottom:20px;"><span class="live"><span class="d"></span>Territory Live</span></div>
+    <h1>{{territory}}</h1>
+    <p style="font-size:13.5px;color:#8f8f96;line-height:1.7;margin:8px 0 26px;">Inbound referrals to {{territory}} are routing to you — exclusively — effective {{effective_date}}.</p>
+
+    <div class="seal"><b>EARN</b><span>Verified Member</span></div>
+    <p class="seal-cap">Your Verified Member seal · 6 variants</p>
+
+    <div class="docrow"><span><b>Verified Member seal</b><i>6 PNG variants — full, inline, light/dark</i></span><a>Download all</a></div>
+    <div class="docrow"><span><b>Territory Confirmation</b><i>Member ID {{member_id}} · {{effective_date}}</i></span><a>Download PDF</a></div>
+
+    <p class="usage"><b>Inline seal</b> → your email signature · <b>full seal</b> → your website and marketing. Both live permanently in your portal's Assets tab.</p>
+
+    <button class="cta" style="max-width:300px;">Go to Member Portal</button>
+    <p class="under">From here on, sign in normally — your activation link has done its job.</p>
+  </div>
+</div>
+
+<!-- ── E · EXPIRED LINK ── -->
+<div class="panel" id="pe">
+  <div class="card center">
+    <div class="ring"><span class="pulse"></span></div>
+    <div class="eyebrow">Activation Link</div>
+    <h1 style="font-size:32px;">This link has expired</h1>
+    <p style="font-size:13.5px;color:#8f8f96;line-height:1.75;margin:10px 0 4px;">No harm done — <b style="color:#e4e4e7;font-weight:500;">your approval stands</b> and your territory is still being held for you.</p>
+    <p style="font-size:12.5px;color:#71717a;margin-bottom:26px;">We'll send a fresh activation link to {{member_email_masked}}</p>
+    <button class="cta" style="max-width:320px;">Send Me a Fresh Link</button>
+    <p class="under">Prefer to do it manually? <a href="/signin">Sign in</a> and you'll be taken straight to where you left off.</p>
+  </div>
+</div>
+
+<span class="demo" onclick="cycle()">demo: cycle screens</span>
+
+<script>
+  /* DEMO ONLY — production navigates; token validation server-side */
+  const order=['p1','p2','p3','pe'];
+  let cur=0;
+  function paint(){
+    order.forEach((id,i)=>document.getElementById(id).className='panel'+(i===cur?' on':''));
+    document.getElementById('stepsBar').style.display=cur<3?'flex':'none';
+    document.getElementById('authStrip').style.display=(cur===2||cur===3)?'none':'inline-flex';
+    ['s1','s2','s3'].forEach((s,i)=>{
+      const el=document.getElementById(s);
+      const lab=el.querySelector('.slab').outerHTML;
+      el.className='sd'+(i===cur?' on':(i<cur?' done':' lock'));
+      el.innerHTML=(i<cur?'✓':i+1)+lab;
+    });
+    window.scrollTo(0,0);
+  }
+  function go(n){cur=n-1;paint();}
+  function cycle(){cur=(cur+1)%order.length;paint();}
+  paint();
+</script>
+</body>
+</html>

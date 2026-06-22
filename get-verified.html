@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EARN — Get Verified</title>
+<meta name="robots" content="noindex">
+<!-- ════════════════════════════════════════════════════════════════
+     MOCKUP 4 / GET VERIFIED REGISTRATION — design target for Ian
+     (June 12, 2026) · Spec: App Delta Spec §4 (Flow B)
+
+     FLOW B = the FRONT-LOADED variant of Flow A's machinery. Same
+     components, opposite order: account first (no referral in hand),
+     then the empty dashboard. BUILD ONCE — Flow A back-loads these
+     exact pieces after the submission form.
+
+     SCREENS: 1 registration → 2 verification-queue confirmation.
+
+     BUILD NOTES:
+     • ENTRY: marketing footer Duo "Get Verified". (Channel stays dark
+       until this ships — marketing must not link a dead door.)
+     • PENDING → manual admin approval (identity/license/standing
+       registry checks — same pipeline as Flow A step 5). The June 9
+       sender-quality flag (admin closes accounts with invalid-
+       submission patterns) is admin-side, not in this UI.
+     • EMAIL VERIFICATION IS ASYNC + NON-BLOCKING — account exists
+       immediately; never a verification wall.
+     • SAME-EMAIL GUARD: email matches an existing account → prompt
+       sign-in instead of registration. Never a duplicate.
+     • LANDING AFTER SCREEN 2 → the sending dashboard (Mockup 3) in
+       its PENDING state with an EMPTY list. Empty-state spec: replace
+       the table body with a centered block — "No referrals yet.
+       Submit your first — it routes the moment you're verified." +
+       a Submit Referral button. Banner + pending chip per Mockup 3.
+     • VOCABULARY: "Get Verified" is the public CTA; "verified" is a
+       STATUS in copy, never a class name. Senders are never members.
+     • Demo JS only — production navigates.
+     ════════════════════════════════════════════════════════════════ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{--font-sans:'Inter',system-ui,sans-serif;--font-serif:'Cormorant Garamond',Georgia,serif;--gold:#918268;--gold-light:#a89a7e;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--font-sans);min-height:100vh;display:flex;flex-direction:column;align-items:center;
+    background:radial-gradient(900px 500px at 50% -5%,rgba(145,130,104,0.12),transparent 60%),#0a0a0a;color:#e4e4e7;padding:44px 16px 80px;}
+  a{text-decoration:none;color:inherit;}
+:focus-visible{outline:2px solid rgba(145,130,104,0.75);outline-offset:2px;border-radius:6px;}
+  .brand{font-weight:800;letter-spacing:0.08em;font-size:18px;color:#fff;margin-bottom:32px;}
+
+  .card{width:100%;max-width:520px;background:rgba(16,16,16,0.72);border:1px solid rgba(255,255,255,0.07);
+    border-radius:20px;padding:40px 38px 36px;backdrop-filter:blur(18px);box-shadow:0 8px 40px rgba(0,0,0,0.45);}
+  h1{font-family:var(--font-serif);font-weight:300;font-size:32px;color:#fff;margin-bottom:8px;}
+  .sub{font-size:13.5px;color:#8f8f96;line-height:1.7;margin-bottom:28px;}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .grid .full{grid-column:1 / -1;}
+  @media (max-width:520px){.grid{grid-template-columns:1fr;}}
+  .field label{display:block;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#71717a;margin-bottom:6px;}
+  .field input,.field select{width:100%;padding:12px 14px;font-size:14px;color:#e4e4e7;background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.10);border-radius:10px;outline:none;transition:border-color .25s,box-shadow .25s;font-family:var(--font-sans);}
+  .field input::placeholder{color:#52525b;}
+  .field select{color:#a1a1aa;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%2371717a' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+  .field input:focus,.field select:focus{border-color:rgba(145,130,104,0.55);box-shadow:0 0 0 3px rgba(145,130,104,0.12);}
+
+  .agree{display:flex;gap:12px;align-items:flex-start;margin-top:18px;}
+  .agree input{margin-top:3px;accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;}
+  .agree p{font-size:12.5px;color:#8f8f96;line-height:1.6;}
+  .agree a{color:var(--gold-light);border-bottom:1px solid rgba(168,154,126,0.35);}
+
+  .cta{width:100%;margin-top:24px;padding:14px;border:none;border-radius:9999px;cursor:pointer;font-family:var(--font-sans);
+    font-size:14px;font-weight:500;letter-spacing:0.04em;color:#fff;background:rgba(8,8,8,0.95);
+    box-shadow:0 0 0 1px rgba(145,130,104,0.5),0 4px 24px rgba(145,130,104,0.22);transition:box-shadow .3s;}
+  .cta:hover{box-shadow:0 0 0 1px rgba(145,130,104,0.8),0 6px 30px rgba(145,130,104,0.35);}
+  .under{font-size:12px;color:#5d5d63;text-align:center;margin-top:14px;line-height:1.7;}
+  .under a{color:#8f8f96;border-bottom:1px solid rgba(255,255,255,0.15);}
+
+  /* confirmation */
+  #confirm{display:none;text-align:center;}
+  .ring{width:58px;height:58px;border-radius:50%;border:1px solid rgba(201,185,138,0.55);display:flex;align-items:center;justify-content:center;margin:0 auto 22px;box-shadow:0 0 30px rgba(201,185,138,0.18);}
+  .ring .pulse{width:11px;height:11px;border-radius:50%;background:#c9b98a;box-shadow:0 0 14px rgba(201,185,138,0.85);animation:pl 2s infinite;}
+  @keyframes pl{0%,100%{opacity:1}50%{opacity:.35}}
+  .chip{display:inline-block;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c9b98a;border:1px solid rgba(201,185,138,0.4);border-radius:9999px;padding:5px 14px;margin-bottom:24px;}
+  .steps{text-align:left;max-width:380px;margin:0 auto 28px;display:flex;flex-direction:column;gap:14px;}
+  .step{display:flex;gap:14px;align-items:flex-start;}
+  .step .n{font-family:var(--font-serif);font-weight:300;font-size:19px;color:var(--gold);min-width:16px;line-height:1.3;}
+  .step p{font-size:13.5px;color:#a1a1aa;line-height:1.6;}
+  .step p b{color:#e4e4e7;font-weight:600;}
+
+  .demo{position:fixed;bottom:14px;right:16px;font-size:11px;color:#3f3f46;cursor:pointer;border:1px dashed rgba(255,255,255,0.12);border-radius:8px;padding:6px 10px;}
+</style>
+</head>
+<body>
+
+<a href="/" class="brand">EARN</a>
+
+<!-- ── SCREEN 1 · REGISTRATION ── -->
+<div class="card" id="reg">
+  <h1>Get verified</h1>
+  <p class="sub">Set up your sending account now, so the moment a client needs another market, the referral takes minutes — your fee documented in writing before any introduction.</p>
+  <div class="grid">
+    <div class="field"><label for="g-name">Full name</label><input id="g-name" type="text" placeholder="Jordan Avery"></div>
+    <div class="field"><label for="g-email">Email</label><input id="g-email" type="email" placeholder="you@brokerage.com"></div>
+    <div class="field"><label for="g-phone">Phone</label><input id="g-phone" type="tel" placeholder="(416) 555-0184"></div>
+    <div class="field"><label for="g-brokerage">Brokerage</label><input id="g-brokerage" type="text" placeholder="Brokerage name"></div>
+    <div class="field"><label for="g-license">License #</label><input id="g-license" type="text" placeholder="e.g. 4756xxxx"></div>
+    <div class="field"><label for="g-prov">License jurisdiction</label>
+      <select id="g-prov"><option>Select province / state</option><option>Ontario</option><option>British Columbia</option><option>Alberta</option><option>Nova Scotia</option><option>Other</option></select></div>
+    <div class="field full"><label for="g-pass">Create password</label><input id="g-pass" type="password" placeholder="••••••••••"></div>
+  </div>
+  <label class="agree">
+    <input type="checkbox">
+    <p>I confirm I am a licensed real estate agent in good standing and agree to the <a href="/terms-and-conditions">Terms of Service</a> and <a href="/privacy-policy">Privacy Policy</a>.</p>
+  </label>
+  <button class="cta" onclick="show()">Get verified</button>
+  <p class="under">Already have an account? <a href="/signin">Sign in</a></p>
+</div>
+
+<!-- ── SCREEN 2 · VERIFICATION QUEUE ── -->
+<div class="card" id="confirm">
+  <div class="ring"><span class="pulse"></span></div>
+  <h1 style="text-align:center;">You're in the queue</h1>
+  <div><span class="chip">Verification in progress</span></div>
+  <div class="steps">
+    <div class="step"><span class="n">1</span><p><b>We verify your license and standing</b> — a quick, one-time check against your provincial registry. You'll be notified the moment it clears.</p></div>
+    <div class="step"><span class="n">2</span><p><b>Submit referrals any time</b> — even right now. Anything you submit is securely held and routes automatically once you're verified.</p></div>
+    <div class="step"><span class="n">3</span><p><b>From then on it's minutes</b> — submit, the agreement generates, your fee is documented in writing, and you track it to close.</p></div>
+  </div>
+  <button class="cta" style="max-width:300px;">Go to your dashboard</button>
+  <p class="under">Account created · jordan@brokerage.com</p>
+</div>
+
+<span class="demo" onclick="tg()">demo: toggle screens</span>
+
+<script>
+  /* DEMO ONLY — production navigates */
+  function show(){document.getElementById('reg').style.display='none';document.getElementById('confirm').style.display='block';window.scrollTo(0,0);}
+  function tg(){const r=document.getElementById('reg'),c=document.getElementById('confirm');const onReg=r.style.display!=='none';r.style.display=onReg?'none':'block';c.style.display=onReg?'block':'none';window.scrollTo(0,0);}
+</script>
+</body>
+</html>
