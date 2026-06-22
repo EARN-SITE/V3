@@ -60,16 +60,19 @@
   :root{--font-sans:'Inter',system-ui,sans-serif;--font-serif:'Cormorant Garamond',Georgia,serif;--gold:#918268;--gold-light:#a89a7e;--text-muted:#78787f;--text-tertiary:#a1a1aa;}
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:var(--font-sans);min-height:100vh;
-    background:radial-gradient(1000px 540px at 50% -5%,rgba(145,130,104,0.12),transparent 60%),#0a0a0a;
-    color:#e4e4e7;padding:120px 16px 80px;display:flex;flex-direction:column;align-items:center;}
+    background:#050505;
+    color:#e4e4e7;padding:160px 24px 80px;display:flex;flex-direction:column;align-items:center;}
+  @media (max-width:768px){ body{ padding-top:120px; } }
   a{text-decoration:none;color:inherit;}
   .brand{font-weight:800;letter-spacing:0.08em;font-size:18px;color:#fff;margin-bottom:34px;}
 
   .wrap{width:100%;max-width:640px;}
 
   .head{text-align:center;}
+  .head-label{ font-size:12px; font-weight:500; letter-spacing:0.25em; text-transform:uppercase; color:#787060; margin-bottom:24px; }
   .head h1{font-family:var(--font-serif);font-weight:400;font-size:clamp(2rem, 4.5vw, 3.5rem);color:#fff;letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;}
-  .head .sub{font-size:14px;color:#8f8f96;line-height:1.7;max-width:520px;margin:0 auto 38px;}
+  .head .sub{font-size:15px;color:#71717a;line-height:1.7;max-width:520px;margin:0 auto 64px;}
+  @media (max-width:768px){ .head .sub{ margin-bottom:40px; } }
 
   .section{background:rgba(16,16,16,0.72);border:1px solid rgba(255,255,255,0.07);border-radius:18px;
     padding:30px 30px 26px;margin-bottom:18px;backdrop-filter:blur(18px);}
@@ -509,6 +512,7 @@
 <!-- ─────────── VIEW 1 · THE FORM ─────────── -->
 <div class="wrap" id="form">
   <div class="head">
+    <div class="head-label">Client Referral</div>
     <h1>Refer your client.</h1>
     <p class="sub">Your client is placed with the one elite agent for that market — your fee in writing before the first introduction.</p>
   </div>
