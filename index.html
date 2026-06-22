@@ -27,9 +27,9 @@
    CSS VARIABLES (from globals.css)
    ═══════════════════════════════════════ */
 :root {
-  --reveal-dur: 0.8s;
-  --reveal-dur-feature: 1.5s;
-  --reveal-ease: cubic-bezier(0.33, 1, 0.68, 1);
+  --reveal-dur: 1.0s;
+  --reveal-dur-feature: 2.6s;
+  --reveal-ease: cubic-bezier(0.25, 1, 0.5, 1);
   --background: #050505;
   --foreground: #fafafa;
   --muted-foreground: #a1a1aa;
@@ -673,7 +673,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* Pure materialization — no movement, just appears */
 .fade-in-rise {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translateY(40px);
   transition: opacity var(--reveal-dur-feature) var(--reveal-ease), transform var(--reveal-dur-feature) var(--reveal-ease);
 }
 .fade-in-rise.visible { opacity: 1; transform: translateY(0); }
