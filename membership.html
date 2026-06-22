@@ -27,10 +27,11 @@
 
 <style>
 :root {
-  --reveal-dur: 1.2s;
-  --reveal-dur-feature: 3.0s;
-  --reveal-dur-statement: 4.0s;
-  --reveal-ease: cubic-bezier(0.87, 0, 0.13, 1);
+  --reveal-dur: 0.9s;
+  --reveal-dur-feature: 2.4s;
+  --reveal-dur-statement: 3.2s;
+  --reveal-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --reveal-ease-heavy: cubic-bezier(0.87, 0, 0.13, 1);
   --background: #050505;
   --foreground: #fafafa;
   --muted-foreground: #a1a1aa;
@@ -1071,10 +1072,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .fade-in-scale {
   opacity: 0;
   transform: scale(0.92);
-  transition: opacity var(--reveal-dur-feature) var(--reveal-ease), transform var(--reveal-dur-feature) var(--reveal-ease);
+  transition: opacity var(--reveal-dur-feature) var(--reveal-ease-heavy), transform var(--reveal-dur-feature) var(--reveal-ease-heavy);
 }
 .fade-in-scale.visible { opacity: 1; transform: scale(1); }
-.fade-in-subtle { opacity: 0; transition: opacity var(--reveal-dur-statement) var(--reveal-ease); }
+.fade-in-subtle { opacity: 0; transition: opacity var(--reveal-dur-statement) var(--reveal-ease-heavy); }
 .fade-in-subtle.visible { opacity: 1; }
 /* ── Centered section headers (site-wide rhythm) ── */
 .depth-section .depth-label, .depth-section h2 { text-align: center; }
@@ -1312,7 +1313,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .fade-in-rise {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity var(--reveal-dur-feature) var(--reveal-ease), transform var(--reveal-dur-feature) var(--reveal-ease);
+  transition: opacity var(--reveal-dur-feature) var(--reveal-ease-heavy), transform var(--reveal-dur-feature) var(--reveal-ease-heavy);
 }
 .fade-in-rise.visible { opacity: 1; transform: translateY(0); }
 @keyframes marquee {
@@ -1496,7 +1497,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 <section class="ticker">
   <div class="ticker-border top"></div>
 
-  <div class="ticker-label fade-in">
+  <div class="ticker-label">
     <svg viewBox="0 0 24 24" fill="none" stroke="#918268" stroke-width="1.5" style="width:16px;height:16px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
     <span>Drawn from North America’s leading brokerages</span>
     <svg viewBox="0 0 24 24" fill="none" stroke="#918268" stroke-width="1.5" style="width:16px;height:16px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1872,7 +1873,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
         <text x="130" y="270" text-anchor="middle" fill="white" font-family="'Cormorant Garamond',Georgia,serif" font-size="22" font-weight="400" letter-spacing="0.02em">Verified Member</text>
       </svg>
     </div>
-    <p class="mc-statement fade-in-subtle" style="transition-delay:0.8s;">A credential mark issued to every accepted member. Displayed on member websites, signatures, and client-facing materials.</p>
+    <p class="mc-statement fade-in-subtle">A credential mark issued to every accepted member. Displayed on member websites, signatures, and client-facing materials.</p>
   </div>
 </section>
 

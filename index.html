@@ -27,9 +27,9 @@
    CSS VARIABLES (from globals.css)
    ═══════════════════════════════════════ */
 :root {
-  --reveal-dur: 1.2s;
+  --reveal-dur: 0.9s;
   --reveal-dur-feature: 3.0s;
-  --reveal-ease: cubic-bezier(0.87, 0, 0.13, 1);
+  --reveal-ease: cubic-bezier(0.65, 0, 0.35, 1);
   --background: #050505;
   --foreground: #fafafa;
   --muted-foreground: #a1a1aa;
@@ -667,16 +667,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transform: translateY(0);
 }
 @media (prefers-reduced-motion: reduce) {
-  .fade-in, .fade-in-rise, .fade-in-scale { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .fade-in { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* Pure materialization — no movement, just appears */
-.fade-in-rise {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity var(--reveal-dur-feature) var(--reveal-ease), transform var(--reveal-dur-feature) var(--reveal-ease);
-}
-.fade-in-rise.visible { opacity: 1; transform: translateY(0); }
 
 
 
@@ -990,7 +984,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 <section class="ticker">
   <div class="ticker-border top"></div>
 
-  <div class="ticker-label fade-in">
+  <div class="ticker-label">
     <svg viewBox="0 0 24 24" fill="none" stroke="#918268" stroke-width="1.5" style="width:16px;height:16px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
     <span>Drawn from North America’s leading brokerages</span>
     <svg viewBox="0 0 24 24" fill="none" stroke="#918268" stroke-width="1.5" style="width:16px;height:16px;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -1173,7 +1167,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
      FOUNDER NOTE
      ═══════════════════════════════════════ -->
 <section class="founder">
-  <div class="founder-inner">
+  <div class="founder-inner fade-in">
     <div>
       <blockquote>
         <p>I built EARN because I was tired of referral roulette. I wanted a black book of the best agents in North America. This is that black book.</p>
@@ -1197,7 +1191,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
      ═══════════════════════════════════════ -->
 <footer class="footer-section">
   <div class="footer-border-top"></div>
-  <div class="footer-cta fade-in-rise">
+  <div class="footer-cta">
     <p class="footer-identity">EARN is referral infrastructure — when a client leaves an agent’s market, they’re placed with a vetted elite agent, the fee in writing, the referral tracked to close.</p>
     <div class="footer-duo">
       <div class="footer-duo-cell">
@@ -1255,7 +1249,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ── Fade-in on scroll (IntersectionObserver) ──
-const fadeEls = document.querySelectorAll('.fade-in, .fade-in-rise');
+const fadeEls = document.querySelectorAll('.fade-in');
 const fadeObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
