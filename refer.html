@@ -34,10 +34,12 @@
        fine; no chaser-email machinery, no orphaned referrals).
      • EMAIL VERIFICATION IS ASYNC + NON-BLOCKING — never a wall
        mid-flow. Admin approval remains the routing gate.
-     • FEE INPUT: auto-filled 25, HARD MAX 25, sender may adjust down
-       (clamp client- AND server-side). Framing: this is what the
-       sender RECEIVES — never "acknowledge"/payer language. The
-       chosen % feeds referral-agreement generation (Essential item 6).
+     • FEE INPUT: auto-filled 25, SUGGESTED MAX 25 (not a hard cap). Floor at 0;
+       a value above 25 is permitted but surfaces a flagged disclaimer that 25%
+       is the suggested maximum. Do NOT clamp down to 25 (client or server).
+       Framing: this is what the sender RECEIVES — never "acknowledge"/payer
+       language. The chosen % feeds referral-agreement generation (Essential
+       item 6). Locked June 22, 2026 — matches the live app.
      • DESTINATION is a dropdown. Option-list source is session wiring
        (market list); an unclaimed destination market triggers the
        Golden Ticket pipeline — do not reject it.
@@ -556,8 +558,8 @@
   <div class="section">
     <div class="sec-head"><span class="sec-num">4</span><span class="sec-title">Your referral fee</span></div>
     <div class="grid">
-      <div class="field"><label for="fee">Referral fee (% of gross commission)</label><input id="fee" type="number" value="25" min="1" max="25" step="0.5" oninput="clampFee(this)"></div>
-      <div class="field" style="display:flex;align-items:flex-end;"><p style="font-size:12.5px;color:#8f8f96;line-height:1.6;padding-bottom:4px;">This is what <b style="color:#e4e4e7;">you receive</b>, paid brokerage-to-brokerage at closing. 25% is the network standard and the maximum — adjust down only if you choose to.</p></div>
+      <div class="field"><label for="fee">Referral fee (% of gross commission)</label><input id="fee" type="number" value="25" min="1" max="100" step="0.5" oninput="checkFee(this)"></div>
+      <div class="field" style="display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;"><p style="font-size:12.5px;color:#8f8f96;line-height:1.6;padding-bottom:4px;">This is what <b style="color:#e4e4e7;">you receive</b>, paid brokerage-to-brokerage at closing. 25% is the network standard and suggested maximum.</p><p id="feeNote" style="display:none;font-size:12px;color:#c9a86a;line-height:1.55;margin-top:6px;">25% is the suggested maximum referral fee. A higher fee is permitted but falls outside the network standard.</p></div>
     </div>
     <label class="agree" style="margin-top:16px;">
       <input type="checkbox">
@@ -614,7 +616,7 @@
     o.forEach((id,i)=>{document.getElementById(id).style.display=(i===(cur+1)%3)?'block':'none';});
     window.scrollTo(0,0);
   }
-  function clampFee(el){const v=parseFloat(el.value);if(v>25)el.value=25;if(v<0)el.value=0;}
+  function checkFee(el){var v=parseFloat(el.value);if(v<0){el.value=0;v=0;}var note=document.getElementById('feeNote');if(note)note.style.display=(v>25)?'block':'none';}
 
 // ── Navbar scroll effect ──
 const navPill = document.getElementById('navPill');
