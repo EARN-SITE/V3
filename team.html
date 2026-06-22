@@ -31,6 +31,8 @@
    CSS VARIABLES
    ═══════════════════════════════════════ */
 :root {
+  --reveal-dur: 0.8s;
+  --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --background: #050505;
   --foreground: #fafafa;
   --muted-foreground: #a1a1aa;
@@ -785,11 +787,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease);
 }
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-in, .fade-in-subtle { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* Scroll progress */
@@ -905,9 +910,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
      PAGE HERO
      ═══════════════════════════════════════ -->
 <section class="page-hero">
-  <span class="page-hero-label fade-in">Leadership</span>
-  <h1 class="fade-in" style="transition-delay:0.1s;">Built by Practitioners.<br>Not Spectators.</h1>
-  <p class="fade-in" style="transition-delay:0.2s;">The leadership behind the network has closed hundreds of transactions, scaled billion-dollar ventures, and built the infrastructure connecting them.</p>
+  <span class="page-hero-label">Leadership</span>
+  <h1>Built by Practitioners.<br>Not Spectators.</h1>
+  <p>The leadership behind the network has closed hundreds of transactions, scaled billion-dollar ventures, and built the infrastructure connecting them.</p>
 </section>
 
 

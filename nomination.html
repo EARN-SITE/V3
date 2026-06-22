@@ -28,6 +28,8 @@
 
 <style>
 :root {
+  --reveal-dur: 0.8s;
+  --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --background: #050505;
   --foreground: #fafafa;
   --muted-foreground: #a1a1aa;
@@ -565,12 +567,15 @@ textarea.form-input {
    ═══════════════════════════════════════ */
 .fade-in {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease);
 }
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .fade-in, .fade-in-subtle { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* ═══════════════════════════════════════
@@ -640,9 +645,9 @@ textarea.form-input {
 
 <!-- PAGE HEADER -->
 <section class="nom-header">
-  <div class="nom-header-label fade-in">Member Nomination</div>
-  <h1 class="fade-in" style="transition-delay:0.1s;">Nominate an Agent.</h1>
-  <p class="fade-in" style="transition-delay:0.2s;">You already know agents strong enough for the network — peers you've worked with and rate. Nomination is how you put them forward, vetted to the same standard as any candidate.</p>
+  <div class="nom-header-label">Member Nomination</div>
+  <h1>Nominate an Agent.</h1>
+  <p>You already know agents strong enough for the network — peers you've worked with and rate. Nomination is how you put them forward, vetted to the same standard as any candidate.</p>
 </section>
 
 
@@ -797,7 +802,7 @@ const fadeObserver = new IntersectionObserver((entries) => {
       fadeObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.1 });
+}, { threshold: 0.15 });
 fadeEls.forEach(el => fadeObserver.observe(el));
 
 

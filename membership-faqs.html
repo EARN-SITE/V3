@@ -27,6 +27,8 @@
 
 <style>
 :root {
+  --reveal-dur: 0.8s;
+  --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --background: #050505;
   --foreground: #fafafa;
   --muted-foreground: #a1a1aa;
@@ -558,10 +560,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* ═══ ANIMATIONS ═══ */
 .fade-in {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease);
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .fade-in, .fade-in-subtle { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
 #scrollProgress {
   position: fixed; top: 0; left: 0; height: 2px; width: 0;
   background: linear-gradient(to right, rgba(145,130,104,0.6), rgba(145,130,104,0.9));
@@ -664,9 +670,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-  <span class="page-hero-label fade-in">FAQ</span>
-  <h1 class="fade-in" style="transition-delay:0.1s;">Common Questions.</h1>
-  <p class="fade-in" style="transition-delay:0.2s;">Answers to what prospective territory holders ask most frequently about the network, its mechanics, and membership.</p>
+  <span class="page-hero-label">FAQ</span>
+  <h1>Common Questions.</h1>
+  <p>Answers to what prospective territory holders ask most frequently about the network, its mechanics, and membership.</p>
 </section>
 
 

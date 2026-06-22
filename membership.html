@@ -27,6 +27,8 @@
 
 <style>
 :root {
+  --reveal-dur: 0.8s;
+  --reveal-ease: cubic-bezier(0.16, 1, 0.3, 1);
   --background: #050505;
   --foreground: #fafafa;
   --muted-foreground: #a1a1aa;
@@ -409,10 +411,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .footer-right a:hover { color: #d4d4d8; }
 /* ═══ ANIMATIONS ═══ */
 .fade-in {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease);
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .fade-in, .fade-in-subtle { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
 #scrollProgress {
   position: fixed; top: 0; left: 0; height: 2px; width: 0;
   background: linear-gradient(to right, rgba(145,130,104,0.6), rgba(145,130,104,0.9));
@@ -890,7 +896,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     transparent 80%
   );
   opacity: 0;
-  transition: opacity 3s ease;
+  transition: opacity 1.2s ease;
 }
 .phone-glow.visible { opacity: 1; }
 /* Phone responsive */
@@ -1477,10 +1483,10 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 <!-- PAGE HERO -->
 <section class="page-hero">
-  <span class="page-hero-label page-hero-label--name fade-in">ELITE AGENT REFERRAL NETWORK</span>
-  <h1 class="fade-in" style="transition-delay:0.1s;">The Agent Other Agents Trust.</h1>
-  <p class="fade-in" style="transition-delay:0.2s;">One agent per market — vetted, credentialed, and receiving every client referral the network carries for that market.</p>
-  <div class="fade-in" style="transition-delay:0.3s;margin-top:28px;"><a href="/" class="marked-door">For Referring Agents →</a></div>
+  <span class="page-hero-label page-hero-label--name">ELITE AGENT REFERRAL NETWORK</span>
+  <h1>The Agent Other Agents Trust.</h1>
+  <p>One agent per market — vetted, credentialed, and receiving every client referral the network carries for that market.</p>
+  <div style="margin-top:28px;"><a href="/" class="marked-door">For Referring Agents →</a></div>
 </section>
 
 <!-- VETTING TICKER (ported from homepage) -->
@@ -1564,7 +1570,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     <span class="depth-label fade-in" style="text-align:center;">The Receiving Experience</span>
     <h2 class="fade-in" style="font-family:'Cormorant Garamond','Georgia',serif;font-weight:400;letter-spacing:-0.03em;font-size:clamp(2rem,4vw,3.2rem);margin-bottom:64px;color:#fff;text-wrap:balance;">EARN members don't chase leads. Client referrals are routed to them.</h2>
     <div style="display:flex;justify-content:center;">
-      <div class="fade-in" style="transition-delay:0.2s;">
+      <div>
         <div class="phone-wrap">
           <div class="phone-body" id="phoneMock">
 
@@ -2140,6 +2146,7 @@ const phoneObserver = new IntersectionObserver(([entry]) => {
       document.getElementById('phoneTime').classList.add('visible');
       document.getElementById('phoneBar').classList.add('visible');
       document.getElementById('lockShortcuts').classList.add('visible');
+      document.getElementById('phoneAmbient').classList.add('visible');
     }, 500);
 
     // Notifications: start after screen is awake
@@ -2151,7 +2158,6 @@ const phoneObserver = new IntersectionObserver(([entry]) => {
     }, 2400);
     setTimeout(() => {
       document.getElementById('notif2').classList.add('visible');
-      document.getElementById('phoneAmbient').classList.add('visible');
     }, 3600);
   }
 }, { threshold: 0.3 });
