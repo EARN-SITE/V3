@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EARN — Referrals</title>
+<meta name="robots" content="noindex">
+<!-- ════════════════════════════════════════════════════════════════
+     MOCKUP 3 rev B / SENDING DASHBOARD — design target for Ian
+     (June 12, 2026 · rebuilt on the EXISTING CRM layout per founder)
+
+     LAYOUT PARITY: this mirrors the current app's CRM (sidebar · list
+     table · detail view with Receiving Agent / Client Info / Activity
+     Log / Documents cards). KEEP that structure. This file is the
+     restyle + new-criteria target:
+     • BRANDING: green accent → gold #918268 (checklist Essential
+       item 2). Headings → Cormorant Garamond light; body Inter.
+       Light Mode theming is OUT OF SCOPE for this pass — keep the
+       toggle if trivial, dark is the brand surface.
+     • LABEL SWEEP IN-APP: "Send new referral" → "Submit Referral"
+       (applies to the member CRM too — same button).
+     • ONE SHELL, TWO ACCOUNT TYPES: members keep Received/Sent tabs;
+       SENDER accounts are SENT-ONLY (no tabs, no Received data, no
+       Admin nav). "Commissions" nav → "Fees" for senders (display +
+       tracking only; broker-to-broker, never processed).
+     • STATUSES (lifecycle): held — pending verification → routed →
+       accepted → closed. Map 1:1 to the June 9 notification triggers.
+       Old "Pending" chip is replaced by these.
+     • "Agent Pending" rows (no territory holder in destination) stay
+       valid — that state triggers the Golden Ticket pipeline; show
+       the sender "Being assigned", never an error.
+     • VERIFICATION STATES (demo toggle bottom-right): pending shows
+       the banner + everything Held; senders CAN keep submitting
+       while pending (founder, June 12) — all held. Verified clears
+       the banner; lifecycle progresses.
+     • CLIENT CONTACT releases to the receiving agent only after the
+       referral agreement is signed (Activity Log + agent card copy).
+     • FLOW G DOOR: quiet "Apply for membership →" in the sidebar
+       above the user card. Authenticated, pre-filled, same account,
+       type flips on acceptance. Never pushed, never a 2nd account.
+     • Sample data fictional. Row click → detail; demo JS only.
+     ════════════════════════════════════════════════════════════════ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root{--font-sans:'Inter',system-ui,sans-serif;--font-serif:'Cormorant Garamond',Georgia,serif;--gold:#918268;--gold-light:#a89a7e;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--font-sans);background:#0a0a0a;color:#e4e4e7;min-height:100vh;}
+  a{text-decoration:none;color:inherit;cursor:pointer;}
+:focus-visible{outline:2px solid rgba(145,130,104,0.75);outline-offset:2px;border-radius:6px;}
+  .app{display:flex;min-height:100vh;}
+
+  /* ── sidebar (layout parity with current CRM) ── */
+  aside{width:248px;flex-shrink:0;display:flex;flex-direction:column;padding:26px 16px 20px;border-right:1px solid rgba(255,255,255,0.05);}
+  .logo{font-weight:800;letter-spacing:0.1em;font-size:20px;color:#fff;padding:0 12px;margin-bottom:34px;}
+  .nv{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:500;color:#8f8f96;border-radius:10px;padding:11px 12px;transition:color .2s,background .2s;position:relative;}
+  .nv svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;}
+  .nv:hover{color:#e4e4e7;}
+  .nv.active{color:var(--gold-light);background:rgba(145,130,104,0.08);}
+  .nv.active::before{content:"";position:absolute;left:-16px;top:8px;bottom:8px;width:3px;border-radius:2px;background:var(--gold);}
+  .send{margin:22px 0 8px;padding:13px;border:none;border-radius:9999px;cursor:pointer;font-family:var(--font-sans);font-size:13.5px;font-weight:500;letter-spacing:0.04em;color:#fff;background:rgba(8,8,8,0.95);box-shadow:0 0 0 1px rgba(145,130,104,0.5),0 4px 22px rgba(145,130,104,0.2);transition:box-shadow .3s;}
+  .send:hover{box-shadow:0 0 0 1px rgba(145,130,104,0.8),0 6px 28px rgba(145,130,104,0.33);}
+  .spacer{flex:1;}
+  .nv.sm{font-size:13px;padding:9px 12px;}
+  .door{display:flex;align-items:center;gap:7px;font-size:12.5px;color:#6f6f76;padding:10px 12px 14px;transition:color .25s;}
+  .door:hover{color:var(--gold-light);}
+  .door .a{transition:transform .25s;}
+  .door:hover .a{transform:translateX(3px);}
+  .user{display:flex;align-items:center;gap:11px;border-top:1px solid rgba(255,255,255,0.06);padding:16px 12px 0;}
+  .av{width:36px;height:36px;border-radius:50%;background:rgba(145,130,104,0.18);border:1px solid rgba(145,130,104,0.4);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:17px;color:var(--gold-light);}
+  .user b{display:block;font-size:13px;color:#fff;font-weight:600;}
+  .user span{display:block;font-size:11.5px;color:#71717a;margin-top:1px;}
+
+  /* ── main panel ── */
+  main{flex:1;padding:34px 40px 60px;max-width:1180px;}
+  .panel{display:none;}
+  .panel.on{display:block;}
+
+  .ttl-row{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:24px;}
+  h1{font-family:var(--font-serif);font-weight:300;font-size:34px;color:#fff;letter-spacing:0.005em;}
+  .vchip{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;letter-spacing:0.13em;text-transform:uppercase;border-radius:9999px;padding:4px 12px;margin-left:14px;vertical-align:6px;}
+  .vchip.ok{color:var(--gold-light);border:1px solid rgba(145,130,104,0.45);}
+  .vchip.wait{color:#c9b98a;border:1px solid rgba(201,185,138,0.35);}
+  .vchip .d{width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .tools{display:flex;align-items:center;gap:12px;}
+  .search{display:flex;align-items:center;gap:9px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:9999px;padding:10px 16px;width:260px;color:#52525b;font-size:13px;}
+  .filters{font-size:13px;color:#8f8f96;border:1px solid rgba(255,255,255,0.09);border-radius:9999px;padding:10px 18px;cursor:pointer;transition:color .2s;}
+  .filters:hover{color:#fff;}
+
+  .banner{display:none;align-items:flex-start;gap:13px;border:1px solid rgba(201,185,138,0.3);background:rgba(201,185,138,0.06);border-radius:14px;padding:15px 18px;margin-bottom:22px;}
+  .banner.on{display:flex;}
+  .pulse{width:9px;height:9px;border-radius:50%;background:#c9b98a;margin-top:5px;flex-shrink:0;box-shadow:0 0 12px rgba(201,185,138,0.8);animation:pl 2s infinite;}
+  @keyframes pl{0%,100%{opacity:1}50%{opacity:.35}}
+  .banner p{font-size:13px;color:#bdb49a;line-height:1.6;}
+  .banner p b{color:#e2d9bd;font-weight:600;}
+
+  .thead,.trow{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 0.6fr 0.9fr 1.2fr;gap:14px;align-items:center;padding:14px 20px;}
+  .thead{font-size:10.5px;letter-spacing:0.13em;text-transform:uppercase;color:#5d5d63;}
+  .tbl{background:rgba(16,16,16,0.72);border:1px solid rgba(255,255,255,0.07);border-radius:16px;overflow:hidden;}
+  .trow{border-top:1px solid rgba(255,255,255,0.05);cursor:pointer;transition:background .2s;}
+  .trow:hover{background:rgba(145,130,104,0.05);}
+  .ragent{display:flex;align-items:center;gap:11px;font-size:14px;color:#fff;font-weight:500;}
+  .ragent .mini{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-family:var(--font-serif);font-size:13px;color:#a1a1aa;flex-shrink:0;}
+  .ragent .pend{color:#8f8f96;font-weight:400;font-style:italic;}
+  .cell{font-size:13.5px;color:#a1a1aa;}
+  .cell.fee{color:var(--gold-light);font-weight:600;}
+  .scip{font-size:10.5px;letter-spacing:0.11em;text-transform:uppercase;border-radius:9999px;padding:4px 12px;white-space:nowrap;justify-self:start;}
+  .s-held{color:#c9b98a;border:1px solid rgba(201,185,138,0.35);}     /* in-progress = gold tint */
+  .s-routed{color:#c9b98a;border:1px solid rgba(201,185,138,0.35);}   /* in-progress = gold tint */
+  .s-accepted{color:#5b8a5e;border:1px solid rgba(91,138,94,0.45);}   /* positive = sage */
+  .s-closed{color:#5b8a5e;border:1px solid rgba(91,138,94,0.45);}     /* positive = sage (doctrine: Closed is sage) */
+
+  /* ── detail ── */
+  .d-head{display:flex;align-items:center;gap:14px;margin-bottom:24px;flex-wrap:wrap;}
+  .back{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#8f8f96;transition:color .2s,border-color .2s;}
+  .back:hover{color:#fff;border-color:rgba(145,130,104,0.5);}
+  .d-head h1{font-size:30px;}
+  .d-date{margin-left:auto;font-size:12.5px;color:#5d5d63;}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .card{background:rgba(16,16,16,0.72);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:24px;}
+  .card.full{grid-column:1 / -1;}
+  .c-t{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#a1a1aa;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+  .tag{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold-light);border:1px solid rgba(145,130,104,0.4);border-radius:9999px;padding:3px 10px;}
+  .c-body{font-size:13.5px;color:#a1a1aa;line-height:1.7;}
+  .c-body b{color:#fff;font-weight:600;}
+  .who{display:flex;align-items:center;gap:13px;}
+  .who .av{width:42px;height:42px;font-size:18px;}
+  .feeline{display:flex;align-items:baseline;gap:14px;margin-top:4px;}
+  .feeline .pct{font-family:var(--font-serif);font-weight:300;font-size:34px;color:var(--gold-light);}
+  .log{display:flex;flex-direction:column;}
+  .li{display:flex;gap:16px;padding:12px 0;border-left:1px solid rgba(255,255,255,0.07);margin-left:5px;position:relative;padding-left:22px;}
+  .li::before{content:"";position:absolute;left:-5px;top:18px;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px rgba(145,130,104,0.6);}
+  .li.dim::before{background:#3f3f46;box-shadow:none;}
+  .li p{font-size:13.5px;color:#e4e4e7;}
+  .li span{display:block;font-size:11.5px;color:#5d5d63;margin-top:3px;}
+  .docrow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 0;border-top:1px solid rgba(255,255,255,0.05);font-size:13.5px;}
+  .docrow:first-of-type{border-top:none;}
+  .docrow a{color:var(--gold-light);font-size:12.5px;}
+  .adddoc{font-size:12.5px;color:#8f8f96;border:1px solid rgba(255,255,255,0.1);border-radius:9999px;padding:8px 16px;cursor:pointer;margin-left:auto;transition:color .2s;}
+  .adddoc:hover{color:#fff;}
+  .empty{font-size:13px;color:#5d5d63;text-align:center;padding:18px 0;}
+
+  .demo{position:fixed;bottom:14px;right:16px;font-size:11px;color:#3f3f46;cursor:pointer;border:1px dashed rgba(255,255,255,0.12);border-radius:8px;padding:6px 10px;background:#0a0a0a;}
+  @media (max-width:900px){aside{display:none;}main{padding:24px 18px;}.cards{grid-template-columns:1fr;}.thead,.trow{grid-template-columns:1.4fr 1fr 1fr;} .hidemb{display:none;}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside>
+    <div class="logo">EARN</div>
+    <a class="nv active"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3.2 2.9-5 5.5-5s4.9 1.8 5.5 5"/><circle cx="17.5" cy="9.5" r="2.4"/><path d="M16 14.6c2.3.2 4 1.7 4.5 4.4"/></svg>Referrals</a>
+    <a class="nv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.6 10.2c.5-.9 4.8-1.1 4.8.9 0 2.2-4.8 1.6-4.8 3.8 0 2 4.3 1.8 4.8.9"/></svg>Fees</a>
+    <a class="nv"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.2-1.6l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2.7-1.6L13.5 2h-3l-.3 2.9a7 7 0 0 0-2.7 1.6l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .5.1 1.1.2 1.6l-2 1.5 2 3.4 2.3-1a7 7 0 0 0 2.7 1.6l.3 2.9h3l.3-2.9a7 7 0 0 0 2.7-1.6l2.3 1 2-3.4-2-1.5c.1-.5.2-1.1.2-1.6z"/></svg>Settings</a>
+    <button class="send" onclick="location.href='/refer'">Submit Referral</button>
+    <div class="spacer"></div>
+    <a class="nv sm"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2.2 2.2 0 0 0 4 0"/></svg>Notifications</a>
+    <a class="nv sm"><svg viewBox="0 0 24 24"><path d="M9 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h4M16 17l5-5-5-5M21 12H9"/></svg>Sign out</a>
+    <a class="door">Apply for membership <span class="a">→</span></a>
+    <div class="user"><div class="av">J</div><div><b>Jordan Avery</b><span>Avery &amp; Co. Realty</span></div></div>
+  </aside>
+
+  <main>
+    <!-- ── LIST ── -->
+    <div class="panel on" id="list">
+      <div class="ttl-row">
+        <h1>Referrals<span class="vchip ok" id="chipOk"><span class="d"></span>Verified</span><span class="vchip wait" id="chipWait" style="display:none;"><span class="d"></span>Verification in progress</span></h1>
+        <div class="tools">
+          <div class="search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Search referrals</div>
+          <span class="filters">Filters</span>
+        </div>
+      </div>
+
+      <div class="banner" id="banner">
+        <span class="pulse"></span>
+        <p><b>Your license check is underway.</b> Keep submitting referrals — each one is securely held and routes automatically the moment your verification clears. You'll be notified when it does.</p>
+      </div>
+
+      <div class="tbl">
+        <div class="thead"><span>Receiving agent</span><span>Client</span><span>Destination</span><span class="hidemb">Fee</span><span class="hidemb">Date</span><span>Status</span></div>
+        <div id="rows"></div>
+      </div>
+    </div>
+
+    <!-- ── DETAIL ── -->
+    <div class="panel" id="detail">
+      <div class="d-head">
+        <a class="back" onclick="goList()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
+        <h1 id="dName">—</h1><span class="scip" id="dChip"></span>
+        <span class="d-date" id="dDate"></span>
+      </div>
+      <div class="cards">
+        <div class="card"><div class="c-t">Receiving agent</div><div class="c-body" id="dAgent"></div></div>
+        <div class="card"><div class="c-t">Client info <span class="tag" id="dNeed"></span></div>
+          <div class="c-body who"><div class="av" id="dAv">M</div><div><b id="dClient"></b><span id="dContact" style="display:block;font-size:12.5px;color:#71717a;margin-top:2px;"></span></div></div>
+        </div>
+        <div class="card"><div class="c-t">Your referral fee</div>
+          <div class="feeline"><span class="pct" id="dFee"></span><span class="c-body">of gross commission · documented in writing · paid broker-to-broker at close. EARN tracks it; payment settles between brokerages.</span></div>
+        </div>
+        <div class="card"><div class="c-t">Documents <span class="adddoc">+ Add document</span></div><div id="dDocs"></div></div>
+        <div class="card full"><div class="c-t">Activity log</div><div class="log" id="dLog"></div></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<span class="demo" onclick="flip()">demo: toggle pending / verified</span>
+
+<script>
+  /* DEMO ONLY — fictional sample data; production binds to records */
+  const V = [
+    {agent:'K. Delacroix', agentSub:'Elite Agent · Calgary, AB', client:'Michael Okafor', contact:'m.okafor@…  ·  (416) 555-0117', need:'Buyer', dest:'Calgary, AB', fee:'25%', date:'Jun 12, 2026', s:'s-routed', chip:'Routed — agreement out', docs:[{n:'Referral Agreement · REF-2026-0612-041',a:'Out for signature'}],
+     log:[['Agreement sent for signatures','Jun 12, 2026 · client contact releases to K. Delacroix once signed',0],['Routed to K. Delacroix — Calgary, AB','Jun 12, 2026',0],['Verification cleared','Jun 12, 2026',1],['Referral created · Held','Jun 12, 2026',1]]},
+    {agent:'A. Boudreau', agentSub:'Elite Agent · Halifax, NS', client:'D. + S. Tremblay', contact:'tremblays@…  ·  (902) 555-0163', need:'Seller', dest:'Halifax, NS', fee:'25%', date:'May 28, 2026', s:'s-accepted', chip:'Accepted — in progress', docs:[{n:'Referral Agreement · REF-2026-0528-033',a:'Signed'}],
+     log:[['Referral accepted by A. Boudreau','May 30, 2026',0],['Agreement signed · client introduced','May 29, 2026',0],['Routed to A. Boudreau — Halifax, NS','May 28, 2026',1],['Referral created','May 28, 2026',1]]},
+    {agent:'P. Sandhu', agentSub:'Elite Agent · Kelowna, BC', client:'Rina Singh', contact:'rina.s@…  ·  (604) 555-0142', need:'Buyer', dest:'Kelowna, BC', fee:'20%', date:'Apr 14, 2026', s:'s-closed', chip:'Closed', docs:[{n:'Referral Agreement · REF-2026-0414-019',a:'Closed'}],
+     log:[['Closed — fee tracked to close','Jun 2, 2026',0],['Referral accepted','Apr 16, 2026',1],['Agreement signed · client introduced','Apr 15, 2026',1],['Routed to P. Sandhu — Kelowna, BC','Apr 14, 2026',1]]}
+  ];
+  const P = [
+    {agent:null, agentSub:null, client:'Michael Okafor', contact:'m.okafor@…  ·  (416) 555-0117', need:'Buyer', dest:'Calgary, AB', fee:'25%', date:'Jun 12, 2026', s:'s-held', chip:'Held — pending verification', docs:null,
+     log:[['Referral created · Held — pending verification','Jun 12, 2026 · routes automatically when your verification clears',0]]},
+    {agent:null, agentSub:null, client:'Linh Nguyen', contact:'l.nguyen@…  ·  (647) 555-0189', need:'Seller', dest:'Toronto / GTA, ON', fee:'25%', date:'Jun 12, 2026', s:'s-held', chip:'Held — pending verification', docs:null,
+     log:[['Referral created · Held — pending verification','Jun 12, 2026 · routes automatically when your verification clears',0]]}
+  ];
+  let verified = true, idx = 0;
+
+  function rows(){
+    const d = verified ? V : P;
+    document.getElementById('rows').innerHTML = d.map((r,i)=>
+      `<div class="trow" onclick="goDetail(${i})">
+        <span class="ragent"><span class="mini">${r.agent ? r.agent[0] : '·'}</span>${r.agent ? r.agent : '<span class="pend">Being assigned</span>'}</span>
+        <span class="cell">${r.client.split(' ')[0]} ${r.client.includes(' ')? r.client.split(' ').slice(-1)[0][0]+'.':''}</span>
+        <span class="cell">${r.dest}</span>
+        <span class="cell fee hidemb">${r.fee}</span>
+        <span class="cell hidemb">${r.date}</span>
+        <span class="scip ${r.s}">${r.chip}</span>
+      </div>`).join('');
+    document.getElementById('banner').className = 'banner' + (verified ? '' : ' on');
+    document.getElementById('chipOk').style.display = verified ? 'inline-flex' : 'none';
+    document.getElementById('chipWait').style.display = verified ? 'none' : 'inline-flex';
+  }
+  function goDetail(i){
+    idx = i; const r = (verified ? V : P)[i];
+    document.getElementById('dName').textContent = r.client;
+    const c = document.getElementById('dChip'); c.className = 'scip ' + r.s; c.textContent = r.chip;
+    document.getElementById('dDate').textContent = 'Created ' + r.date;
+    document.getElementById('dAgent').innerHTML = r.agent
+      ? `<div class="who"><div class="av">${r.agent[0]}</div><div><b>${r.agent}</b><span style="display:block;font-size:12.5px;color:#71717a;margin-top:2px;">${r.agentSub}</span></div></div>`
+      : `No agent assigned yet — your referral routes to the destination's Elite Agent the moment your verification clears. You'll be notified.`;
+    document.getElementById('dNeed').textContent = r.need;
+    document.getElementById('dAv').textContent = r.client[0];
+    document.getElementById('dClient').textContent = r.client;
+    document.getElementById('dContact').textContent = r.contact;
+    document.getElementById('dFee').textContent = r.fee;
+    document.getElementById('dDocs').innerHTML = r.docs
+      ? r.docs.map(d=>`<div class="docrow"><span>${d.n}</span><a>${d.a}</a></div>`).join('')
+      : `<p class="empty">No documents yet — the referral agreement generates when your referral routes.</p>`;
+    document.getElementById('dLog').innerHTML = r.log.map(l=>`<div class="li${l[2]?' dim':''}"><div><p>${l[0]}</p><span>${l[1]}</span></div></div>`).join('');
+    sw('detail');
+  }
+  function goList(){sw('list');}
+  function sw(p){document.getElementById('list').className='panel'+(p==='list'?' on':'');document.getElementById('detail').className='panel'+(p==='detail'?' on':'');window.scrollTo(0,0);}
+  function flip(){verified=!verified;rows();goList();}
+  rows();
+</script>
+</body>
+</html>
