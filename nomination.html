@@ -28,8 +28,6 @@
 
 <style>
 :root {
-  --reveal-dur: 0.9s;
-  --reveal-ease: cubic-bezier(0.65, 0, 0.35, 1);
   --background: #050505;
   --foreground: #fafafa;
   --muted-foreground: #a1a1aa;
@@ -562,19 +560,6 @@ textarea.form-input {
 }
 .footer-minimal a:hover { color: var(--text-body); }
 
-/* ═══════════════════════════════════════
-   FADE-IN ANIMATION
-   ═══════════════════════════════════════ */
-.fade-in {
-  opacity: 0;
-  transition: opacity var(--reveal-dur) var(--reveal-ease);
-}
-.fade-in.visible {
-  opacity: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-  .fade-in, .fade-in-subtle { opacity: 1 !important; transform: none !important; transition: none !important; }
-}
 
 /* ═══════════════════════════════════════
    SCROLL PROGRESS BAR
@@ -653,7 +638,7 @@ textarea.form-input {
 <div class="nom-form-wrap" id="formContainer">
 
   <!-- Incentive Note -->
-  <div class="incentive-note fade-in">
+  <div class="incentive-note">
     <svg class="incentive-note-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="10"/>
       <path d="M12 16v-4"/>
@@ -721,7 +706,7 @@ textarea.form-input {
     </div>
 
     <!-- Add Nomination Button -->
-    <button type="button" class="add-nomination-btn fade-in" id="addNominationBtn" onclick="addNomination()">
+    <button type="button" class="add-nomination-btn" id="addNominationBtn" onclick="addNomination()">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="12" y1="5" x2="12" y2="19"/>
         <line x1="5" y1="12" x2="19" y2="12"/>
@@ -730,7 +715,7 @@ textarea.form-input {
     </button>
 
     <!-- ── Consent & Permissions ── -->
-    <div class="form-section fade-in">
+    <div class="form-section">
       <div class="form-section-label">Permissions</div>
       <div class="form-row single" style="margin-bottom: 16px;">
         <div class="form-group">
@@ -754,7 +739,7 @@ textarea.form-input {
     </div>
 
     <!-- ── Submit ── -->
-    <div class="form-submit-wrap fade-in">
+    <div class="form-submit-wrap">
       <div class="shader-btn-wrap" data-shader-btn>
         <canvas></canvas>
         <button class="shader-btn lg" type="submit" id="submitBtn">Submit Nomination</button>
@@ -791,17 +776,6 @@ textarea.form-input {
 <div id="scrollProgress"></div>
 
 <script>
-// ── Fade-in Observer ──
-const fadeEls = document.querySelectorAll('.fade-in');
-const fadeObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      fadeObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.15 });
-fadeEls.forEach(el => fadeObserver.observe(el));
 
 
 // ── Navbar scroll ──
