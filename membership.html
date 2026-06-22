@@ -421,7 +421,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
 @media (prefers-reduced-motion: reduce) {
-  .fade-in, .fade-in-rise, .fade-in-scale, .fade-in-subtle { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .fade-in, .fade-in-rise, .fade-in-scale, .fade-in-subtle, .anti-header h2 em { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 #scrollProgress {
   position: fixed; top: 0; left: 0; height: 2px; width: 0;
@@ -1304,7 +1304,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   color: white;
   text-wrap: balance;
 }
-.anti-header h2 em { font-style: italic; font-weight: 400; color: var(--gold); }
+.anti-header h2 em { font-style: italic; font-weight: 400; color: var(--gold); opacity: 0; transition: opacity 0.9s var(--reveal-ease-heavy); transition-delay: 2.4s; }
+.anti-header.visible h2 em { opacity: 1; }
 .anti-header p {
   max-width: 672px;
   font-size: 1.125rem;
