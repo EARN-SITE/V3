@@ -416,10 +416,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* ═══ ANIMATIONS ═══ */
 .fade-in {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity var(--reveal-dur) var(--reveal-ease), transform var(--reveal-dur) var(--reveal-ease);
+  transition: opacity var(--reveal-dur) var(--reveal-ease);
 }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
+.fade-in.visible { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .fade-in, .fade-in-rise, .fade-in-scale, .fade-in-subtle, .anti-header h2 em { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
@@ -1315,10 +1314,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 /* Heavy rise — deeper, slower, deliberate */
 .fade-in-rise {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity var(--reveal-dur-feature) var(--reveal-ease-heavy), transform var(--reveal-dur-feature) var(--reveal-ease-heavy);
+  transition: opacity var(--reveal-dur-feature) var(--reveal-ease-heavy);
 }
-.fade-in-rise.visible { opacity: 1; transform: translateY(0); }
+.fade-in-rise.visible { opacity: 1; }
 @keyframes marquee {
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-50%, 0, 0); }
