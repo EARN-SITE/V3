@@ -404,7 +404,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   position: relative;
   z-index: 10;
   display: flex;
-  max-width: 896px;
+  max-width: 1200px;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -420,9 +420,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-feature-settings: 'lnum' 1;
   text-wrap: balance;
 }
-.hero-content h1 span { display: block; }
+.hero-content h1 span { display: block; white-space: nowrap; }
 @media (max-width: 768px) {
-  .hero-content h1 span { display: inline; }
+  .hero-content h1 span { display: inline; white-space: normal; }
 }
 .hero-content p {
   max-width: 560px;
