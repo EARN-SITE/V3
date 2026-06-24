@@ -769,6 +769,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .standard-row p { font-size:15px; line-height:1.7; color: var(--text-secondary); }
 .standard-close { margin-top: 36px; font-size: 17px; line-height: 1.65; color: var(--text-primary); max-width: 460px; }
 .standard-door { margin-top: 44px; }
+.standard-sub--sender {
+  margin-top: 18px;
+  max-width: 560px;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  color: var(--text-tertiary);
+}
 /* ── Field of One Hundred ── */
 .standard-field-wrap { position: sticky; top: calc(50vh - 220px); }
 @media (max-width: 920px){ .standard-field-wrap { position: static; } }
@@ -1064,6 +1072,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     <div class="standard-copy">
       <span class="standard-label fade-in">The Standard</span>
       <h2 class="fade-in" style="text-wrap:balance;font-variant-numeric:lining-nums;font-feature-settings:'lnum' 1;">99% of agents do not qualify.</h2>
+      <p class="standard-sub--sender fade-in" style="transition-delay:0.1s;">Sending is open to every licensed agent. The Standard sets who your client reaches — not whether you can send.</p>
       <div class="standard-rows fade-in" style="transition-delay:0.15s;">
         <div class="standard-row">
           <h3>Production</h3>
@@ -1243,7 +1252,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
       <div class="footer-duo-line" aria-hidden="true"></div>
       <div class="footer-duo-cell">
         <p class="duo-line">Be ready for the next one.</p>
-        <a href="/get-verified" class="footer-refer-link">Get Verified</a>
+        <a href="/get-verified" class="footer-refer-link">Register to send</a>
       </div>
     </div>
     <a href="/membership" class="marked-door">For Elite Agents<span class="md-arrow" aria-hidden="true">→</span></a>
