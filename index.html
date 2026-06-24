@@ -330,7 +330,6 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   .nav-center { display: none; }
   .nav-hamburger { display: flex; }
   .nav-right { gap: 12px; }
-  .nav-signin { display: none; }
 }
 @media (max-width: 768px) {
   .nav-center { display: none; }
@@ -583,6 +582,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   text-transform: uppercase;
   color: #78787f;
 }
+.founder-creds {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-tertiary);
+  letter-spacing: 0.01em;
+}
 
 /* ═══════════════════════════════════════
    FOOTER SECTION
@@ -663,6 +668,28 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .fade-in.visible {
   opacity: 1;
 }
+/* ── Statement monument (How It Works → On the Record) ── */
+.statement { padding: 140px 24px; display: flex; justify-content: center; }
+.statement-inner { max-width: 860px; text-align: center; }
+.statement-inner.fade-in { opacity: 1; }   /* container is the scroll trigger only — it never fades; the lines do */
+.stmt-block {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 4.6vw, 3.5rem);
+  line-height: 1.16;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.stmt-line { display: block; opacity: 0; transition: opacity 3.2s var(--reveal-ease); }
+.statement-inner.visible .stmt-line:nth-child(1) { opacity: 1; transition-delay: 0s; }
+.statement-inner.visible .stmt-line:nth-child(2) { opacity: 1; transition-delay: 0.3s; }
+.statement-inner.visible .stmt-line:nth-child(3) { opacity: 1; transition-delay: 0.6s; }
+.statement-inner.visible .stmt-line:nth-child(4) { opacity: 1; transition-delay: 0.9s; }
+.stmt-climax { margin-top: 0.4em; }
+.stmt-climax em { font-style: italic; color: var(--gold); }
+@media (prefers-reduced-motion: reduce) {
+  .stmt-line { opacity: 1; transition: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   .fade-in { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
@@ -695,6 +722,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   z-index: 0;
 }
 .shader-btn {
+  white-space: nowrap;
   position: relative;
   z-index: 1;
   display: inline-flex;
@@ -721,7 +749,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .mobile-menu.open .mobile-menu-link:nth-child(5) { transition-delay: 0.3s; }
 .footer-refer { margin-top: 44px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .footer-refer p { font-size: 14px; color: var(--text-tertiary); }
-.footer-refer-link { display: inline-block; padding: 12px 30px; border: 1px solid rgba(145,130,104,0.45); border-radius: 9999px; color: var(--gold); font-size: 14px; font-weight: 500; letter-spacing: 0.02em; text-decoration: none; transition: all 0.3s ease; }
+.footer-refer-link { display: inline-block; padding: 16px 40px; border: 1px solid rgba(145,130,104,0.45); border-radius: 9999px; color: var(--gold); font-size: 14px; font-weight: 500; letter-spacing: 0.02em; text-decoration: none; transition: all 0.3s ease; }
 .footer-refer-link:hover { border-color: var(--gold); background: rgba(145,130,104,0.08); color: var(--gold-light); }
 
 .open-gate { padding: 170px 24px; text-align: center; }
@@ -741,8 +769,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .standard-row p { font-size:15px; line-height:1.7; color: var(--text-secondary); }
 .standard-close { margin-top: 36px; font-size: 17px; line-height: 1.65; color: var(--text-primary); max-width: 460px; }
 /* ── Field of One Hundred ── */
-.standard-field-wrap { position: sticky; top: 50vh; transform: translateY(-50%); }
-@media (max-width: 920px){ .standard-field-wrap { position: static; transform: none; } }
+.standard-field-wrap { position: sticky; top: calc(50vh - 220px); }
+@media (max-width: 920px){ .standard-field-wrap { position: static; } }
 .standard-field { position: relative; width: 100%; max-width: 440px; margin: 0 auto; aspect-ratio: 1 / 1; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr); place-items: center; }
 .field-agent { width: 17px; height: 17px; color: var(--gold-light); transition: color 1s ease, transform 0.7s ease; }
 .field-agent svg { width: 100%; height: 100%; display: block; }
@@ -965,7 +993,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
     <span style="display:block;font-family:'Inter',sans-serif;font-size:clamp(12px, 2.5vw, 18px);font-weight:400;letter-spacing:clamp(0.12em, 1.5vw, 0.25em);text-transform:uppercase;color:#847b66;margin-bottom:20px;">Elite Agent Referral Network</span>
     <h1>
       <span>Instant access to a vetted</span>
-      <span>top&nbsp;1% agent in every market.</span>
+      <span>top&nbsp;1% agent — anywhere you refer.</span>
     </h1>
     <p style="color:#d4d4d8;margin-top:22px;font-size:clamp(15px,2vw,18px);letter-spacing:0.01em;">Your fee in writing before the first introduction.</p>
     <div style="margin-top:38px;display:flex;flex-direction:column;gap:20px;align-items:center;">
@@ -1095,6 +1123,20 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   </div>
 </section>
 
+<!-- ═══════════════════════════════════════
+     STATEMENT (stakes monument → segue to On the Record)
+     ═══════════════════════════════════════ -->
+<section class="statement">
+  <div class="statement-inner fade-in">
+    <p class="stmt-block">
+      <span class="stmt-line">Your reputation.</span>
+      <span class="stmt-line">Your commission.</span>
+      <span class="stmt-line">Your client.</span>
+      <span class="stmt-line stmt-climax">Every referral puts all three in <em>someone else’s hands</em>.</span>
+    </p>
+  </div>
+</section>
+
 
 
 <!-- ═══════════════════════════════════════
@@ -1104,7 +1146,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   <div class="otr-inner">
     <span class="otr-label fade-in">On the Record</span>
     <h2 class="fade-in" style="transition-delay:0.08s;text-wrap:balance;">A handshake is not an agreement.</h2>
-    <p class="otr-sub fade-in" style="transition-delay:0.15s;">Most referrals travel on goodwill — a name passed along, a promise remembered differently at closing. Every EARN referral is on the record, so your fee never depends on anyone’s memory.</p>
+    <p class="otr-sub fade-in" style="transition-delay:0.15s;">Every EARN referral is on the record — signed before the introduction, tracked to the close — so your fee never depends on anyone’s memory.</p>
 
   <!-- Proof band — the receipts for the two EARN-column claims.
        Both cards are ILLUSTRATIVE system objects: redacted parties, no dates,
@@ -1176,6 +1218,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
           <cite style="font-style:normal;">
             <span class="founder-name">Liam McKinney</span>
             <span class="founder-title" style="display:block;">Founder</span>
+            <span class="founder-creds" style="display:block;">Third-generation Broker · 500+ career transactions</span>
           </cite>
         </footer>
       </blockquote>
